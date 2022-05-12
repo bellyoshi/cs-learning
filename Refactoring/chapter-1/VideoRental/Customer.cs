@@ -28,16 +28,26 @@ public class Customer
 
     public string statement()
     {
-        int frequentRenterPoints = 0;
         string result = "Rental Record for " + getName() + "\n";
         foreach(Rental each in rentals)
+        {
+            result += "\t" + each.getMovie().getTitle() + "\n";
+        }
+        result += "Amount owed in " + getTotalCharge() + "\n";
+        result += "You earned " + getTotalFrequentRentalPoints() + " frequent renter points";
+        return result;
+    }
+
+    private int getTotalFrequentRentalPoints()
+    {
+        int frequentRenterPoints = 0;
+        string result = "Rental Record for " + getName() + "\n";
+        foreach (Rental each in rentals)
         {
             frequentRenterPoints+=each.getFrequentRenterPoints();
             result += "\t" + each.getMovie().getTitle() + "\n";
         }
-        result += "Amount owed in " + getTotalCharge() + "\n";
-        result += "You earned " + frequentRenterPoints + " frequent renter points";
-        return result;
+        return frequentRenterPoints;
     }
 
     private double getTotalCharge()
