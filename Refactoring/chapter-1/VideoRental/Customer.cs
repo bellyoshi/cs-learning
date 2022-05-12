@@ -33,21 +33,17 @@ public class Customer
         string result = "Rental Record for " + getName() + "\n";
         foreach(Rental each in rentals)
         {
-            double thisAmount = each.getCharge();
 
             frequentRenterPoints++;
             if (each.getMovie().getPriceCode() == Movie.NEW_RELEASE && each.getDaysRented() > 1)
                 frequentRenterPoints++;
             result += "\t" + each.getMovie().getTitle() + "\n";
-            totalAmout += thisAmount;
+            totalAmout += each.getCharge();
         }
         result += "Amount owed in " + totalAmout + "\n";
         result += "You earned " + frequentRenterPoints + " frequent renter points";
         return result;
     }
 
-    private static double amountFor(Rental aRental)
-    {
-        return aRental.getCharge();
-    }
+
 }
