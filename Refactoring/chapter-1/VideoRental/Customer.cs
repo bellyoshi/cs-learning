@@ -33,10 +33,7 @@ public class Customer
         string result = "Rental Record for " + getName() + "\n";
         foreach(Rental each in rentals)
         {
-
-            frequentRenterPoints++;
-            if (each.getMovie().getPriceCode() == Movie.NEW_RELEASE && each.getDaysRented() > 1)
-                frequentRenterPoints++;
+            frequentRenterPoints+=each.getFrequentRenterPoints();
             result += "\t" + each.getMovie().getTitle() + "\n";
             totalAmout += each.getCharge();
         }
