@@ -55,27 +55,9 @@ public class Customer
     }
 
     private int getTotalFrequentRentalPoints()
-    {
-        int frequentRenterPoints = 0;
-        foreach (Rental each in rentals)
-        {
-            frequentRenterPoints+=each.getFrequentRenterPoints();
-        }
-        return frequentRenterPoints;
-    }
-
+        => rentals.Sum(rental => rental.getFrequentRenterPoints());
+    
     private double getTotalCharge()
-    {
-        //return rentals.Sum(rental => rental.getCharge());
-        double result = 0;
-        foreach (Rental each in rentals)
-        {
-            result += each.getCharge();
-        }
-        return result;
-    }
-
-
-
+        => rentals.Sum(rental => rental.getCharge());
 
 }
