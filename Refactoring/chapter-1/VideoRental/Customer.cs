@@ -16,10 +16,7 @@ public class Customer
         _name = name;
     }
 
-    public string getName()
-    {
-        return _name;
-    }
+    public string getName() => _name;
 
     public void addRental(Rental rental)
     {

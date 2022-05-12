@@ -20,13 +20,8 @@ public class Movie
     {
         _priceCode=arg;
     }
-    public string getTitle()
-    {
-        return _title;
-    }
-
-    public int getPriceCode()
-    {
-        return _priceCode;
-    }
+    public string getTitle() => _title;
+    
+    public int getPriceCode() => _priceCode;
+    
 }
