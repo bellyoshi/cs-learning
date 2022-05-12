@@ -42,10 +42,24 @@ namespace VideoRental.Tests
             sut.addRental(new Rental(new Movie("movie1", Movie.REGULAR), 7));
             sut.addRental(new Rental(new Movie("movie2", Movie.NEW_RELEASE), 7));
             Assert.AreEqual("Rental Record for customer name\n" +
-                "\tmovie1\n" +
-                "\tmovie2\n" +
+                "\tmovie1\t9.5\n" +
+                "\tmovie2\t21\n" +
                 "Amount owed in 30.5\n" +
                 "You earned 3 frequent renter points", sut.statement());
+        }
+
+        [TestMethod()]
+        public void htmlStatementTest()
+        {
+            var sut = new Customer("customer name");
+            sut.addRental(new Rental(new Movie("movie1", Movie.REGULAR), 7));
+            sut.addRental(new Rental(new Movie("movie2", Movie.NEW_RELEASE), 7));
+            Assert.AreEqual("<H1>Rental Record for <EM>customer name</EM></H1>\n"+
+                "<P>movie1:9.5<BR>\n"+
+                "movie2:21<BR>\n</P>" +
+                "<P>You owe <EM>30.5</EM></P>\n" +
+                "<P>On this rental you earned <EM>3</EM>frequent renter points</P>"
+                , sut.htmlStatement());
         }
     }
 }
