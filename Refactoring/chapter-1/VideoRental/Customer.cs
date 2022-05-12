@@ -33,32 +33,39 @@ public class Customer
         string result = "Rental Record for " + getName() + "\n";
         foreach(Rental each in rentals)
         {
-            double thisAmout = 0;
-            switch (each.getMovie().getPriceCode())
-            {
-                case Movie.REGULAR:
-                    thisAmout += 2;
-                    if (each.getDaysRented() > 2)
-                        thisAmout += (each.getDaysRented() - 2) * 1.5;
-                    break;
-                case Movie.NEW_RELEASE:
-                    thisAmout += each.getDaysRented() * 3;
-                    break;
-                case Movie.CHILDRENS:
-                    thisAmout += 1.5;
-                    if (each.getDaysRented() > 3)
-                        thisAmout += (each.getDaysRented() - 3) * 1.5;
-                    break;
-            }
+            double thisAmount = amountFor(each);
 
             frequentRenterPoints++;
-            if (each.getMovie().getPriceCode() == Movie.NEW_RELEASE && each.getDaysRented() > 1) 
+            if (each.getMovie().getPriceCode() == Movie.NEW_RELEASE && each.getDaysRented() > 1)
                 frequentRenterPoints++;
             result += "\t" + each.getMovie().getTitle() + "\n";
-            totalAmout += thisAmout;
+            totalAmout += thisAmount;
         }
         result += "Amount owed in " + totalAmout + "\n";
         result += "You earned " + frequentRenterPoints + " frequent renter points";
+        return result;
+    }
+
+    private static double amountFor(Rental aRental)
+    {
+        double result = 0;
+        switch (aRental.getMovie().getPriceCode())
+        {
+            case Movie.REGULAR:
+                result += 2;
+                if (aRental.getDaysRented() > 2)
+                    result += (aRental.getDaysRented() - 2) * 1.5;
+                break;
+            case Movie.NEW_RELEASE:
+                result += aRental.getDaysRented() * 3;
+                break;
+            case Movie.CHILDRENS:
+                result += 1.5;
+                if (aRental.getDaysRented() > 3)
+                    result += (aRental.getDaysRented() - 3) * 1.5;
+                break;
+        }
+
         return result;
     }
 }
