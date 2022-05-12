@@ -41,11 +41,9 @@ public class Customer
     private int getTotalFrequentRentalPoints()
     {
         int frequentRenterPoints = 0;
-        string result = "Rental Record for " + getName() + "\n";
         foreach (Rental each in rentals)
         {
             frequentRenterPoints+=each.getFrequentRenterPoints();
-            result += "\t" + each.getMovie().getTitle() + "\n";
         }
         return frequentRenterPoints;
     }
