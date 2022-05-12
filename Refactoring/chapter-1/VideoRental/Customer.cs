@@ -28,19 +28,30 @@ public class Customer
 
     public string statement()
     {
-        double totalAmout = 0;
         int frequentRenterPoints = 0;
         string result = "Rental Record for " + getName() + "\n";
         foreach(Rental each in rentals)
         {
             frequentRenterPoints+=each.getFrequentRenterPoints();
             result += "\t" + each.getMovie().getTitle() + "\n";
-            totalAmout += each.getCharge();
         }
-        result += "Amount owed in " + totalAmout + "\n";
+        result += "Amount owed in " + getTotalCharge() + "\n";
         result += "You earned " + frequentRenterPoints + " frequent renter points";
         return result;
     }
+
+    private double getTotalCharge()
+    {
+        //return rentals.Sum(rental => rental.getCharge());
+        double result = 0;
+        foreach (Rental each in rentals)
+        {
+            result += each.getCharge();
+        }
+        return result;
+    }
+
+
 
 
 }
