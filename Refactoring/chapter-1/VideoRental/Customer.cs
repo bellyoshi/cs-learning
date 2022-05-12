@@ -33,7 +33,7 @@ public class Customer
         string result = "Rental Record for " + getName() + "\n";
         foreach(Rental each in rentals)
         {
-            double thisAmount = amountFor(each);
+            double thisAmount = each.getCharge();
 
             frequentRenterPoints++;
             if (each.getMovie().getPriceCode() == Movie.NEW_RELEASE && each.getDaysRented() > 1)
