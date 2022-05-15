@@ -24,27 +24,22 @@ public class Movie
     
     public int getPriceCode() => _priceCode;
 
-    internal double getCharge(int daysRented)
+    public double getCharge(int daysRented)
     {
-        double result = 0;
         switch (getPriceCode())
         {
             case Movie.REGULAR:
-                result += 2;
                 if (daysRented > 2)
-                    result += (daysRented - 2) * 1.5;
-                break;
+                    return 2 + (daysRented - 2) * 1.5;
+                return 2;
             case Movie.NEW_RELEASE:
-                result += daysRented * 3;
-                break;
+                return daysRented * 3;
             case Movie.CHILDRENS:
-                result += 1.5;
                 if (daysRented > 3)
-                    result += (daysRented - 3) * 1.5;
-                break;
+                    return 1.5 +  (daysRented - 3) * 1.5;
+                return 1.5;
         }
-
-        return result;
+        return 0;
     }
 
     internal int getFrequentRenterPoints(int dayRented)
