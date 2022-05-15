@@ -22,15 +22,11 @@ namespace VideoRental
         public Movie getMovie() => _movie;
 
         internal double getCharge()
-        
             => _movie.getCharge(_daysRented);
         
 
-        internal int getFrequentRenterPoints()
-        {
-            if (getMovie().getPriceCode() == Movie.NEW_RELEASE && getDaysRented() > 1)
-                return 2;
-            return 1;
-        }
+        internal int getFrequentRenterPoints() 
+            => _movie.getFrequentRenterPoints(_daysRented);
+
     }
 }
