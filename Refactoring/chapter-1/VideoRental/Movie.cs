@@ -31,7 +31,8 @@ public class Movie
             case Movie.CHILDRENS:
                 _price = new ChildrensPrice();
                 break;
-                default: throw new ArgumentOutOfRangeException();
+            default: 
+                throw new ArgumentOutOfRangeException();
         }
     }
     public string getTitle() => _title;
@@ -40,11 +41,7 @@ public class Movie
 
     public double getCharge(int daysRented) => _price.getCharge(daysRented);
 
+    public int getFrequentRenterPoints(int daysRented) => _price.getFrequentRenterPoints(daysRented);
 
-    internal int getFrequentRenterPoints(int dayRented)
-    {
-        if (getPriceCode() == Movie.NEW_RELEASE && dayRented > 1)
-            return 2;
-        return 1;
-    }
+
 }

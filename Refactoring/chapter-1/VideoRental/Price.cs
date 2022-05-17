@@ -15,6 +15,12 @@ abstract class Price
 
     }
 
+    public virtual int getFrequentRenterPoints(int daysRented)
+    {
+
+        return 1;
+    }
+
 }
 
 class ChildrensPrice : Price
@@ -38,7 +44,10 @@ class NewReleasePrice : Price
     public override int getPriceCode()
     =>
          Movie.NEW_RELEASE;
+    public override int getFrequentRenterPoints(int daysRented)
+    => daysRented > 1 ? 2:1;
     
+
 }
 
 class RegularPrice : Price

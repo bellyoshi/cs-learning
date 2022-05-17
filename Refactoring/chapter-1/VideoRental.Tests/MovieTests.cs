@@ -32,9 +32,9 @@ namespace VideoRental.Tests
         {
             var sut = new Movie("", Movie.REGULAR);
             Assert.AreEqual(2, sut.getCharge(1));
-            Assert.AreEqual(2,sut.getCharge(2));
-            Assert.AreEqual(3.5,sut.getCharge(3));
-            
+            Assert.AreEqual(2, sut.getCharge(2));
+            Assert.AreEqual(3.5, sut.getCharge(3));
+
         }
         [TestMethod()]
         public void MovieCHILDRENS_getChargeTest()
@@ -53,6 +53,16 @@ namespace VideoRental.Tests
             Assert.AreEqual(3, sut.getCharge(1));
             Assert.AreEqual(6, sut.getCharge(2));
 
+        }
+
+        [TestMethod()]
+        public void getFrequentRenterPointsTest()
+        {
+            var sut = new Movie("", Movie.NEW_RELEASE);
+            Assert.AreEqual(1,sut.getFrequentRenterPoints(1));
+            Assert.AreEqual(2, sut.getFrequentRenterPoints(2));
+            sut.setPriceCode(Movie.REGULAR);
+            Assert.AreEqual(1, sut.getFrequentRenterPoints(2));
         }
     }
 }
