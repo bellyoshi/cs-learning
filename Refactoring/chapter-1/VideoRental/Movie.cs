@@ -9,6 +9,7 @@ public class Movie
 
     private string _title;
     private int _priceCode;
+    private Price _price;
 
     public Movie(string title, int priceCode)
     {
@@ -18,29 +19,27 @@ public class Movie
 
     public void setPriceCode(int arg)
     {
-        _priceCode=arg;
+        switch (arg)
+        {
+            case Movie.REGULAR:
+                _price = new RegularPrice();
+                break;
+            case Movie.NEW_RELEASE:
+                _price = new NewReleasePrice();
+                break;
+
+            case Movie.CHILDRENS:
+                _price = new ChildrensPrice();
+                break;
+                default: throw new ArgumentOutOfRangeException();
+        }
     }
     public string getTitle() => _title;
     
-    public int getPriceCode() => _priceCode;
+    public int getPriceCode() => _price.getPriceCode();
 
-    public double getCharge(int daysRented)
-    {
-        switch (getPriceCode())
-        {
-            case Movie.REGULAR:
-                if (daysRented > 2)
-                    return 2 + (daysRented - 2) * 1.5;
-                return 2;
-            case Movie.NEW_RELEASE:
-                return daysRented * 3;
-            case Movie.CHILDRENS:
-                if (daysRented > 3)
-                    return 1.5 +  (daysRented - 3) * 1.5;
-                return 1.5;
-        }
-        return 0;
-    }
+    public double getCharge(int daysRented) => _price.getCharge(daysRented);
+
 
     internal int getFrequentRenterPoints(int dayRented)
     {
