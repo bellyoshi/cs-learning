@@ -5,52 +5,51 @@ abstract class Price
     abstract public int getPriceCode();
 
     abstract public double getCharge(int daysRented);
-
     
+    internal double getCharge(int daysRented, int basicDays, double basicCharge, double chargeOfday)
+    {
+        var charge = basicCharge;
+        if (daysRented > basicDays)
+            charge +=  (daysRented - basicDays) * chargeOfday;
+        return charge;
+
+    }
+
 }
 
 class ChildrensPrice : Price
 {
     public override double getCharge(int daysRented)
-    {
-        if (daysRented > 3)
-            return 1.5 +  (daysRented - 3) * 1.5;
-        return 1.5;
-    }
+        => getCharge(daysRented, 3, 1.5, 1.5);       
+    
 
     public override int getPriceCode()
-    {
-        return Movie.CHILDRENS;
-    }
+    =>
+         Movie.CHILDRENS;
+    
 }
 
 class NewReleasePrice : Price
 {
     public override double getCharge(int daysRented)
-    {
-       return daysRented * 3;
-    }
+       => daysRented * 3;
+    
 
     public override int getPriceCode()
-    {
-        return Movie.NEW_RELEASE;
-    }
+    =>
+         Movie.NEW_RELEASE;
+    
 }
 
 class RegularPrice : Price
 {
     public override double getCharge(int daysRented)
-    {
-
-        if (daysRented > 2)
-            return 2 + (daysRented - 2) * 1.5;
-        return 2;
+    => getCharge(daysRented, 2, 2.0, 1.5);
 
         
-    }
 
     public override int getPriceCode()
-    {
-        return Movie.REGULAR;
-    }
+    =>
+         Movie.REGULAR;
+    
 }
