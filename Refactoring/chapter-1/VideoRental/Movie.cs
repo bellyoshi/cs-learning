@@ -13,7 +13,7 @@ public class Movie
     public Movie(string title, int priceCode)
     {
         _title = title;
-        _priceCode = priceCode;
+        setPriceCode(priceCode);
     }
 
     public void setPriceCode(int arg)
