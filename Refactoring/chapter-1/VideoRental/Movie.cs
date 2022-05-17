@@ -8,7 +8,6 @@ public class Movie
     public const int NEW_RELEASE = 1;
 
     private string _title;
-    private int _priceCode;
     private Price _price;
 
     public Movie(string title, int priceCode)

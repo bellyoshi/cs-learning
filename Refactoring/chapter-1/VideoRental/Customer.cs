@@ -19,9 +19,9 @@ public class Customer
     public string getName() => _name;
 
     public void addRental(Rental rental)
-    {
+    =>
         rentals.Add(rental);
-    }
+    
 
     public string statement()
     {

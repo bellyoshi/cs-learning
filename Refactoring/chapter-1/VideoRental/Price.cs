@@ -7,19 +7,16 @@ abstract class Price
     abstract public double getCharge(int daysRented);
     
     internal double getCharge(int daysRented, int basicDays, double basicCharge, double chargeOfday)
-    {
-        var charge = basicCharge;
-        if (daysRented > basicDays)
-            charge +=  (daysRented - basicDays) * chargeOfday;
-        return charge;
+        => basicCharge+  enchoDays(daysRented , basicDays) * chargeOfday;
 
-    }
+    int enchoDays(int daysRented,int  basicDays)
+    =>
+         Math.Max(daysRented - basicDays, 0);
+    
 
     public virtual int getFrequentRenterPoints(int daysRented)
-    {
-
-        return 1;
-    }
+    =>         1;
+    
 
 }
 
