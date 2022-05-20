@@ -29,8 +29,10 @@ public class Movie
 
     public int getPriceCode()
         => _price.getPriceCode();
+
     public double getCharge(int daysRented)
         => _price.getCharge(daysRented);
+
     public int getFrequentRenterPoints(int daysRented)
         => _price.getFrequentRenterPoints(daysRented);
 }

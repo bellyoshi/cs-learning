@@ -12,7 +12,6 @@ public class Customer
 
     public void addRental(Rental rental)
         => rentals.Add(rental);
-    
 
     public string statement()
     {
