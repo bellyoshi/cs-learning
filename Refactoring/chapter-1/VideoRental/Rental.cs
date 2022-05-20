@@ -2,24 +2,22 @@
 
 public class Rental
 {
-    private Movie _movie;
+    public Movie Movie { get; }
     private int _daysRented;
 
     public Rental(Movie movie, int daysRented)
     {
-        _movie = movie;
+        Movie = movie;
         _daysRented = daysRented;
     }
 
     public int getDaysRented() => _daysRented;
-   
-    public Movie getMovie() => _movie;
 
     internal double getCharge()
-        => _movie.getCharge(_daysRented);
+        => Movie.getCharge(_daysRented);
     
 
     internal int getFrequentRenterPoints() 
-        => _movie.getFrequentRenterPoints(_daysRented);
+        => Movie.getFrequentRenterPoints(_daysRented);
 
 }
