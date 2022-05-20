@@ -1,6 +1,5 @@
 ﻿namespace VideoRental;
 
-
 public class Movie
 {
     public const int CHILDRENS = 2;
@@ -19,28 +18,19 @@ public class Movie
 
     public void setPriceCode(int arg)
     {
-        switch (arg)
+        _price = arg switch
         {
-            case Movie.REGULAR:
-                _price = new RegularPrice();
-                break;
-            case Movie.NEW_RELEASE:
-                _price = new NewReleasePrice();
-                break;
-
-            case Movie.CHILDRENS:
-                _price = new ChildrensPrice();
-                break;
-            default: 
-                throw new ArgumentOutOfRangeException();
-        }
+            Movie.REGULAR => new RegularPrice(),
+            Movie.NEW_RELEASE => new NewReleasePrice(),
+            Movie.CHILDRENS => new ChildrensPrice(),
+            _ => throw new InvalidOperationException(),
+        };
     }
 
-    public int getPriceCode() => _price.getPriceCode();
-
-    public double getCharge(int daysRented) => _price.getCharge(daysRented);
-
-    public int getFrequentRenterPoints(int daysRented) => _price.getFrequentRenterPoints(daysRented);
-
-
+    public int getPriceCode()
+        => _price.getPriceCode();
+    public double getCharge(int daysRented)
+        => _price.getCharge(daysRented);
+    public int getFrequentRenterPoints(int daysRented)
+        => _price.getFrequentRenterPoints(daysRented);
 }

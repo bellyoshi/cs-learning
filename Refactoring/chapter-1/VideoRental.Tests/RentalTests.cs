@@ -11,7 +11,7 @@ public class RentalTests
     {
         var movie = new Movie("", 0);
         var sut = new Rental(movie, 1);
-        Assert.AreEqual(1,sut.getDaysRented());
+        Assert.AreEqual(1,sut.DaysRented);
         Assert.AreEqual(movie,sut.Movie);
     }
 }

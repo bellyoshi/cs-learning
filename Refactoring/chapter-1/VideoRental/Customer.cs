@@ -11,8 +11,7 @@ public class Customer
     }
 
     public void addRental(Rental rental)
-    =>
-        rentals.Add(rental);
+        => rentals.Add(rental);
     
 
     public string statement()
@@ -20,7 +19,7 @@ public class Customer
         string result = $"Rental Record for {Name}\n";
         foreach(Rental each in rentals)
         {
-            result += "\t" + each.Movie.Title +"\t" + each.getCharge() + "\n";
+            result += "\t" + each.Title +"\t" + each.getCharge() + "\n";
         }
         result += "Amount owed in " + getTotalCharge() + "\n";
         result += "You earned " + getTotalFrequentRentalPoints() + " frequent renter points";
@@ -33,7 +32,7 @@ public class Customer
         result += "<P>";
         foreach (Rental each in rentals)
         {
-            result += $"{each.Movie.Title}:{each.getCharge()}<BR>\n";
+            result += $"{each.Title}:{each.getCharge()}<BR>\n";
         }
         result +="</P>";
         result += $"<P>You owe <EM>{getTotalCharge()}</EM></P>\n";
