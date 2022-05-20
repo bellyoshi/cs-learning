@@ -7,12 +7,13 @@ public class Movie
     public const int REGULAR = 0;
     public const int NEW_RELEASE = 1;
 
-    private string _title;
+    public string Title { get;}
+
     private Price _price;
 
     public Movie(string title, int priceCode)
     {
-        _title = title;
+        Title = title;
         setPriceCode(priceCode);
     }
 
@@ -34,8 +35,7 @@ public class Movie
                 throw new ArgumentOutOfRangeException();
         }
     }
-    public string getTitle() => _title;
-    
+
     public int getPriceCode() => _price.getPriceCode();
 
     public double getCharge(int daysRented) => _price.getCharge(daysRented);

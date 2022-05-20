@@ -1,32 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace VideoRental;
 
-namespace VideoRental
+public class Rental
 {
-    public class Rental
+    private Movie _movie;
+    private int _daysRented;
+
+    public Rental(Movie movie, int daysRented)
     {
-        private Movie _movie;
-        private int _daysRented;
-
-        public Rental(Movie movie, int daysRented)
-        {
-            _movie = movie;
-            _daysRented = daysRented;
-        }
-
-        public int getDaysRented() => _daysRented;
-       
-        public Movie getMovie() => _movie;
-
-        internal double getCharge()
-            => _movie.getCharge(_daysRented);
-        
-
-        internal int getFrequentRenterPoints() 
-            => _movie.getFrequentRenterPoints(_daysRented);
-
+        _movie = movie;
+        _daysRented = daysRented;
     }
+
+    public int getDaysRented() => _daysRented;
+   
+    public Movie getMovie() => _movie;
+
+    internal double getCharge()
+        => _movie.getCharge(_daysRented);
+    
+
+    internal int getFrequentRenterPoints() 
+        => _movie.getFrequentRenterPoints(_daysRented);
+
 }

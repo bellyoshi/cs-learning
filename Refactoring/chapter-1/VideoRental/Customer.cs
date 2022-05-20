@@ -1,22 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VideoRental;
+﻿namespace VideoRental;
 
 public class Customer
 {
-    private string _name;
+    public string Name { get; }
     private List<Rental> rentals = new List<Rental>();
 
     public Customer(string name)
     {
-        _name = name;
+        Name = name;
     }
-
-    public string getName() => _name;
 
     public void addRental(Rental rental)
     =>
@@ -25,10 +17,10 @@ public class Customer
 
     public string statement()
     {
-        string result = "Rental Record for " + getName() + "\n";
+        string result = $"Rental Record for {Name}\n";
         foreach(Rental each in rentals)
         {
-            result += "\t" + each.getMovie().getTitle() +"\t" + each.getCharge() + "\n";
+            result += "\t" + each.getMovie().Title +"\t" + each.getCharge() + "\n";
         }
         result += "Amount owed in " + getTotalCharge() + "\n";
         result += "You earned " + getTotalFrequentRentalPoints() + " frequent renter points";
@@ -37,11 +29,11 @@ public class Customer
 
     public string htmlStatement()
     {
-        string result = $"<H1>Rental Record for <EM>{getName()}</EM></H1>\n";
+        string result = $"<H1>Rental Record for <EM>{Name}</EM></H1>\n";
         result += "<P>";
         foreach (Rental each in rentals)
         {
-            result += $"{each.getMovie().getTitle()}:{each.getCharge()}<BR>\n";
+            result += $"{each.getMovie().Title}:{each.getCharge()}<BR>\n";
         }
         result +="</P>";
         result += $"<P>You owe <EM>{getTotalCharge()}</EM></P>\n";

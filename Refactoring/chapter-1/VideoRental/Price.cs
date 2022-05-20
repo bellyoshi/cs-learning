@@ -7,7 +7,8 @@ abstract class Price
     abstract public double getCharge(int daysRented);
     
     internal double getCharge(int daysRented, int basicDays, double basicCharge, double chargeOfday)
-        => basicCharge+  enchoDays(daysRented , basicDays) * chargeOfday;
+        => basicCharge +
+        enchoDays(daysRented , basicDays) * chargeOfday;
 
     int enchoDays(int daysRented,int  basicDays)
     =>
