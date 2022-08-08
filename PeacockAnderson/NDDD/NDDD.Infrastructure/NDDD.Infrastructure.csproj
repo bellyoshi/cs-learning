@@ -10,4 +10,10 @@
     <ProjectReference Include="..\NDDD.Domain\NDDD.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="SQLServer\" />
+    <Folder Include="Csv\" />
+    <Folder Include="Fake\" />
+  </ItemGroup>
+
 </Project>
