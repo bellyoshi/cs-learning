@@ -3,7 +3,7 @@ using NDDD.Domain.Repositories;
 
 namespace NDDD.Infrastructure.Fake;
 
-public class MeasureFake : IMeasureRepository
+internal sealed class MeasureFake : IMeasureRepository
 {
     MeasureEntity IMeasureRepository.GetLatest()
     {

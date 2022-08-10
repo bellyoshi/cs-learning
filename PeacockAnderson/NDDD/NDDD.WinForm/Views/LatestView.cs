@@ -1,18 +1,29 @@
 ﻿using NDDD.WinForm.ViewModels;
 using NDDD.Infrastructure.Fake;
+using NDDD.Infrastructure;
 
 namespace NDDD.WinForm.Views
 {
     public partial class LatestView : Form
     {
-        private LatestViewModel _viewModel = new LatestViewModel(new MeasureFake());
+        private readonly LatestViewModel _viewModel = new ();
         public LatestView()
         {
             InitializeComponent();
 
             AddDataBingings();
+
+            DebugModeDisp();
         }
 
+        private void DebugModeDisp()
+        {
+            toolStripStatusLabel1.Visible = false;
+#if DEBUG
+            toolStripStatusLabel1.Visible = true;
+#endif
+        }
+        
         private void AddDataBingings()
         {
             this.AreaIDTextBox.DataBindings.Add("Text", _viewModel, nameof(_viewModel.AreaIdText));
@@ -23,5 +34,7 @@ namespace NDDD.WinForm.Views
         {
             _viewModel.Search();
         }
+
+
     }
 }

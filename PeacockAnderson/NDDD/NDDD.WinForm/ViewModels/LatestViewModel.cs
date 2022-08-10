@@ -1,5 +1,6 @@
 ﻿using NDDD.Domain.Entities;
 using NDDD.Domain.Repositories;
+using NDDD.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,11 @@ namespace NDDD.WinForm.ViewModels
         private string _areaIdText = string.Empty;
         private string _measureDateText = string.Empty;
         private string _measureValueText = string.Empty;
+
+        public LatestViewModel():this(Factories.CreateMeasure())
+        {
+
+        }
 
         public LatestViewModel(IMeasureRepository measureRepository)
         {
