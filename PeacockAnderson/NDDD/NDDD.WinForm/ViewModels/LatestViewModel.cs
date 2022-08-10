@@ -29,19 +29,21 @@ namespace NDDD.WinForm.ViewModels
         public string MeasureDateText
 
         {
-            get => _
+            get => _measureDateText;
+            set => SetProperty(ref _measureDateText, value);
         }
-        {
-            get => _measure != null ? _measure.MeasureDate.ToString("yyyy/MM/dd HH:mm:ss") : String.Empty;
-        }
+
         public string MeasureValueText {
-            get => _measure != null ? Math.Round(_measure.MeasureValue, 2) + "℃" : String.Empty;
+            get => _measureValueText;
+            set => SetProperty(ref _measureValueText, value);
         }
 
         public void Search()
         {
             var measure = _measureRepository.GetLatest();
-        AreaId = _measure.AreaId.ToString().PadLeft(4, '0');
+            AreaIdText = measure.AreaId.ToString().PadLeft(4, '0');
+            MeasureDateText = measure.MeasureDate.ToString("yyyy/MM/dd HH:mm:ss");
+            MeasureValueText = Math.Round(measure.MeasureValue, 2) + "℃";
             OnPropertyChanged();
         }
     }
