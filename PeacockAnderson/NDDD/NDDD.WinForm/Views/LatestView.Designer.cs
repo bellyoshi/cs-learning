@@ -80,6 +80,7 @@
             this.AreaIDTextBox.Name = "AreaIDTextBox";
             this.AreaIDTextBox.ReadOnly = true;
             this.AreaIDTextBox.Size = new System.Drawing.Size(125, 27);
+            this.AreaIDTextBox.Size = new System.Drawing.Size(163, 27);
             this.AreaIDTextBox.TabIndex = 2;
             // 
             // MeasureDateTextBox
@@ -88,6 +89,7 @@
             this.MeasureDateTextBox.Name = "MeasureDateTextBox";
             this.MeasureDateTextBox.ReadOnly = true;
             this.MeasureDateTextBox.Size = new System.Drawing.Size(125, 27);
+            this.MeasureDateTextBox.Size = new System.Drawing.Size(163, 27);
             this.MeasureDateTextBox.TabIndex = 2;
             // 
             // MeasureValueTextbox
@@ -96,6 +98,7 @@
             this.MeasureValueTextbox.Name = "MeasureValueTextbox";
             this.MeasureValueTextbox.ReadOnly = true;
             this.MeasureValueTextbox.Size = new System.Drawing.Size(125, 27);
+            this.MeasureValueTextbox.Size = new System.Drawing.Size(163, 27);
             this.MeasureValueTextbox.TabIndex = 2;
             // 
             // LatestView

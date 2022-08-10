@@ -38,11 +38,12 @@ public abstract class ViewModelBase : INotifyPropertyChanged {
         return DateTime.Now;
     }
 
-    //todo:public void OnPropertyChanged() {
-    //    PropertyChanged.Invoke(
-    //        this,
-    //        new PropertyChangedEventArgs(""));
-    //}
+    public void OnPropertyChanged()
+    {
+        PropertyChanged?.Invoke(
+            this,
+            new PropertyChangedEventArgs(""));
+    }
 
 }
 
