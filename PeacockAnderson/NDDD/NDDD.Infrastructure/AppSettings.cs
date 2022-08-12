@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace NDDD.Domain
 {
-    public class Shared
+    public class AppSettings
     {
-
+        public static AppSettings Default { get; set; } = new AppSettings();
+        public bool IsFake { get; set; } = false;
     }
 }

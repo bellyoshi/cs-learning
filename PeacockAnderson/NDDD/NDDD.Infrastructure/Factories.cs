@@ -22,7 +22,7 @@ namespace NDDD.Infrastructure {
 
 // デバッグビルドのみFakeの選択が可能
 #if DEBUG
-            if (Shared.IsFake) {
+            if (AppSettings.Default.IsFake) {
                 return new MeasureFake();
             }
 #endif
