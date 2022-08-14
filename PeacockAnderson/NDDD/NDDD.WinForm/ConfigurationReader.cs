@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
-using NDDD.Domain;
+using NDDD.Infrastructure;
 
 namespace NDDD.WinForm
 {
