@@ -4,7 +4,7 @@ using NDDD.Infrastructure;
 
 namespace NDDD.WinForm.Views
 {
-    public partial class LatestView : Form
+    public partial class LatestView : BaseForm
     {
         private readonly LatestViewModel _viewModel = new ();
         public LatestView()
@@ -13,16 +13,10 @@ namespace NDDD.WinForm.Views
 
             AddDataBingings();
 
-            DebugModeDisp();
+
         }
 
-        private void DebugModeDisp()
-        {
-            toolStripStatusLabel1.Visible = false;
-#if DEBUG
-            toolStripStatusLabel1.Visible = true;
-#endif
-        }
+
         
         private void AddDataBingings()
         {
