@@ -27,7 +27,7 @@ namespace NDDD.WinForm.Views {
             
             // LatestViewの表示
             using (var f = new LatestView()) {
-                f.Show();
+                f.ShowDialog();
             }
         }
     }

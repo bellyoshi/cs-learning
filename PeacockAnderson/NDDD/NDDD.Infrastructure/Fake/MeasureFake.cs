@@ -14,7 +14,7 @@ internal sealed class MeasureFake : IMeasureRepository
             var lines = System.IO.File.ReadAllLines(filename);
             var value = lines[0].Split(',');
             return new MeasureEntity(Convert.ToInt32(value[0]), Convert.ToDateTime(value[1]), Convert.ToSingle(value[2]));
-        } catch (Exception ex)
+        } catch (Exception)
         {
             return new MeasureEntity(10, Convert.ToDateTime("2020/12/12 12:34:56"), 123.341f);
         }

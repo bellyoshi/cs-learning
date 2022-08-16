@@ -11,9 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ValueObjects\" />
     <Folder Include="Exceptions\" />
-    <Folder Include="Helpers\" />
     <Folder Include="StaticValues\" />
     <Folder Include="Logics\" />
   </ItemGroup>
