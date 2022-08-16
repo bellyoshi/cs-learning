@@ -10,23 +10,21 @@
             => obj is T vo ? EqualsCore(vo) : false;
         
 
-        public static bool operator ==(ValueObject<T> vo1,
-            ValueObject<T> vo2) {
-            return Equals(vo1, vo2);
-        }
+        public static bool operator ==(ValueObject<T> vo1, ValueObject<T> vo2) 
+            => Equals(vo1, vo2);
+        
 
-        public static bool operator !=(ValueObject<T> vo1,
-           ValueObject<T> vo2) {
-            return !Equals(vo1, vo2);
-        }
+        public static bool operator !=(ValueObject<T> vo1, ValueObject<T> vo2) 
+            => !Equals(vo1, vo2);
 
-        public override string ToString() {
-            return base.ToString()??String.Empty;
-        }
 
-        public override int GetHashCode() {
-            return base.GetHashCode();
-        }
+        //public override string ToString() 
+        //    => base.ToString()??String.Empty;
+
+
+        public override int GetHashCode()
+            => base.GetHashCode();
+
 
         protected abstract bool EqualsCore(T other);
     }
