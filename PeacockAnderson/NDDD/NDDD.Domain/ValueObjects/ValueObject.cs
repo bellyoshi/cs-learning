@@ -6,59 +6,33 @@
     /// </summary>
     public abstract class ValueObject<T> where T : ValueObject<T> {
 
-        /// <summary>
-        /// Equals
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public override bool Equals(object obj) {
-            if(obj is T)
+        public override bool Equals(object? obj)
+        {
+            if (obj is not T vo)
             {
-                var vo = (T)obj;
-                return EqualsCore(vo);
-            } 
-            return false;
-           
+                return false;
+            }
+            return EqualsCore(vo);
         }
 
-        /// <summary>
-        /// ==
-        /// </summary>
-        /// <param name="vo1"></param>
-        /// <param name="vo2"></param>
-        /// <returns></returns>
         public static bool operator ==(ValueObject<T> vo1,
             ValueObject<T> vo2) {
             return Equals(vo1, vo2);
         }
 
-        /// <summary>
-        /// !=
-        /// </summary>
-        /// <param name="vo1"></param>
-        /// <param name="vo2"></param>
-        /// <returns></returns>
         public static bool operator !=(ValueObject<T> vo1,
            ValueObject<T> vo2) {
             return !Equals(vo1, vo2);
         }
 
-        /// <summary>
-        /// ToString
-        /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
-        protected abstract bool EqualsCore(T other);
         public override string ToString() {
             return base.ToString()??String.Empty;
         }
 
-        /// <summary>
-        /// GetHashCode
-        /// </summary>
-        /// <returns></returns>
         public override int GetHashCode() {
             return base.GetHashCode();
         }
+
+        protected abstract bool EqualsCore(T other);
     }
 }
