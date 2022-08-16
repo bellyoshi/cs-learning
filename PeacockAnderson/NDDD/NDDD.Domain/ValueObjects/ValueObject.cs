@@ -7,13 +7,8 @@
     public abstract class ValueObject<T> where T : ValueObject<T> {
 
         public override bool Equals(object? obj)
-        {
-            if (obj is not T vo)
-            {
-                return false;
-            }
-            return EqualsCore(vo);
-        }
+            => obj is T vo ? EqualsCore(vo) : false;
+        
 
         public static bool operator ==(ValueObject<T> vo1,
             ValueObject<T> vo2) {

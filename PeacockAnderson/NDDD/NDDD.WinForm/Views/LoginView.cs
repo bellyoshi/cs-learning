@@ -2,22 +2,16 @@
 
 namespace NDDD.WinForm.Views {
 
-    /// <summary>
-    /// ログイン画面
-    /// </summary>
     public partial class LoginView : BaseForm {
 
-        /// <summary>
-        /// コンストラクター
-        /// </summary>
         public LoginView() {
             InitializeComponent();
         }
 
         /// <summary>
         /// ログインId
-        /// 実際はViewModelに書く
-        /// IDチェックやら何やかんや
+        /// todo:実際はViewModelに書く
+        /// todo:IDチェックやら何やかんや
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -27,6 +21,7 @@ namespace NDDD.WinForm.Views {
             
             // LatestViewの表示
             using (var f = new LatestView()) {
+                //todo dispacher
                 f.ShowDialog();
             }
         }
