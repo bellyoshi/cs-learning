@@ -1,4 +1,4 @@
-﻿//using NDDD.Domain.ValueObjects;
+﻿using NDDD.Domain.ValueObjects;
 
 
 namespace NDDD.Domain.Entities; 
@@ -19,42 +19,15 @@ public sealed class MeasureEntity {
     public MeasureEntity(
         int areaId,
         DateTime measureDate,
-        float measureValue) {
-
-        // ID
-        // 非DDDの考え方
-         AreaId = areaId;
-        // DDDの考え方
-        // ValueObject化する（クラス）
-        //AreaId = new AreaId(areaId);
-
-        MeasureDate = measureDate;
-        //MeasureDate = new MeasureDate(measureDate);
-
-         MeasureValue = measureValue;
-        //MeasureValue = new MeasureValue (measureValue);
-    
+        float measureValue) 
+    {
+        AreaId = new AreaId(areaId);
+        MeasureDate = new MeasureDate(measureDate);
+        MeasureValue = new MeasureValue (measureValue);
     }
 
-    // ID
-    // 非DDDの考え方
-     public int AreaId { get; }
-    // DDDの考え方
-    // ValueObject化する（クラス）
-    //public AreaId AreaId { get; }
-
-    // 計測日
-    // 非DDDの考え方
-    public DateTime MeasureDate { get; }
-    // DDDの考え方
-    // ValueObject化する（クラス）
-   // public MeasureDate MeasureDate { get; }
-
-    // 計測値
-    // 非DDDの考え方
-    public float MeasureValue { get; }
-    // DDDの考え方
-    // ValueObject化する（クラス）
-   // public MeasureValue MeasureValue { get; }
+    public AreaId AreaId { get; }
+    public MeasureDate MeasureDate { get; }
+    public MeasureValue MeasureValue { get; }
 
 }
