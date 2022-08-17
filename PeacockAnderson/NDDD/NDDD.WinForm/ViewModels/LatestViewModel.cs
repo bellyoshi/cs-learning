@@ -24,7 +24,7 @@ namespace NDDD.WinForm.ViewModels
 
         public LatestViewModel(IMeasureRepository measureRepository)
         {
-            this._measureRepository=measureRepository;
+            this._measureRepository= new MeasureRepository(measureRepository);
         }
 
         public string AreaIdText { 
