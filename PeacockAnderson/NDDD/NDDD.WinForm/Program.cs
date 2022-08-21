@@ -12,7 +12,7 @@ namespace NDDD.WinForm
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             ConfigurationReader.Initialize();
-            Application.Run(new Views.LoginView());
+            Application.Run(FormDispacher.Context);
         }
     }
 }

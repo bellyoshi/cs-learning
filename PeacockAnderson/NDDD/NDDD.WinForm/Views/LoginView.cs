@@ -18,12 +18,9 @@ namespace NDDD.WinForm.Views {
         private void LoginButton_Click(object sender, System.EventArgs e) {
 
             CurrentUser.LoginId = LoginTextBox.Text;
-            
-            // LatestViewの表示
-            using (var f = new LatestView()) {
-                //todo dispacher
-                f.ShowDialog();
-            }
+
+            FormDispacher.ShowLatest();
+            this.Close();
         }
     }
 }
