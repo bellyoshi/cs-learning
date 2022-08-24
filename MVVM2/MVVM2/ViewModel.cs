@@ -1,5 +1,4 @@
-﻿using Reactive.Bindings;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -9,19 +8,21 @@ using System.Reactive.Linq;
 
 namespace MVVM2;
 
-public class ViewModel : INotifyPropertyChanged
+public class ViewModel : ViewModelBase
 {
     public event PropertyChangedEventHandler PropertyChanged;
-    public ReactiveProperty<int> Counter { get; } = new ReactiveProperty<int>();
-
-    public ReactiveCommand UpCommand { get; private set; }
-    public ReactiveCommand DownCommand { get; private set; }
+    public int Counter { get; set; } 
+    
+    public Command UpCommand { get; private set; }
+    public Command DownCommand { get; private set; }
 
     public ViewModel()
     {
-        UpCommand = Counter.Select(_ => Counter.Value < 10).ToReactiveCommand();
-        UpCommand.Subscribe(() => Counter.Value++);
-        DownCommand = Counter.Select(_ => Counter.Value > 0).ToReactiveCommand();
-        DownCommand.Subscribe(() => Counter.Value--);
+        var observeCounter = PropertySetter.ObserveChanged(nameof(Counter));
+
+        UpCommand = observeCounter.Select(_ => Counter < 10).ToCommand(() => Counter++);
+        DownCommand = observeCounter.Select(_ => Counter > 0).ToCommand(() => Counter--);
+        
+ 
     }
 }

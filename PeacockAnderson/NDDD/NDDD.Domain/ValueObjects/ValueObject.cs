@@ -1,31 +1,50 @@
-﻿namespace NDDD.Domain.ValueObjects {
+﻿namespace NDDD.Domain.ValueObjects
+{
 
     /// <summary>
     /// ValueObjec基底抽象クラス
     /// イコール問題の対応
     /// </summary>
-    public abstract class ValueObject<T> where T : ValueObject<T> {
+    public abstract class ValueObject
+    {
+        protected static bool EqualOperator(ValueObject left, ValueObject right)
+        {
+            if (ReferenceEquals(left, null) ^ ReferenceEquals(right, null))
+            {
+                return false;
+            }
+            return ReferenceEquals(left, right) || left.Equals(right);
+        }
+
+        protected static bool NotEqualOperator(ValueObject left, ValueObject right)
+        {
+            return !(EqualOperator(left, right));
+        }
+
+        protected abstract IEnumerable<object> GetEqualityComponents();
 
         public override bool Equals(object? obj)
-            => obj is T vo ? EqualsCore(vo) : false;
-        
+        {
+            if (obj is null || obj.GetType() != GetType())
+            {
+                return false;
+            }
 
-        public static bool operator ==(ValueObject<T> vo1, ValueObject<T> vo2) 
+            var other = (ValueObject)obj;
+
+            return this.GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
+        }
+        public static bool operator ==(ValueObject vo1, ValueObject vo2)
             => Equals(vo1, vo2);
-        
 
-        public static bool operator !=(ValueObject<T> vo1, ValueObject<T> vo2) 
+
+        public static bool operator !=(ValueObject vo1, ValueObject vo2)
             => !Equals(vo1, vo2);
-
-
-        //public override string ToString() 
-        //    => base.ToString()??String.Empty;
-
-
         public override int GetHashCode()
-            => base.GetHashCode();
-
-
-        protected abstract bool EqualsCore(T other);
+        {
+            return GetEqualityComponents()
+                .Select(x => x != null ? x.GetHashCode() : 0)
+                .Aggregate((x, y) => x ^ y);
+        }
     }
 }
