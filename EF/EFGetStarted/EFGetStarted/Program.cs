@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-
+using EFGetStarted.Model;
 using var db = new BloggingContext();
 
 // Note: This sample requires the database to be created before running.
@@ -13,6 +13,7 @@ db.SaveChanges();
 
 // Read
 Console.WriteLine("Querying for a blog");
+System.Diagnostics.Debug.Assert(db.Blogs is not null);
 var blog = db.Blogs
     .OrderBy(b => b.BlogId)
     .First();
@@ -20,11 +21,15 @@ var blog = db.Blogs
 // Update
 Console.WriteLine("Updating the blog and adding a post");
 blog.Url = "https://devblogs.microsoft.com/dotnet";
-blog.Posts.Add(
-    new Post { Title = "Hello World", Content = "I wrote an app using EF Core!" });
+blog.Posts.AddRange(new Post[]{ 
+    new Post { Title = "Hello World", Content = "I wrote an app using EF Core!" },
+    new Post { Title = "This is Basic", Content = "I like N88BASIC."}
+    }
+);
+
 db.SaveChanges();
 
 // Delete
-Console.WriteLine("Delete the blog");
-db.Remove(blog);
-db.SaveChanges();
+//Console.WriteLine("Delete the blog");
+//db.Remove(blog);
+//db.SaveChanges();
