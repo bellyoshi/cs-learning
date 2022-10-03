@@ -18,7 +18,7 @@ namespace NDDD.Domain.ValueObjects {
     /// クラスは参照型なので、同じ値で比較してイコールにならない（アドレス比較のため）
     /// 解決のためValueObject基底抽象クラスを継承してEqualsCoreを実装する
     /// </summary>
-    public sealed class AreaId:ValueObject<AreaId> {
+    public sealed class AreaId:ValueObject {
        
         /// <summary>
         /// コンストラクタ
@@ -30,19 +30,15 @@ namespace NDDD.Domain.ValueObjects {
         // getのみ
         public int Value { get; }
 
-        /// <summary>
-        /// イコールイコール問題解消
-        /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
-        protected override bool EqualsCore(AreaId other) {
-            return this.Value == other.Value;
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Value;
         }
 
         // 表示する項目
         // ビジネスロジック処理があればここに書く
         // この例は、表示の制御（4桁表示）
-        public string DisplayValue => Value.ToString().PadLeft(3, '0');
+        public string DisplayValue => Value.ToString().PadLeft(4, '0');
 
 
     }

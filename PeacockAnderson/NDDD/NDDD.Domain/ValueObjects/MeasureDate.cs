@@ -11,7 +11,7 @@ namespace NDDD.Domain.ValueObjects {
     /// クラスは参照型なので、同じ値で比較してイコールにならない（アドレス比較のため）
     /// 解決のためValueObject基底抽象クラスを継承してEqualsCoreを実装する
     /// </summary>
-    public sealed class MeasureDate : ValueObject<MeasureDate> {
+    public sealed class MeasureDate : ValueObject {
        
         /// コンストラクタ 
         public MeasureDate(DateTime value) {
@@ -22,12 +22,9 @@ namespace NDDD.Domain.ValueObjects {
         public DateTime Value { get; }
 
         /// <summary>
-        /// イコールイコール問題解消
-        /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
-        protected override bool EqualsCore(MeasureDate other) {
-            return this.Value == other.Value;
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Value;
         }
 
         // 表示する項目

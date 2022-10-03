@@ -3,7 +3,7 @@
 
 namespace NDDD.Infrastructure.Fake
 {
-    public class FakeValueObject : ValueObject<FakeValueObject>
+    public class FakeValueObject : ValueObject
     {
         int Value { get; }
         public FakeValueObject(int value)
@@ -11,9 +11,9 @@ namespace NDDD.Infrastructure.Fake
             this.Value = value;
         }
 
-        protected override bool EqualsCore(FakeValueObject other)
+        protected override IEnumerable<object> GetEqualityComponents()
         {
-            return this.Value == other.Value;
+            yield return Value;
         }
     }
     
