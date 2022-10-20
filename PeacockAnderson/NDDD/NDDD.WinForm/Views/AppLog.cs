@@ -6,21 +6,20 @@ using System.Threading.Tasks;
 
 namespace NDDD.WinForm.Views
 {
-    internal class AppLog : ILog
+    internal class AppLog 
     {
-        static AppLog applog = new AppLog();
-        internal static ILog GetLogger() => applog;
+        static AppLog logger = new AppLog();
 
         //private static log4net.ILog _logger =
         //    log4net.LogManager.GetLogger(
         //        System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public void Error(Exception ex)
+        public static void Error(Exception ex)
         {
             //logger.Error(ex.Message, ex);
         }
 
-        public void Info(string msg)
+        public static void Info(string msg)
         {
             //logger.Info(ex.Message, ex);
         }
