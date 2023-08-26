@@ -7,22 +7,27 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="Violet"></Setter>
+        </Style>
+        <Style x:Key="Large" TargetType="Button">
+            <Setter Property="Width" Value="200"></Setter>
+            <Setter Property="FontSize" Value="50"></Setter>
+        </Style>
+        <Style x:Key="Small" TargetType="Button">
+
+            <Setter Property="Width" Value="100"></Setter>
+            <Setter Property="FontSize" Value="35"></Setter>
+        </Style>
+    </Page.Resources>
 
     <Grid>
         <StackPanel>
-            <Button Content="Yes"></Button>
-            <Button Content="No"></Button>
-            <TextBlock> Hello World</TextBlock>
-            <Button>Click Me</Button>
-            <TextBlock FontSize="50">Click Me!</TextBlock>
-            <Button x:Name="MyButton" Foreground="White">
-                <Button.Background>Red</Button.Background>
-                <TextBlock FontSize="50">Click Me!</TextBlock>
-            </Button>
-
-            <Button Background="Red">Hello</Button>
-            <Button Background="Green">World</Button>
-            <Button Background="Blue">XAML</Button>
+           
+            <Button Style="{StaticResource Large}"  Background="Red">Hello</Button>
+            <Button Style="{StaticResource Large}" Background="Green"  >World</Button>
+            <Button Style="{StaticResource Small}" Background="Blue" >XAML</Button>
         </StackPanel>
 
     </Grid>
