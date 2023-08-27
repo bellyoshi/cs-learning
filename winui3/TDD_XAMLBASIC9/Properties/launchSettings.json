@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "TDD_XAMLBASIC9 (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "TDD_XAMLBASIC9 (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
