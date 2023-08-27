@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "TDD_Jumper (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "TDD_Jumper (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
