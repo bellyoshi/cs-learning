@@ -30,7 +30,16 @@ namespace TDD_XAMLBASIC9
 
         private void myButton_Click(object sender, RoutedEventArgs e)
         {
-            myButton.Content = "Clicked";
+            int? total = TryParseToInt(Value0.Text) + TryParseToInt(Value1.Text);
+            Result.Text = total.ToString();
+        }
+
+        private int? TryParseToInt(string value)
+        {
+            int num;
+            if(int.TryParse(value, out num))
+                return (int)num;
+            return null;
         }
     }
 }

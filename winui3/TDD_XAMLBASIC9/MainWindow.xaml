@@ -9,6 +9,10 @@
     mc:Ignorable="d">
 
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button x:Name="myButton" Click="myButton_Click">Click Me</Button>
+        <TextBox x:Name="Value0"/>
+        <TextBlock>+</TextBlock>
+        <TextBox x:Name="Value1"/>
+        <Button Click="myButton_Click">=</Button>
+        <TextBox x:Name="Result"/>
     </StackPanel>
 </Window>
