@@ -45,7 +45,7 @@ namespace TDD_Jumper
         {
             if (e.Key == VirtualKey.Space && stickY == 200)
             {
-                speed = -20;
+                speed = -15;
             }
         }
 
@@ -82,15 +82,15 @@ namespace TDD_Jumper
 
         private void BoxUpdate()
         {
-            boxX = (boxX > -100) ? boxX - 5 : 600;
+            boxX = (boxX > -100) ? boxX - 10 : 600;
             Box.SetValue(Canvas.TopProperty, 300);
             Box.SetValue(Canvas.LeftProperty, boxX);
         }
 
         private void StickmanUpdate()
         {
-            StickmanCounter = (StickmanCounter + 1) % (images.Length * 2);
-            Stickman.Source = images[StickmanCounter / 2];
+            StickmanCounter = (StickmanCounter + 1) % (images.Length );
+            Stickman.Source = images[StickmanCounter ];
 
             speed += 1;
             stickY += speed;
