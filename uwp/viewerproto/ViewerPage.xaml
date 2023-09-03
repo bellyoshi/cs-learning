@@ -9,6 +9,11 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button x:Name="myButton" Click="MyButton_Click">ファイル選択</Button>
+            <Button x:Name="PreviousButton" Click="PreviousButton_Click">前へ</Button>
+            <Button x:Name="NextButton" Click="NextButton_Click">次へ</Button>
+            <Image x:Name="imgPdf"></Image>
+        </StackPanel>
     </Grid>
 </Page>

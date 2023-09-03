@@ -38,16 +38,7 @@ namespace viewerproto
                 await CoreApplication.CreateNewView().Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                 {
                     _subWindowApplicationView = ApplicationView.GetForCurrentView();
-                    Window.Current.Content = new Page
-                    {
-                        Content = new TextBlock
-                        {
-                            FontSize = 36,
-                            Text = "Dummy",
-                            HorizontalAlignment = HorizontalAlignment.Center,
-                            VerticalAlignment = VerticalAlignment.Center,
-                        },
-                    };
+                    Window.Current.Content = new ViewerPage();
                     Window.Current.Activate();
                 });
             }
