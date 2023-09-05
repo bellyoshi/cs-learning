@@ -18,10 +18,10 @@ public class Customer
         string result = $"Rental Record for {Name}\n";
         foreach(Rental each in rentals)
         {
-            result += "\t" + each.Title +"\t" + each.getCharge() + "\n";
+            result += $"\t{each.Title}\t{each.getCharge()}\n";
         }
-        result += "Amount owed in " + getTotalCharge() + "\n";
-        result += "You earned " + getTotalFrequentRentalPoints() + " frequent renter points";
+        result += $"Amount owed in {getTotalCharge()}\n";
+        result += $"You earned {getTotalFrequentRentalPoints()} frequent renter points";
         return result;
     }
 
