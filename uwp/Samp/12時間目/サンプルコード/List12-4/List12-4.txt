@@ -1,0 +1,15 @@
+Windows.Storage.StorageFile file = await picker.PickSingleFileAsync();
+Windows.Data.Pdf.PdfDocument pdfDocument = null;
+
+if (file != null)
+{
+    try
+    {
+        // PDFÉtÉ@ÉCÉãÇì«Ç›çûÇﬁ
+        pdfDocument = await Windows.Data.Pdf.PdfDocument.LoadFromFileAsync(file);
+    }
+    catch
+    {
+
+    }
+}

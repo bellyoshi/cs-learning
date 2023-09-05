@@ -1,0 +1,1 @@
+インスタンス名.FileTypeFilter.Add(".txt");

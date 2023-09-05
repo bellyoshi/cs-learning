@@ -1,0 +1,1 @@
+await Windows.Storage.FileIO.WriteTextAsync(PickSaveFileAsync()メソッドの戻り値, 保存するテキスト);

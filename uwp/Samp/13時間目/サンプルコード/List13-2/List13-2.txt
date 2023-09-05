@@ -1,0 +1,2 @@
+var attributes = new InkDrawingAttributes();
+attributes.Color = Windows.UI.Colors.Red;     // ペンの色（赤）

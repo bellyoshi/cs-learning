@@ -1,0 +1,2 @@
+var attributes = new InkDrawingAttributes();
+attributes.IgnorePressure = true;	// ƒyƒ“‚Ìˆ³—Í‚ðŽg—p‚·‚é

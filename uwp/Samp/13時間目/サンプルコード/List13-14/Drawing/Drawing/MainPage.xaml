@@ -1,0 +1,67 @@
+﻿<Page
+    x:Class="Drawing.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Drawing"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <!-- Gridを2行に分ける-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <!-- 1行目にStackPanelを配置 -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            
+            <!-- [開く]ボタン -->
+            <Button x:Name="btnOpen" Margin="10,0,0,0" ToolTipService.ToolTip="開く">
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE197;" />
+            </Button>
+
+            <!-- [保存]ボタン -->
+            <Button x:Name="btnSave" Margin="2,0,0,0" ToolTipService.ToolTip="保存">
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE105;" />
+            </Button>
+
+            <!-- ペン先選択-->
+            <TextBlock Text="ペン先" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <ComboBox x:Name="cmbPenStyle" Margin="10,0,0,0"  Width="80" SelectedIndex="0" SelectionChanged="cmbPenStyle_SelectionChanged">
+                <ComboBoxItem Content="●" />
+                <ComboBoxItem Content="■" />
+            </ComboBox>
+ 
+            <!-- ペンの色 -->
+            <TextBlock Text="ペンの色" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <ComboBox x:Name="cmbPenColors" Margin="10,0,0,0"  Width="120" SelectionChanged="cmbPenColors_SelectionChanged" />
+
+            <!-- ペンの太さ -->
+            <TextBlock Text="ペンの太さ" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <ComboBox x:Name="cmbPenSize" Margin="10,0,0,0"  Width="80" SelectedIndex="0">
+                <ComboBoxItem Content="極細" />
+                <ComboBoxItem Content="細い" />
+                <ComboBoxItem Content="普通" />
+                <ComboBoxItem Content="太" />
+                <ComboBoxItem Content="極太" />
+            </ComboBox>
+
+            <!-- [消しゴム]ボタン -->
+            <ToggleButton x:Name="tglEraser" Margin="10,0,0,0" >
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xED60;" />
+            </ToggleButton>
+
+            <!-- [削除]ボタン -->
+            <Button x:Name="btnClear" Margin="2,0,0,0" ToolTipService.ToolTip="削除">
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE107;" />
+            </Button>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1">
+            <InkCanvas x:Name="inkCanvas" />
+        </ScrollViewer>
+    </Grid>
+</Page>

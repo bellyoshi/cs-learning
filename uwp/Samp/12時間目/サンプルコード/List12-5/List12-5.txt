@@ -1,0 +1,15 @@
+// 1ページ目を読み込む
+using (Windows.Data.Pdf.PdfPage page = pdfDocument.GetPage(0))
+{
+    // 描画データ書き込み用のストリームを作成
+    var stream = new Windows.Storage.Streams.InMemoryRandomAccessStream();
+    await page.RenderToStreamAsync(stream);
+
+    Windows.UI.Xaml.Media.Imaging.BitmapImage src = new Windows.UI.Xaml.Media.Imaging.BitmapImage();
+
+    // Imageオブジェクトにsrcをセット
+    imgPdf.Source = src;
+
+    //作成したビットマップイメージを設定する
+    await src.SetSourceAsync(stream);
+}

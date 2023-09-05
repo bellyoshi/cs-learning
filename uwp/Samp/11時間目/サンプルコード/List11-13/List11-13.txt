@@ -1,0 +1,16 @@
+private void btnCopy_Click(object sender, RoutedEventArgs e)
+{
+	DataPackage dtPkg = new DataPackage();
+
+	// クリップボード操作をコピーにする
+	dtPkg.RequestedOperation = DataPackageOperation.Copy;
+
+	// txtMemoで選択されているテキストをクリップボードにセットする
+	dtPkg.SetText(txtMemo.SelectedText);
+
+	// クリップボードにデータをセットする
+	Clipboard.SetContent(dtPkg);
+
+	// 再度txtMemoにフォーカスを当てる
+	txtMemo.Focus(FocusState.Programmatic);
+}
