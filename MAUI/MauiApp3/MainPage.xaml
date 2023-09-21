@@ -9,24 +9,16 @@
             Padding="30,0"
             VerticalOptions="Center">
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
-
             <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
-
+                Text="Hello World" FontSize="32" HorizontalTextAlignment="Center"/>
             <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
+                Text="ようこそ.NET MAUIの世界へ" FontSize="24" HorizontalTextAlignment="Center"/>
+            <Label FontSize="32">坊ちゃん</Label>
+            <Label FontSize="24">夏目漱石</Label>
+            <Label>
+                親譲りの無鉄砲子供の時から損ばかりしている。小学校に・・・
+            </Label>
+
 
             <Button
                 x:Name="CounterBtn"
@@ -34,6 +26,11 @@
                 SemanticProperties.Hint="Counts the number of times you click"
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Center" />
+
+
+            <Label x:Name="Message"></Label>
+            <Button Text="現在時刻"  Clicked="OnDateTimeClicked"/>
+            <Entry Placeholder="＜プレイスホルダー＞"/>
 
         </VerticalStackLayout>
     </ScrollView>

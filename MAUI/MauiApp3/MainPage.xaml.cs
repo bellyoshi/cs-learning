@@ -9,6 +9,7 @@ namespace MauiApp3
         public MainPage()
         {
             InitializeComponent();
+            Message.Text = "わははのは！";
         }
 
         private void OnCounterClicked(object sender, EventArgs e)
@@ -26,6 +27,11 @@ namespace MauiApp3
             // Get display size
 
 
+        }
+
+        private void OnDateTimeClicked(object sender, EventArgs e)
+        {
+            Message.Text = DateTime.Now.ToString();
         }
     }
 }
