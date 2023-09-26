@@ -1,24 +1,20 @@
-﻿namespace UiEntry
+﻿namespace UiEntry;
+
+public partial class MainPage : ContentPage
 {
-    public partial class MainPage : ContentPage
+    int count = 0;
+
+    public MainPage()
     {
-        int count = 0;
+        InitializeComponent();
+    }
 
-        public MainPage()
-        {
-            InitializeComponent();
-        }
 
-        private void OnCounterClicked(object sender, EventArgs e)
-        {
-            count++;
+    private void OnClickCommit(object sender, EventArgs e)
+    {
+        string name = NameText.Text;
+        string address = AddressText.Text;
+        MessageLabel.Text = $"{name} in {address}";
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
-        }
     }
 }
