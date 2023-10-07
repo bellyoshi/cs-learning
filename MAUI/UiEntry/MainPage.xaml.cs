@@ -14,7 +14,7 @@ public partial class MainPage : ContentPage
     {
         string name = NameText.Text;
         string address = AddressText.Text;
-        MessageLabel.Text = $"{name} in {address}";
+        MessageLabel.Text = $"{name} in {address} ";
 
     }
 }
