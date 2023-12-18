@@ -1,0 +1,28 @@
+﻿<Window x:Class="ListReactiveProperty.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ListReactiveProperty"
+        xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:rp="clr-namespace:Reactive.Bindings.Interactivity;assembly=ReactiveProperty.WPF"
+        
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        >
+    <StackPanel>
+
+
+
+        <Button Content="Check in">
+            <behaviors:Interaction.Triggers>
+                <behaviors:EventTrigger EventName="Click">
+                    <rp:EventToReactiveCommand Command="{Binding CheckInCommand}">
+                        <local:FileOpenReactiveConverter  />
+                    </rp:EventToReactiveCommand>
+                </behaviors:EventTrigger>
+            </behaviors:Interaction.Triggers>
+        </Button>
+        <ListBox ItemsSource="{Binding CheckInLog}"></ListBox>
+    </StackPanel>
+</Window>
