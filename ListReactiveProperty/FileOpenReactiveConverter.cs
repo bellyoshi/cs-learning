@@ -20,8 +20,8 @@ internal class FileOpenReactiveConverter : ReactiveConverter<RoutedEventArgs, st
             var dialog = new Microsoft.Win32.OpenFileDialog
             {
                 FileName = "Document", // Default file name
-                DefaultExt = ".txt", // Default file extension
-                Filter = "Text documents (.txt)|*.txt" // Filter files by extension
+                DefaultExt = ".pdf", // Default file extension
+                Filter = ViewerBy2ndLib.FileTypes.CreateFilter(), // Default file extension
             };
 
             // Show open file dialog box
