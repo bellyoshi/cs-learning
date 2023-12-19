@@ -9,15 +9,15 @@ namespace ViewerBy2ndLib
     {
 
         /// 開ける動画の拡張子
-        static readonly string[] movieExts = { "avi", "mpeg", "mp4", "wmv", "mov" };
+        static readonly string[] movieExts = ["avi", "mpeg", "mp4", "wmv", "mov"];
 
         // 開ける画像の拡張子
-        static readonly string[] ImageExts = { "jpeg", "jpg", "bmp", "png", "gif", "tiff", "tif" };
+        static readonly string[] ImageExts = ["jpeg", "jpg", "bmp", "png", "gif", "tiff", "tif"];
 
-        static readonly string[] SVGExts = { "svg" };
+        static readonly string[] SVGExts = ["svg"];
 
         // PDFの拡張子
-        static readonly string[] PDFExts = { "pdf" };
+        static readonly string[] PDFExts = ["pdf"];
 
         //FileTypeEnum fileType;
 
@@ -52,29 +52,29 @@ namespace ViewerBy2ndLib
             var buf = new System.Text.StringBuilder();
             buf.Append("画像ファイル");
             buf.Append('|');
-            buf.Append(CreateExtsOfFilter(ImageExts));
+            buf.Append(CreateExtentionsOfFilter(ImageExts));
             buf.Append('|');
             buf.Append("動画ファイル");
             buf.Append('|');
-            buf.Append(CreateExtsOfFilter(movieExts));
+            buf.Append(CreateExtentionsOfFilter(movieExts));
             buf.Append('|');
             buf.Append("SVGファイル");
             buf.Append('|');
-            buf.Append(CreateExtsOfFilter(SVGExts));
+            buf.Append(CreateExtentionsOfFilter(SVGExts));
             buf.Append('|');
             buf.Append("PDFファイル");
             buf.Append('|');
-            buf.Append(CreateExtsOfFilter(PDFExts));
+            buf.Append(CreateExtentionsOfFilter(PDFExts));
             buf.Append('|');
             buf.Append("All Supported Files");
             buf.Append('|');
-            buf.Append(CreateExtsOfFilter(PDFExts));
+            buf.Append(CreateExtentionsOfFilter(PDFExts));
             buf.Append(';');
-            buf.Append(CreateExtsOfFilter(ImageExts));
+            buf.Append(CreateExtentionsOfFilter(ImageExts));
             buf.Append(';');
-            buf.Append(CreateExtsOfFilter(movieExts));
+            buf.Append(CreateExtentionsOfFilter(movieExts));
             buf.Append(';');
-            buf.Append(CreateExtsOfFilter(SVGExts));
+            buf.Append(CreateExtentionsOfFilter(SVGExts));
             buf.Append('|');
             buf.Append("All Files(*.*)");
             buf.Append('|');
@@ -83,7 +83,7 @@ namespace ViewerBy2ndLib
             return buf.ToString();
     }
 
-        static  string CreateExtsOfFilter(string[] exts) {
+        static  string CreateExtentionsOfFilter(string[] exts) {
             var buf = new System.Text.StringBuilder();
             Debug.Assert(exts.Length > 0);
             AppendExt(buf, exts[0]);

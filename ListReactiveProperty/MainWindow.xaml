@@ -14,15 +14,18 @@
 
 
 
-        <Button Content="Check in">
+        <Button Content="Append File">
             <behaviors:Interaction.Triggers>
                 <behaviors:EventTrigger EventName="Click">
-                    <rp:EventToReactiveCommand Command="{Binding CheckInCommand}">
+                    <rp:EventToReactiveCommand Command="{Binding AppendFile}">
                         <local:FileOpenReactiveConverter  />
                     </rp:EventToReactiveCommand>
                 </behaviors:EventTrigger>
             </behaviors:Interaction.Triggers>
         </Button>
-        <ListBox ItemsSource="{Binding CheckInLog}"></ListBox>
+        <ListBox ItemsSource="{Binding FilesList}"
+                 SelectedItem="{Binding SelectedImagePath.Value}">
+        </ListBox>
+        <Image Source="{Binding SelectedImagePath.Value}"></Image>
     </StackPanel>
 </Window>

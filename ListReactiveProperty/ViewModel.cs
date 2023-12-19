@@ -12,17 +12,18 @@ namespace ListReactiveProperty
 {
     internal class ViewModel
     {
-        public ObservableCollection<string> CheckInLog { get; } = [];
-        public ReactiveCommand<string> CheckInCommand { get; } = new();
+        public ObservableCollection<FileViewParam> FilesList { get; } = [];
+        public ReactiveCommand<string> AppendFile { get; } = new();
         public ReadOnlyReactiveProperty<string?> FileName { get; }
 
+        public ReactiveProperty<string> SelectedImagePath { get; } = new();
         public ViewModel()
         {
-            this.FileName = CheckInCommand.ToReadOnlyReactiveProperty();
-            CheckInCommand.Subscribe(name =>
+            this.FileName = AppendFile.ToReadOnlyReactiveProperty();
+            AppendFile.Subscribe(name =>
             {
                 if (string.IsNullOrEmpty(name)) return;
-                CheckInLog.Add(name);
+                FilesList.Add(new(name));
             });
         }
 
