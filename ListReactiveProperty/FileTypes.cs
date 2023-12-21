@@ -21,11 +21,12 @@ namespace ViewerBy2ndLib
 
         //FileTypeEnum fileType;
 
-        public string extention;
 
 
-        bool IsContain(string[] exts)
+
+        static bool IsContain(string filename, string[] exts)
         {
+            var extention = System.IO.Path.GetExtension(filename);
             foreach (var target in exts)
             {
                 if (String.Compare($".{target}", extention, true) == 0)
@@ -34,19 +35,15 @@ namespace ViewerBy2ndLib
             return false;
         }
 
-        public bool IsImageExt
-             => IsContain(ImageExts);
-        public bool IsMovieExt
-             => IsContain(movieExts);
-        public bool IsSVGExt
-            => IsContain(SVGExts);
-        public bool IsPDFExt
-            => IsContain(PDFExts);
+        static public bool IsImageExt(string filename)
+             => IsContain(filename, ImageExts);
+        static public bool IsMovieExt(string filename)
+             => IsContain(filename, movieExts);
+        static public bool IsSVGExt(string filename)
+            => IsContain(filename, SVGExts);
+        static public bool IsPDFExt(string filename)
+            => IsContain(filename, PDFExts);
 
-        public FileTypes(string filename)
-        {
-            this.extention = System.IO.Path.GetExtension(filename);
-        }
         static public string CreateFilter()
         {
             var buf = new System.Text.StringBuilder();

@@ -27,5 +27,6 @@
                  SelectedItem="{Binding SelectedImagePath.Value}">
         </ListBox>
         <Image Source="{Binding SelectedImagePath.Value}"></Image>
+        <Image Source="{Binding ImageSource.Value}"></Image>
     </StackPanel>
 </Window>

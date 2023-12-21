@@ -8,7 +8,7 @@ namespace ListReactiveProperty
 {
     internal class FileViewParam
     {
-        string filename { get; set; }
+        public string filename { get; set; }
         public FileViewParam(string filename)
         {
             this.filename = filename;

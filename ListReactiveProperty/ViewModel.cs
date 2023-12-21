@@ -17,6 +17,9 @@ namespace ListReactiveProperty
         public ReadOnlyReactiveProperty<string?> FileName { get; }
 
         public ReactiveProperty<string> SelectedImagePath { get; } = new();
+
+        public ReactiveProperty<System.Windows.Media.Imaging.BitmapSource> ImageSource { get; } = new(); 
+
         public ViewModel()
         {
             this.FileName = AppendFile.ToReadOnlyReactiveProperty();
@@ -24,6 +27,12 @@ namespace ListReactiveProperty
             {
                 if (string.IsNullOrEmpty(name)) return;
                 FilesList.Add(new(name));
+            });
+
+            SelectedImagePath.Subscribe(path =>
+            {
+                if (string.IsNullOrEmpty(path)) return;
+                ImageSource.Value = ImageCreater.GetImageFromFile(new(path));
             });
         }
 
