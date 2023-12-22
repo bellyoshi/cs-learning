@@ -16,7 +16,7 @@ namespace pdfiumWrapper
         static public BitmapSource GetImage(string filename , int page)
         {
             PdfiumViewer.Core.PdfDocument doc = PdfiumViewer.Core.PdfDocument.Load(filename);
-            Bitmap bitmap = new Bitmap((int)doc.PageSizes[page].Width, (int)doc.PageSizes[page].Height); 
+            Bitmap bitmap = new((int)doc.PageSizes[page].Width, (int)doc.PageSizes[page].Height);
             using (Graphics g = Graphics.FromImage(bitmap))
             {
                 g.FillRectangle(Brushes.White, 0, 0, bitmap.Width, bitmap.Height);
@@ -33,35 +33,22 @@ namespace pdfiumWrapper
             svgDocument.ShapeRendering = SvgShapeRendering.Auto;
             Bitmap bitmap = svgDocument.Draw();
 
-            // Convert the Bitmap to BitmapSource
-            using (MemoryStream memory = new MemoryStream())
-            {
-                bitmap.Save(memory, ImageFormat.Png);
-                memory.Position = 0;
-                BitmapImage bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
-                bitmapImage.StreamSource = memory;
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.EndInit();
-                return bitmapImage;
-            }
+            return ConvertBitmapToBitmapSource(bitmap);
         }
 
-        static  BitmapSource ConvertBitmapToBitmapSource(Bitmap bitmap)
+        static  BitmapImage ConvertBitmapToBitmapSource(Bitmap bitmap)
         {
-            using (MemoryStream stream = new MemoryStream())
-            {
-                bitmap.Save(stream, ImageFormat.Bmp);
+            using var stream = new MemoryStream();
+            bitmap.Save(stream, ImageFormat.Png);
 
-                stream.Position = 0;
-                BitmapImage bitmapImage = new BitmapImage();
-                bitmapImage.BeginInit();
-                bitmapImage.StreamSource = stream;
-                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.EndInit();
+            stream.Position = 0;
+            BitmapImage bitmapImage = new();
+            bitmapImage.BeginInit();
+            bitmapImage.StreamSource = stream;
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+            bitmapImage.EndInit();
 
-                return bitmapImage;
-            }
+            return bitmapImage;
         }
     }
 }
