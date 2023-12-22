@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="PdfiumViewer.Native.x86_64.v8-xfa" Version="2018.4.8.256" />
     <PackageReference Include="PdfiumViewer.WPF" Version="1.0.6" />
+    <PackageReference Include="Svg" Version="3.4.6" />
   </ItemGroup>
 
 </Project>

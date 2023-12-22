@@ -8,7 +8,7 @@ using System.IO.Enumeration;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Media.Imaging;
-
+using Svg;
 namespace pdfiumWrapper
 {
     public class PDFRender
@@ -26,6 +26,27 @@ namespace pdfiumWrapper
 
             return ConvertBitmapToBitmapSource(bitmap);
         }
+
+        public static BitmapSource GetSVGImage(string filename)
+        {
+            SvgDocument svgDocument = SvgDocument.Open(filename);
+            svgDocument.ShapeRendering = SvgShapeRendering.Auto;
+            Bitmap bitmap = svgDocument.Draw();
+
+            // Convert the Bitmap to BitmapSource
+            using (MemoryStream memory = new MemoryStream())
+            {
+                bitmap.Save(memory, ImageFormat.Png);
+                memory.Position = 0;
+                BitmapImage bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.StreamSource = memory;
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.EndInit();
+                return bitmapImage;
+            }
+        }
+
         static  BitmapSource ConvertBitmapToBitmapSource(Bitmap bitmap)
         {
             using (MemoryStream stream = new MemoryStream())

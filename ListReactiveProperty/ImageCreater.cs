@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using Svg;
+using System.Drawing.Imaging;
+using System.Drawing;
+using System.IO;
 using System.Windows.Media.Imaging;
 using ViewerBy2ndLib;
 
@@ -11,6 +14,13 @@ internal class ImageCreater
         if (FileTypes.IsImageExt(viewParam.filename))
         {
             return new BitmapImage(new Uri(viewParam.filename));
+        }else if (FileTypes.IsSVGExt(viewParam.filename))
+        {
+            return pdfiumWrapper.PDFRender.GetSVGImage(viewParam.filename);
+        }
+        else if (FileTypes.IsMovieExt(viewParam.filename))
+        {
+            return null;
         }
         else if (FileTypes.IsPDFExt(viewParam.filename))
         {

@@ -5,7 +5,7 @@ VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListReactiveProperty", "ListReactiveProperty.csproj", "{547E6E5F-1817-4FE2-96D4-F2F23CB9F12D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pdfiumWrapper2", "..\pdfiumWrapper2\pdfiumWrapper2.csproj", "{ACA5FB81-0406-427C-BABC-356F87CC657F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pdfiumWrapper2", "..\pdfiumWrapper2\pdfiumWrapper2.csproj", "{ACA5FB81-0406-427C-BABC-356F87CC657F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
