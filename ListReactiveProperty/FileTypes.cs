@@ -12,9 +12,31 @@ namespace ViewerBy2ndLib
         static readonly string[] movieExts = ["avi", "mpeg", "mp4", "wmv", "mov"];
 
         // 開ける画像の拡張子
-        static readonly string[] ImageExts = ["jpeg", "jpg", "bmp", "png", "gif", "tiff", "tif"];
+        static readonly string[] ImageExts = [
+            "jpg", "jpeg",  // JPEG images
+    "png",           // Portable Network Graphics
+    "gif",           // Graphics Interchange Format
+    "bmp",           // Bitmap
+    "tiff", ".tif",  // Tagged Image File Format
+//    "webp",          // WebP format
+//    "heif", ".heic", // High Efficiency Image File Format
+//    "raw",           // RAW images
+    "cr2",           // Canon RAW format
+//    "nef",           // Nikon Electronic Format
+//    "arw",           // Sony Alpha Raw
+//    "raf",           // Fuji RAW format
+//    "orf",           // Olympus Raw Format
+//    "dng",           // Digital Negative
+//    "rw2",           // Panasonic RAW format
+//    "pef",           // Pentax Electronic Format
+//    "psd",           // Adobe Photoshop Document
+//    "ai",            // Adobe Illustrator Document
+//    "eps",           // Encapsulated PostScript
+//    "indd",          // Adobe InDesign Document
+//×    "xcf"            // GIMP Image File
+];
 
-        static readonly string[] SVGExts = ["svg"];
+    static readonly string[] SVGExts = ["svg"];
 
         // PDFの拡張子
         static readonly string[] PDFExts = ["pdf"];
