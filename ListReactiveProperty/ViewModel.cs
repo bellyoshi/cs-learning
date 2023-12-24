@@ -18,7 +18,9 @@ namespace ListReactiveProperty
 
         public ReactiveProperty<string> SelectedImagePath { get; } = new();
 
-        public ReactiveProperty<System.Windows.Media.Imaging.BitmapSource> ImageSource { get; } = new(); 
+        public ReactiveProperty<System.Windows.Media.Imaging.BitmapSource> ImageSource { get; } = new();
+
+        public ReactiveCommand OpenWindowCommand { get; } = new();
 
         public ViewModel()
         {
@@ -34,8 +36,16 @@ namespace ListReactiveProperty
                 if (string.IsNullOrEmpty(path)) return;
                 ImageSource.Value = ImageCreater.GetImageFromFile(new(path));
             });
+
+            OpenWindowCommand.Subscribe(_ => OpenNewWindow());
         }
 
+        private void OpenNewWindow()
+        {
+            var window = new ViewerWindow();
+            window.DataContext = this;
+            window.Show();
+        }
 
 
     }
