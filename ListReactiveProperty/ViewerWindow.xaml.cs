@@ -11,21 +11,21 @@ namespace ListReactiveProperty
         {
             InitializeComponent();
 
-            PositionWindowOnSecondaryMonitor();
+            //PositionWindowOnSecondaryMonitor();
         }
 
-        private void PositionWindowOnSecondaryMonitor()
-        {
-            var monitors = MonitorInfo.GetMonitors();
-            var secondaryMonitor = monitors[0]; 
-            if (monitors.Count > 1)
-            {
-                secondaryMonitor = monitors[1]; // 例として2番目のモニターを選択
+        //private void PositionWindowOnSecondaryMonitor()
+        //{
+        //    var monitors = MonitorInfo.GetMonitors();
+        //    var secondaryMonitor = monitors[0]; 
+        //    if (monitors.Count > 1)
+        //    {
+        //        secondaryMonitor = monitors[1]; // 例として2番目のモニターを選択
 
-            }
-            this.Left = secondaryMonitor.WorkArea.Left;
-            this.Top = secondaryMonitor.WorkArea.Top;
+        //    }
+        //    this.Left = secondaryMonitor.WorkArea.Left;
+        //    this.Top = secondaryMonitor.WorkArea.Top;
 
-        }
+        //}
     }
 }

@@ -5,7 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ListReactiveProperty"
         mc:Ignorable="d"
-        Title="Window1" Height="450" Width="800">
+        Title="Window1" 
+        Left="{Binding WindowLeft.Value}"
+        Height="{Binding WindowHeight.Value}"
+        Width="{Binding WindowWidth.Value}"
+        Top= "{Binding WomdowTop.Value}">
+    
+
     <Grid>
         <Image Source="{Binding ImageSource.Value}"/>
        

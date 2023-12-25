@@ -43,7 +43,8 @@ namespace ListReactiveProperty
         private void OpenNewWindow()
         {
             var window = new ViewerWindow();
-            window.DataContext = this;
+            var model = new ViewerViewModel(ImageSource);
+            window.DataContext = model;
             window.Show();
         }
 
