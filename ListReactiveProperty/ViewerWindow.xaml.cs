@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Reactive.Bindings;
+using System.Windows;
 
 namespace ListReactiveProperty
 {
@@ -7,8 +8,9 @@ namespace ListReactiveProperty
     /// </summary>
     public partial class ViewerWindow : Window
     {
-        public ViewerWindow()
+        public ViewerWindow(ReactiveProperty<System.Windows.Media.Imaging.BitmapSource> ImageSource)
         {
+            DataContext ??= new ViewerViewModel(ImageSource);
             InitializeComponent();
 
             //PositionWindowOnSecondaryMonitor();

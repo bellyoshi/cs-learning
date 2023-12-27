@@ -9,7 +9,7 @@
         Left="{Binding WindowLeft.Value}"
         Height="{Binding WindowHeight.Value}"
         Width="{Binding WindowWidth.Value}"
-        Top= "{Binding WomdowTop.Value}">
+        Top= "{Binding WindowTop.Value}">
     
 
     <Grid>

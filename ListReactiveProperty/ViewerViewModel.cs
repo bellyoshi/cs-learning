@@ -20,11 +20,11 @@ namespace ListReactiveProperty
         {
             this.ImageSource = ImageSource;
             var monitors = MonitorInfo.GetMonitors();
-            var monitor = monitors[0];
-            WindowTop.Value = monitor.MonitorArea.Top;
-            WindowLeft.Value = monitor.MonitorArea.Left;
-            WindowWidth.Value = monitor.MonitorArea.Right - monitor.MonitorArea.Left;
-            WindowHeight.Value = monitor.MonitorArea.Bottom - monitor.MonitorArea.Top;
+            var MonitorArea = monitors[0].MonitorArea;
+            WindowTop.Value = MonitorArea.Top;
+            WindowLeft.Value = MonitorArea.Left;
+            WindowWidth.Value = MonitorArea.Right - MonitorArea.Left;
+            WindowHeight.Value = MonitorArea.Bottom - MonitorArea.Top;
         }
 
     }
