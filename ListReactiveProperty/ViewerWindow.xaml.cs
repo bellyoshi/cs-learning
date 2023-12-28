@@ -10,10 +10,9 @@ namespace ListReactiveProperty
     {
         public ViewerWindow(ReactiveProperty<System.Windows.Media.Imaging.BitmapSource> ImageSource)
         {
-            //initializeComponentの前にDataContextを設定しなければWindowのサイズが変わらない
-            DataContext ??= new ViewerViewModel(ImageSource);
-            InitializeComponent();
 
+            InitializeComponent();
+            DataContext ??= new ViewerViewModel(ImageSource);
 
         }
 

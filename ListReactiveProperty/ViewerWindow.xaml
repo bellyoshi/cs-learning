@@ -6,14 +6,18 @@
         xmlns:local="clr-namespace:ListReactiveProperty"
         mc:Ignorable="d"
         Title="Window1" 
-        Left="{Binding WindowLeft.Value}"
-        Height="{Binding WindowHeight.Value}"
-        Width="{Binding WindowWidth.Value}"
-        Top= "{Binding WindowTop.Value}">
+        Left="{Binding WindowLeft.Value, Mode=TwoWay}"
+            Height="{Binding WindowHeight.Value, Mode=TwoWay}" MinHeight="{Binding WindowHeight.Value}" MaxHeight="{Binding WindowHeight.Value}"
+Width="{Binding WindowWidth.Value, Mode=TwoWay}" MinWidth="{Binding WindowWidth.Value}" MaxWidth="{Binding WindowWidth.Value}"
+        
+        Top= "{Binding WindowTop.Value, Mode=TwoWay}">
     
 
     <Grid>
         <Image Source="{Binding ImageSource.Value}"/>
-       
+        <TextBlock Text="{Binding Text.Value}"/>
+        <Button Content="Button" Command="{Binding ButtonCommand}"/>
+ 
+
     </Grid>
 </Window>

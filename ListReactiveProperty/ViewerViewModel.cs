@@ -16,6 +16,10 @@ namespace ListReactiveProperty
         public ReactiveProperty<int> WindowWidth { get; } = new();
         public ReactiveProperty<int> WindowHeight { get; } = new();
 
+        public ReactiveCommand ButtomCommand { get; } = new();
+
+        public ReactiveProperty<String > Text { get; } = new();
+
         public ViewerViewModel(ReactiveProperty<System.Windows.Media.Imaging.BitmapSource> ImageSource)
         {
             this.ImageSource = ImageSource;
@@ -25,6 +29,8 @@ namespace ListReactiveProperty
             WindowLeft.Value = MonitorArea.Left;
             WindowWidth.Value = MonitorArea.Right - MonitorArea.Left;
             WindowHeight.Value = MonitorArea.Bottom - MonitorArea.Top;
+
+            ButtomCommand.Subscribe(_ => Text.Value = "Hello World");
         }
 
     }
