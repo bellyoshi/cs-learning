@@ -15,9 +15,7 @@ Width="{Binding WindowWidth.Value, Mode=TwoWay}" MinWidth="{Binding WindowWidth.
 
     <Grid>
         <Image Source="{Binding ImageSource.Value}"/>
-        <TextBlock Text="{Binding Text.Value}"/>
-        <Button Content="Button" Command="{Binding ButtonCommand}"/>
- 
+
 
     </Grid>
 </Window>

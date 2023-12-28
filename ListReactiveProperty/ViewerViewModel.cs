@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Forms;
 
 namespace ListReactiveProperty
 {
@@ -11,27 +13,44 @@ namespace ListReactiveProperty
     {
         public ReactiveProperty<System.Windows.Media.Imaging.BitmapSource> ImageSource { get; }
 
-        public ReactiveProperty<int> WindowTop { get; } = new();
-        public ReactiveProperty<int> WindowLeft { get; } = new();
-        public ReactiveProperty<int> WindowWidth { get; } = new();
-        public ReactiveProperty<int> WindowHeight { get; } = new();
+        public ReactiveProperty<double> WindowTop { get; } = new();
+        public ReactiveProperty<double> WindowLeft { get; } = new();
+        public ReactiveProperty<double> WindowWidth { get; } = new();
+        public ReactiveProperty<double> WindowHeight { get; } = new();
 
-        public ReactiveCommand ButtomCommand { get; } = new();
+
 
         public ReactiveProperty<String > Text { get; } = new();
 
         public ViewerViewModel(ReactiveProperty<System.Windows.Media.Imaging.BitmapSource> ImageSource)
         {
             this.ImageSource = ImageSource;
-            var monitors = MonitorInfo.GetMonitors();
-            var MonitorArea = monitors[0].MonitorArea;
-            WindowTop.Value = MonitorArea.Top;
-            WindowLeft.Value = MonitorArea.Left;
-            WindowWidth.Value = MonitorArea.Right - MonitorArea.Left;
-            WindowHeight.Value = MonitorArea.Bottom - MonitorArea.Top;
 
-            ButtomCommand.Subscribe(_ => Text.Value = "Hello World");
+            Screen viewscreen = GetViewScreen();
+            var monitorArea = viewscreen.WorkingArea;
+
+            WindowTop.Value = monitorArea.Top;
+            WindowLeft.Value = monitorArea.Left;
+            WindowWidth.Value = monitorArea.Width;
+            WindowHeight.Value = monitorArea.Height;
+            //var screenWidth = SystemParameters.WorkArea.Width;
+            //var screenHeight = SystemParameters.WorkArea.Height;
+            //WindowWidth.Value = screenWidth;
+            //WindowHeight.Value = screenHeight;
         }
 
+        private static Screen GetViewScreen()
+        {
+            var screens = System.Windows.Forms.Screen.AllScreens;
+            var viewscreen = screens[0];
+            foreach (var screen in screens)
+            {
+                if (screen.Primary) continue;
+                viewscreen = screen;
+                break;
+            }
+
+            return viewscreen;
+        }
     }
 }
