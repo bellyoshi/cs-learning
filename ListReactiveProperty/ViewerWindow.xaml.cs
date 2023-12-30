@@ -14,11 +14,11 @@ namespace ListReactiveProperty
     {
         private readonly ViewerViewModel _viewModel;
 
-        public ViewerWindow(ReactiveProperty<System.Windows.Media.Imaging.BitmapSource> ImageSource)
+        public ViewerWindow()
         {
 
             InitializeComponent();
-            _viewModel = new ViewerViewModel(ImageSource);
+            _viewModel = new ViewerViewModel();
             DataContext ??= _viewModel;
             this.Loaded += new RoutedEventHandler(MainWindow_Loaded);
 

@@ -1,18 +1,13 @@
 ﻿using Reactive.Bindings;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Reactive.Bindings.Extensions;
 using System.Reactive.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Forms;
 
 namespace ListReactiveProperty
 {
     internal class ViewerViewModel
     {
-        public ReactiveProperty<System.Windows.Media.Imaging.BitmapSource> ImageSource { get; }
+        public ReactiveProperty<System.Windows.Media.Imaging.BitmapSource?> ImageSource { get; }
 
         public ReactiveProperty<double> WindowTop { get; } = new();
         public ReactiveProperty<double> WindowLeft { get; } = new();
@@ -40,8 +35,10 @@ namespace ListReactiveProperty
 
         public ReactiveProperty<String > Text { get; } = new();
 
-        public ViewerViewModel(ReactiveProperty<System.Windows.Media.Imaging.BitmapSource> ImageSource)
+        public ViewerViewModel()
         {
+            var thatModel = ThatModel.GetInstance();
+            ImageSource = thatModel.ToReactivePropertyAsSynchronized(x => x.ImageSource);
             this.ImageSource = ImageSource;
 
 

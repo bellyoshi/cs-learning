@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Reactive.Bindings;
 using System.Reactive.Linq;
 using System.Configuration;
+using Reactive.Bindings.Extensions;
 
 namespace ListReactiveProperty
 {
@@ -18,7 +19,7 @@ namespace ListReactiveProperty
 
         public ReactiveProperty<string> SelectedImagePath { get; } = new();
 
-        public ReactiveProperty<System.Windows.Media.Imaging.BitmapSource> ImageSource { get; } = new();
+        public ReactiveProperty<System.Windows.Media.Imaging.BitmapSource?> ImageSource { get; } = new();
 
         public ReactiveCommand OpenWindowCommand { get; } = new();
 
@@ -37,12 +38,16 @@ namespace ListReactiveProperty
                 ImageSource.Value = ImageCreater.GetImageFromFile(new(path));
             });
 
+            ThatModel thatModel = ThatModel.GetInstance();
+            ImageSource = thatModel.ToReactivePropertyAsSynchronized(x => x.ImageSource);
+
+
             OpenWindowCommand.Subscribe(_ => OpenNewWindow());
         }
 
         private void OpenNewWindow()
         {
-            var window = new ViewerWindow(ImageSource);
+            var window = new ViewerWindow();
             window.Show();
 
 
