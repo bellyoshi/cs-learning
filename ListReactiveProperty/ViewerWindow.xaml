@@ -7,8 +7,12 @@
         mc:Ignorable="d"
         Title="Window1" 
         Left="{Binding WindowLeft.Value, Mode=TwoWay}"
-            Height="{Binding WindowHeight.Value, Mode=TwoWay}" MinHeight="{Binding WindowHeight.Value}" MaxHeight="{Binding WindowHeight.Value}"
-Width="{Binding WindowWidth.Value, Mode=TwoWay}" MinWidth="{Binding WindowWidth.Value}" MaxWidth="{Binding WindowWidth.Value}"
+        Height="{Binding VirtualHeight.Value, Mode=TwoWay}" 
+        MinHeight="{Binding VirtualHeight.Value}" 
+        MaxHeight="{Binding VirtualHeight.Value}"
+        Width="{Binding VirtualWidth.Value, Mode=TwoWay}"
+        MinWidth="{Binding VirtualWidth.Value}" 
+        MaxWidth="{Binding VirtualWidth.Value}"
         
         Top= "{Binding WindowTop.Value, Mode=TwoWay}">
     

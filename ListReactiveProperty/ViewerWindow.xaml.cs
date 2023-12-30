@@ -1,5 +1,8 @@
 ﻿using Reactive.Bindings;
+using System.Diagnostics;
+using System.Drawing;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Media;
 
 namespace ListReactiveProperty
@@ -9,11 +12,14 @@ namespace ListReactiveProperty
     /// </summary>
     public partial class ViewerWindow : Window
     {
+        private readonly ViewerViewModel _viewModel;
+
         public ViewerWindow(ReactiveProperty<System.Windows.Media.Imaging.BitmapSource> ImageSource)
         {
 
             InitializeComponent();
-            DataContext ??= new ViewerViewModel(ImageSource);
+            _viewModel = new ViewerViewModel(ImageSource);
+            DataContext ??= _viewModel;
             this.Loaded += new RoutedEventHandler(MainWindow_Loaded);
 
         }
@@ -23,14 +29,13 @@ namespace ListReactiveProperty
             // このウィンドウに対応するDPI情報を取得
             var dpiInfo = VisualTreeHelper.GetDpi(this);
 
-            // 横方向のDPI
-            var dpiX = dpiInfo.DpiScaleX * 96;
+            _viewModel.DpiScaleX.Value = dpiInfo.DpiScaleX;
+            _viewModel.DpiScaleX.Value = dpiInfo.DpiScaleY;
 
-            // 縦方向のDPI
-            var dpiY = dpiInfo.DpiScaleY * 96;
 
-            // DPI情報を表示（デバッグ用）
-            MessageBox.Show($"DPI X: {dpiX}, DPI Y: {dpiY}");
+            //ウインドウがDPIの違うモニタ―を移動することは考慮していない。
+
+
         }
     }
 

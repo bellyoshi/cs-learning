@@ -44,11 +44,7 @@ namespace ListReactiveProperty
         {
             var window = new ViewerWindow(ImageSource);
             window.Show();
-            var model = window.DataContext as ViewerViewModel;
-            System.Diagnostics.Debug.Assert(window.Width == model.WindowWidth.Value);
-            System.Diagnostics.Debug.Assert(window.Height == model.WindowHeight.Value);
-            System.Diagnostics.Debug.Assert(window.Top == model.WindowTop.Value);
-            System.Diagnostics.Debug.Assert(window.Left == model.WindowLeft.Value);
+
 
         }
 
