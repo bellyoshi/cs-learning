@@ -22,6 +22,8 @@ namespace ListReactiveProperty
             DataContext ??= _viewModel;
             this.Loaded += new RoutedEventHandler(MainWindow_Loaded);
 
+            FullScreenMode();
+
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -36,6 +38,12 @@ namespace ListReactiveProperty
             //ウインドウがDPIの違うモニタ―を移動することは考慮していない。
 
 
+        }
+
+        private void FullScreenMode()
+        {
+            // タイトルバーと境界線を表示しない
+            this.WindowStyle = WindowStyle.None;
         }
     }
 
