@@ -9,7 +9,7 @@ using System.Xml.Linq;
 using Accessibility;
 
 
-namespace ListReactiveProperty
+namespace ListReactiveProperty.Models
 {
     internal class ThatModel : INotifyPropertyChanged
     {

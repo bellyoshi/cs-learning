@@ -9,6 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="MonitorInfo.cs" />
+    <Compile Remove="NativeMethods.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ReactiveProperty.WPF" Version="9.3.4" />
   </ItemGroup>
 

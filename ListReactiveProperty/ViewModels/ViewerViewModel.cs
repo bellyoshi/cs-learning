@@ -1,9 +1,10 @@
-﻿using Reactive.Bindings;
+﻿using ListReactiveProperty.Models;
+using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System.Reactive.Linq;
 using System.Windows.Forms;
 
-namespace ListReactiveProperty
+namespace ListReactiveProperty.ViewModels
 {
     internal class ViewerViewModel
     {
@@ -33,13 +34,13 @@ namespace ListReactiveProperty
 
 
 
-        public ReactiveProperty<String > Text { get; } = new();
+        public ReactiveProperty<string> Text { get; } = new();
 
         public ViewerViewModel()
         {
             var thatModel = ThatModel.GetInstance();
             ImageSource = thatModel.ToReactivePropertyAsSynchronized(x => x.ImageSource);
-            this.ImageSource = ImageSource;
+            ImageSource = ImageSource;
 
 
 
@@ -62,7 +63,7 @@ namespace ListReactiveProperty
 
         private static Screen GetViewScreen()
         {
-            var screens = System.Windows.Forms.Screen.AllScreens;
+            var screens = Screen.AllScreens;
             var viewscreen = screens[0];
             foreach (var screen in screens)
             {

@@ -8,10 +8,11 @@ using Reactive.Bindings;
 using System.Reactive.Linq;
 using System.Configuration;
 using Reactive.Bindings.Extensions;
+using ListReactiveProperty.Models;
 
-namespace ListReactiveProperty
+namespace ListReactiveProperty.ViewModels
 {
-    internal class ViewModel
+    internal class MainViewModel
     {
         public ObservableCollection<FileViewParam> FilesList { get; } = [];
         public ReactiveCommand<string> AppendFile { get; } = new();
@@ -23,9 +24,9 @@ namespace ListReactiveProperty
 
         public ReactiveCommand OpenWindowCommand { get; } = new();
 
-        public ViewModel()
+        public MainViewModel()
         {
-            this.FileName = AppendFile.ToReadOnlyReactiveProperty();
+            FileName = AppendFile.ToReadOnlyReactiveProperty();
             AppendFile.Subscribe(name =>
             {
                 if (string.IsNullOrEmpty(name)) return;

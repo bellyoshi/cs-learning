@@ -1,4 +1,5 @@
-﻿using Reactive.Bindings;
+﻿using ListReactiveProperty.ViewModels;
+using Reactive.Bindings;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows;
