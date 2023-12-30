@@ -31,8 +31,8 @@ namespace ListReactiveProperty
             // このウィンドウに対応するDPI情報を取得
             var dpiInfo = VisualTreeHelper.GetDpi(this);
 
-            _viewModel.DpiScaleX.Value = dpiInfo.DpiScaleX;
-            _viewModel.DpiScaleX.Value = dpiInfo.DpiScaleY;
+            _viewModel.SetDpiScale(dpiInfo.DpiScaleX, dpiInfo.DpiScaleY);
+
 
 
             //ウインドウがDPIの違うモニタ―を移動することは考慮していない。

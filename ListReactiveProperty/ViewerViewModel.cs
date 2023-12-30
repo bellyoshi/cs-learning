@@ -25,6 +25,12 @@ namespace ListReactiveProperty
 
         public ReactiveProperty<double> DpiScaleY { get; } = new(1.00);
 
+        public void SetDpiScale(double x, double y)
+        {
+            DpiScaleX.Value = x;
+            DpiScaleY.Value = y;
+        }
+
         //virtual width and height WindowWidth * DpiScaleX
         public ReactiveProperty<double> VirtualWidth { get; } = new();
         public ReactiveProperty<double> VirtualHeight { get; } = new();
