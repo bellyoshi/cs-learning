@@ -230,7 +230,7 @@ internal class MainViewModel
 
     private void ExecuteEndShowOnSecondMonitor()
     {
-        // 「セカンドモニターでの表示終了」の処理
+        Utils.WindowDispacher.CloseWindow<ViewerWindow>();
     }
 
     private void ExecuteShowBackgroundOnSecondMonitor()

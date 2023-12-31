@@ -7,19 +7,26 @@
         mc:Ignorable="d"
         Title="Window1" 
         Left="{Binding WindowLeft.Value, Mode=TwoWay}"
-        Height="{Binding VirtualHeight.Value, Mode=TwoWay}" 
+        Height="{Binding VirtualHeight.Value}" 
         MinHeight="{Binding VirtualHeight.Value}" 
         MaxHeight="{Binding VirtualHeight.Value}"
-        Width="{Binding VirtualWidth.Value, Mode=TwoWay}"
+        Width="{Binding VirtualWidth.Value}"
         MinWidth="{Binding VirtualWidth.Value}" 
         MaxWidth="{Binding VirtualWidth.Value}"
-        
+
         Top= "{Binding WindowTop.Value, Mode=TwoWay}">
-    
 
-    <Grid>
-        <Image Source="{Binding ImageSource.Value}"/>
-
-
-    </Grid>
+    <Window.Resources>
+        <ContextMenu x:Key="MyContextMenu">
+            <MenuItem Header="フルスクリーン" Command="{Binding FullScreenCommand}"/>
+            <MenuItem Header="ウィンドウモード" Command="{Binding WindowModeCommand}"/>
+            <MenuItem Header="表示終了" Command="{Binding CloseDisplayCommand}"/>
+        </ContextMenu>
+    </Window.Resources>
+    <StackPanel>
+        <Image Source="{Binding ImageSource.Value}"
+               ContextMenu ="{StaticResource MyContextMenu}">
+            
+        </Image>
+    </StackPanel>
 </Window>
