@@ -12,7 +12,56 @@
         >
     <StackPanel>
 
-
+        <Menu>
+            <MenuItem Header="_ファイル">
+                <MenuItem Header="_リスト" Command="{Binding ListCommand}"/>
+                <MenuItem Header="開く(_O)" Command="{Binding OpenCommand}"/>
+            </MenuItem>
+            <MenuItem Header="_表示">
+                <MenuItem Header="表示を回転">
+                    <MenuItem Header="元の表示" Command="{Binding RotateOriginalCommand}"/>
+                    <MenuItem Header="右へ90度回転" Command="{Binding RotateRight90Command}"/>
+                    <MenuItem Header="左へ90度回転" Command="{Binding RotateLeft90Command}"/>
+                    <MenuItem Header="180度回転" Command="{Binding Rotate180Command}"/>
+                </MenuItem>
+                <MenuItem Header="ページナビゲーション">
+                    <MenuItem Header="最初のページ" Command="{Binding FirstPageCommand}"/>
+                    <MenuItem Header="次のページ" Command="{Binding NextPageCommand}"/>
+                    <MenuItem Header="前のページ" Command="{Binding PreviousPageCommand}"/>
+                    <MenuItem Header="最後のページ" Command="{Binding LastPageCommand}"/>
+                    <MenuItem Header="ページ指定" Command="{Binding SpecifyPageCommand}"/>
+                </MenuItem>
+                <MenuItem Header="ズーム">
+                    <MenuItem Header="ウィンドウ幅に合わせる" Command="{Binding FitWidthCommand}"/>
+                    <MenuItem Header="全体を表示" Command="{Binding ShowAllCommand}"/>
+                    <MenuItem Header="拡大" Command="{Binding ZoomInCommand}"/>
+                    <MenuItem Header="縮小" Command="{Binding ZoomOutCommand}"/>
+                </MenuItem>
+                <MenuItem Header="再生">
+                    <MenuItem Header="最初に移動" Command="{Binding MoveToStartCommand}"/>
+                    <MenuItem Header="再生開始" Command="{Binding StartPlayingCommand}"/>
+                    <MenuItem Header="一時停止" Command="{Binding PausePlayingCommand}"/>
+                    <MenuItem Header="早送り" Command="{Binding FastForwardCommand}"/>
+                    <MenuItem Header="巻き戻し" Command="{Binding RewindCommand}"/>
+                </MenuItem>
+                <MenuItem Header="セカンドモニター操作">
+                    <MenuItem Header="表示" Command="{Binding ShowOnSecondMonitorCommand}"/>
+                    <MenuItem Header="表示終了" Command="{Binding EndShowOnSecondMonitorCommand}"/>
+                    <MenuItem Header="背景表示" Command="{Binding ShowBackgroundOnSecondMonitorCommand}"/>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_設定">
+                <MenuItem Header="ディスプレイと背景色" Command="{Binding DisplaySettingsCommand}"/>
+                <MenuItem Header="操作中に自動表示" Command="{Binding AutoShowCommand}"/>
+                <MenuItem Header="操作画面サイズ">
+                    <MenuItem Header="スリム" Command="{Binding SlimSizeCommand}"/>
+                    <MenuItem Header="標準" Command="{Binding StandardSizeCommand}"/>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_ヘルプ">
+                <MenuItem Header="このアプリについて(_A)" Command="{Binding AboutCommand}"/>
+            </MenuItem>
+        </Menu>
 
         <Button Content="Append File">
             <behaviors:Interaction.Triggers>
@@ -27,6 +76,6 @@
                  SelectedItem="{Binding SelectedImagePath.Value}">
         </ListBox>
         <Image Source="{Binding ImageSource.Value}"></Image>
-        <Button Content="Open New Window" Command="{Binding OpenWindowCommand}" />
+        <Button Content="Open New Window" Command="{Binding ShowOnSecondMonitorCommand}" />
     </StackPanel>
 </Window>
