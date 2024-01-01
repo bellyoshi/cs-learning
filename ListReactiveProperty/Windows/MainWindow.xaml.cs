@@ -20,7 +20,6 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        DataContext ??= new MainViewModel();
 
         //メイン操作ウィンドウを閉じたらアプリケーションを終了する
         this.Closed += (s, e) => Application.Current.Shutdown();

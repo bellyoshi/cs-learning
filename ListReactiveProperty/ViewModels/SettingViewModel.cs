@@ -16,7 +16,7 @@ namespace ListReactiveProperty.ViewModels
     internal class SettingViewModel
     {
         //back color
-        public ReactiveProperty<Color> BackColor { get; } = new(Color.FromArgb(255, 0, 0, 0)); //default black
+        public ReactiveProperty<Brush> BackColor { get; } 
 
         private readonly ThatModel _thatModel = ThatModel.GetInstance();
 
@@ -26,7 +26,8 @@ namespace ListReactiveProperty.ViewModels
 
         public SettingViewModel()
         {
-            BackColor = _thatModel.ToReactivePropertyAsSynchronized(x => x.BackColor);
+            BackColor //= _thatModel.ToReactivePropertyAsSynchronized(x => x.BackColor);
+            = new(new SolidColorBrush(Color.FromArgb(255, 0, 0, 0))); //default black
             ChangeColorCommand.Subscribe(_ => ShowColorDialog());
 
             Screen.AllScreens.ToList().ForEach(x => DisplayOptions.Add(x));
@@ -39,7 +40,8 @@ namespace ListReactiveProperty.ViewModels
             {
                 // 選択された色をReactivePropertyに設定
                 var selectedColor = Color.FromArgb(colorDialog.Color.A, colorDialog.Color.R, colorDialog.Color.G, colorDialog.Color.B);
-                BackColor.Value = selectedColor;
+                var brush = new SolidColorBrush(Color.FromArgb(selectedColor.A, selectedColor.R, selectedColor.G, selectedColor.B));
+                BackColor.Value = brush;
 
             }
         }

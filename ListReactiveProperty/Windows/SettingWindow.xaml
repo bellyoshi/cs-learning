@@ -25,6 +25,5 @@
 
         <!-- 背景色表示用ラベル -->
         <Label Content="この色で表示" Background="{Binding BackColor.Value}" />
-        <Label Content="この色で表示" Background="Black" />
     </StackPanel>
 </Window>

@@ -13,14 +13,12 @@ namespace ListReactiveProperty
     /// </summary>
     public partial class ViewerWindow : Window
     {
-        private readonly ViewerViewModel _viewModel;
 
         public ViewerWindow()
         {
 
             InitializeComponent();
-            _viewModel = new ViewerViewModel();
-            DataContext ??= _viewModel;
+
             this.Loaded += new RoutedEventHandler(MainWindow_Loaded);
 
             FullScreenMode();
@@ -29,6 +27,8 @@ namespace ListReactiveProperty
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            var _viewModel = DataContext as ViewerViewModel;
+            Debug.Assert(_viewModel != null);
             // このウィンドウに対応するDPI情報を取得
             var dpiInfo = VisualTreeHelper.GetDpi(this);
 

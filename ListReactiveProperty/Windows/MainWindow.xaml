@@ -6,10 +6,13 @@
         xmlns:local="clr-namespace:ListReactiveProperty"
         xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:rp="clr-namespace:Reactive.Bindings.Interactivity;assembly=ReactiveProperty.WPF"
-        
+                xmlns:vm="clr-namespace:ListReactiveProperty.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         >
+    <Window.DataContext>
+        <vm:MainViewModel />
+    </Window.DataContext>
     <StackPanel>
 
         <Menu>

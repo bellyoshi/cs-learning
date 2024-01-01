@@ -13,9 +13,11 @@
         Width="{Binding VirtualWidth.Value}"
         MinWidth="{Binding VirtualWidth.Value}" 
         MaxWidth="{Binding VirtualWidth.Value}"
-
+                xmlns:vm="clr-namespace:ListReactiveProperty.ViewModels"
         Top= "{Binding WindowTop.Value, Mode=TwoWay}">
-
+    <Window.DataContext>
+        <vm:ViewerViewModel />
+    </Window.DataContext>
     <Window.Resources>
         <ContextMenu x:Key="MyContextMenu">
             <MenuItem Header="フルスクリーン" Command="{Binding FullScreenCommand}"/>
