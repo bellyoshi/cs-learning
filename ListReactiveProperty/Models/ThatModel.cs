@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Xml.Linq;
 using Accessibility;
-
+using System.Windows.Media;
 
 namespace ListReactiveProperty.Models
 {
     internal class ThatModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        private System.Drawing.Color _backColor;
-        public System.Drawing.Color BackColor
+        private Color _backColor;
+        public Color BackColor
         {
             get => _backColor;
             set

@@ -241,6 +241,8 @@ internal class MainViewModel
     private void ExecuteDisplaySettings()
     {
         // 「ディスプレイと背景色の設定」の処理
+        Windows.SettingWindow settingWindow = new();
+        settingWindow.Show();
     }
 
     private void ExecuteAutoShow()
