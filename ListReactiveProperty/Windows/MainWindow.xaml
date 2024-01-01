@@ -63,19 +63,72 @@
             </MenuItem>
         </Menu>
 
-        <Button Content="Append File">
-            <behaviors:Interaction.Triggers>
-                <behaviors:EventTrigger EventName="Click">
-                    <rp:EventToReactiveCommand Command="{Binding AppendFile}">
-                        <local:FileOpenReactiveConverter  />
-                    </rp:EventToReactiveCommand>
-                </behaviors:EventTrigger>
-            </behaviors:Interaction.Triggers>
-        </Button>
-        <ListBox ItemsSource="{Binding FilesList}"
+
+
+
+
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!-- 1列目 -->
+            <StackPanel Grid.Column="0" Grid.Row="0" Margin="10">
+                <ListBox ItemsSource="{Binding FilesList}"
                  SelectedItem="{Binding SelectedImagePath.Value}">
-        </ListBox>
-        <Image Source="{Binding ImageSource.Value}"></Image>
-        <Button Content="Open New Window" Command="{Binding ShowOnSecondMonitorCommand}" />
+                </ListBox>
+                <Button Content="全選択" Command="{Binding SelectAllCommand}"/>
+                <Button Content="選択解除" Command="{Binding DeselectAllCommand}"/>
+                <Button Content="ファイルを追加">
+                    <behaviors:Interaction.Triggers>
+                        <behaviors:EventTrigger EventName="Click">
+                            <rp:EventToReactiveCommand Command="{Binding AppendFile}">
+                                <local:FileOpenReactiveConverter  />
+                            </rp:EventToReactiveCommand>
+                        </behaviors:EventTrigger>
+                    </behaviors:Interaction.Triggers>
+                </Button>
+                <Button Content="削除" Command="{Binding DeleteCommand}"/>
+            </StackPanel>
+
+            <!-- 2列目 -->
+            <StackPanel Grid.Column="1" Margin="10">
+                <Button Content="元の表示" Command="{Binding RotateOriginalCommand}"/>
+                <Button Content="右へ90度回転" Command="{Binding RotateRight90Command}"/>
+                <Button Content="左へ90度回転" Command="{Binding RotateLeft90Command}"/>
+                <Button Content="180度回転" Command="{Binding Rotate180Command}"/>
+                <Button Content="最初のページ" Command="{Binding FirstPageCommand}"/>
+                <Button Content="次のページ" Command="{Binding NextPageCommand}"/>
+                <Button Content="前のページ" Command="{Binding PreviousPageCommand}"/>
+                <Button Content="最後のページ" Command="{Binding LastPageCommand}"/>
+                <Button Content="ページ指定" Command="{Binding SpecifyPageCommand}"/>
+                <Button Content="ウィンドウ幅に合わせる" Command="{Binding FitWidthCommand}"/>
+                <Button Content="全体を表示" Command="{Binding ShowAllCommand}"/>
+                <Button Content="拡大" Command="{Binding ZoomInCommand}"/>
+                <Button Content="縮小" Command="{Binding ZoomOutCommand}"/>
+                <Button Content="最初に移動" Command="{Binding MoveToStartCommand}"/>
+                <Button Content="再生開始" Command="{Binding StartPlayingCommand}"/>
+                <Button Content="一時停止" Command="{Binding PausePlayingCommand}"/>
+                <Button Content="早送り" Command="{Binding FastForwardCommand}"/>
+                <Button Content="巻き戻し" Command="{Binding RewindCommand}"/>
+
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <Image Source="{Binding ImageSource.Value}"></Image>
+            </StackPanel>
+            <StackPanel Grid.Row="1">
+                <Button Content="表示" Command="{Binding ShowOnSecondMonitorCommand}"/>
+                <Button Content="表示終了" Command="{Binding EndShowOnSecondMonitorCommand}"/>
+                <Button Content="背景表示" Command="{Binding ShowBackgroundOnSecondMonitorCommand}"/>
+            </StackPanel>
+
+    </Grid>
     </StackPanel>
 </Window>
