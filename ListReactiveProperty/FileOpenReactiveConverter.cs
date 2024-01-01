@@ -21,7 +21,7 @@ internal class FileOpenReactiveConverter : ReactiveConverter<RoutedEventArgs, st
             {
                 FileName = "Document", // Default file name
                 DefaultExt = ".pdf", // Default file extension
-                Filter = ViewerBy2ndLib.FileTypes.CreateFilter(), // Default file extension
+                Filter = FileTypes.CreateFilter(), // Default file extension
             };
 
             // Show open file dialog box

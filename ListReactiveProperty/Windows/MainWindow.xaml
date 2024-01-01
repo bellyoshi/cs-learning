@@ -123,7 +123,7 @@
             <StackPanel Grid.Column="2">
                 <Image Source="{Binding ImageSource.Value}"></Image>
             </StackPanel>
-            <StackPanel Grid.Row="1">
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <Button Content="表示" Command="{Binding ShowOnSecondMonitorCommand}"/>
                 <Button Content="表示終了" Command="{Binding EndShowOnSecondMonitorCommand}"/>
                 <Button Content="背景表示" Command="{Binding ShowBackgroundOnSecondMonitorCommand}"/>
