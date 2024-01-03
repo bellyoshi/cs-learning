@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace ListReactiveProperty
 {
-    internal class SvgFileViewParam : FileViewParam
+    public class SvgFileViewParam : FileViewParam
     {
         public SvgFileViewParam(string filename) : base(filename)
         {
         }
     }
-    {
-    }
+
 }

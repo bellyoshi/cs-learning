@@ -9,15 +9,15 @@ public class FileTypes
 {
 
     /// 開ける動画の拡張子
-    static readonly string[] movieExts = ["avi", "mpeg", "mp4", "wmv", "mov"];
-
+    static readonly string[] movieExts = ["mp4","wmv","avi", "mpg", "mpeg", "mov"];
+    // *.mp4;*.wmv;*.avi;*.mpg;*.mpeg;*.mov;*.mkv;*.flv;*.swf;*.3gp;*.3g2;*.asf;*.m4v;*.m2ts;*.mts;*.ts;*.vob;*.divx;*.xvid|"
     // 開ける画像の拡張子
     static readonly string[] ImageExts = [
         "jpg", "jpeg",  // JPEG images
 "png",           // Portable Network Graphics
 "gif",           // Graphics Interchange Format
 "bmp",           // Bitmap
-"tiff", ".tif",  // Tagged Image File Format
+"tiff", "tif",  // Tagged Image File Format
 //    "webp",          // WebP format
 //    "heif", ".heic", // High Efficiency Image File Format
 //    "raw",           // RAW images
@@ -34,6 +34,7 @@ public class FileTypes
 //    "eps",           // Encapsulated PostScript
 //    "indd",          // Adobe InDesign Document
 //×    "xcf"            // GIMP Image File
+//icon
 ];
 
 static readonly string[] SVGExts = ["svg"];
@@ -73,29 +74,29 @@ static readonly string[] SVGExts = ["svg"];
 
         buf.Append("画像ファイル");
         buf.Append('|');
-        buf.Append(CreateExtentionsOfFilter(ImageExts));
+        CreateExtentionsOfFilter(ImageExts);
         buf.Append('|');
         buf.Append("動画ファイル");
         buf.Append('|');
-        buf.Append(CreateExtentionsOfFilter(movieExts));
+        CreateExtentionsOfFilter(movieExts);
         buf.Append('|');
         buf.Append("SVGファイル");
         buf.Append('|');
-        buf.Append(CreateExtentionsOfFilter(SVGExts));
+        CreateExtentionsOfFilter(SVGExts);
         buf.Append('|');
         buf.Append("PDFファイル");
         buf.Append('|');
-        buf.Append(CreateExtentionsOfFilter(PDFExts));
+        CreateExtentionsOfFilter(PDFExts);
         buf.Append('|');
         buf.Append("All Supported Files");
         buf.Append('|');
-        CreateExtentionsOfFilter(PDFExts);
-        buf.Append(';');
         CreateExtentionsOfFilter(ImageExts);
         buf.Append(';');
         CreateExtentionsOfFilter(movieExts);
         buf.Append(';');
         CreateExtentionsOfFilter(SVGExts);
+        buf.Append(';');
+        CreateExtentionsOfFilter(PDFExts);
         buf.Append('|');
         buf.Append("All Files(*.*)");
         buf.Append('|');
@@ -121,4 +122,18 @@ static readonly string[] SVGExts = ["svg"];
         buf.Append("*.");
         buf.Append(ext);
     }
+
+    public static FileViewParam GetFileViewParam(string filename)
+    {
+        if (IsImageExt(filename))
+            return new ImageFileViewParam(filename);
+        if (IsMovieExt(filename))
+            return new MovieFileViewParam(filename);
+        if (IsSVGExt(filename))
+            return new SvgFileViewParam(filename);
+        if (IsPDFExt(filename))
+            return new PdfFileViewParam(filename);
+        return new FileViewParam(filename);
+    }
+    
 }

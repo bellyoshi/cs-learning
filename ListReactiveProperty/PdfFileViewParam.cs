@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ListReactiveProperty
 {
-    internal class PdfFileViewParam : FileViewParam
+    public class PdfFileViewParam : FileViewParam
     {
         public PdfFileViewParam(string filename) : base(filename)
         {

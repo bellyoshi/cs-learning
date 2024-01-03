@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace ListReactiveProperty
 {
-    internal class ImageFileViewParam: FileViewParam
+    public class ImageFileViewParam: FileViewParam
     {
         public ImageFileViewParam(string filename) : base(filename)
         {
         }
     }
-    {
-    }
+
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ListReactiveProperty
 {
-    internal class FileViewParam
+    public class FileViewParam
     {
         public string filename { get; set; }
         public FileViewParam(string filename)

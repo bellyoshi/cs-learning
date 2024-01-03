@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace ListReactiveProperty
 {
-    internal class MovieFileViewParam: FileViewParam
+    public class MovieFileViewParam: FileViewParam
     {
         public MovieFileViewParam(string filename) : base(filename)
         {
         }
     }
-    {
-    }
+    
 }
