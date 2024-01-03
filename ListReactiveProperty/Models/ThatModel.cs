@@ -8,10 +8,12 @@ using System.ComponentModel;
 using System.Xml.Linq;
 using Accessibility;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace ListReactiveProperty.Models
 {
     internal class ThatModel : INotifyPropertyChanged
+        , IDsplay
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         private Color _backColor;
@@ -40,6 +42,11 @@ namespace ListReactiveProperty.Models
         internal static ThatModel GetInstance()
         {
             return _instance;
+        }
+
+        public void SetImageSource(BitmapSource? ImageSource)
+        {
+            this.ImageSource = ImageSource;
         }
     }
 }

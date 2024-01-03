@@ -66,9 +66,11 @@ static readonly string[] SVGExts = ["svg"];
     static public bool IsPDFExt(string filename)
         => IsContain(filename, PDFExts);
 
+    static System.Text.StringBuilder? buf;
     static public string CreateFilter()
     {
-        var buf = new System.Text.StringBuilder();
+        buf = new System.Text.StringBuilder();
+
         buf.Append("画像ファイル");
         buf.Append('|');
         buf.Append(CreateExtentionsOfFilter(ImageExts));
@@ -87,13 +89,13 @@ static readonly string[] SVGExts = ["svg"];
         buf.Append('|');
         buf.Append("All Supported Files");
         buf.Append('|');
-        buf.Append(CreateExtentionsOfFilter(PDFExts));
+        CreateExtentionsOfFilter(PDFExts);
         buf.Append(';');
-        buf.Append(CreateExtentionsOfFilter(ImageExts));
+        CreateExtentionsOfFilter(ImageExts);
         buf.Append(';');
-        buf.Append(CreateExtentionsOfFilter(movieExts));
+        CreateExtentionsOfFilter(movieExts);
         buf.Append(';');
-        buf.Append(CreateExtentionsOfFilter(SVGExts));
+        CreateExtentionsOfFilter(SVGExts);
         buf.Append('|');
         buf.Append("All Files(*.*)");
         buf.Append('|');
@@ -103,7 +105,7 @@ static readonly string[] SVGExts = ["svg"];
 }
 
     static  string CreateExtentionsOfFilter(string[] exts) {
-        var buf = new System.Text.StringBuilder();
+        Debug.Assert(buf != null);
         Debug.Assert(exts.Length > 0);
         AppendExt(buf, exts[0]);
         for(int i = 1;i < exts.Length; i++)
