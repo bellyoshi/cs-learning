@@ -16,9 +16,8 @@ internal class MainViewModel
 {
     public ObservableCollection<FileViewParam> FilesList { get; } = [];
     public ReactiveCommand<string> AppendFile { get; } = new();
-    public ReadOnlyReactiveProperty<string?> FileName { get; }
 
-    public ReactiveProperty<string> SelectedImagePath { get; } = new();
+    public ReactiveProperty<FileViewParam> SelectedFile { get; } = new();
 
     public ReactiveProperty<System.Windows.Media.Imaging.BitmapSource?> ImageSource { get; } = new();
 
@@ -75,17 +74,16 @@ internal class MainViewModel
 
     public MainViewModel()
     {
-        FileName = AppendFile.ToReadOnlyReactiveProperty();
         AppendFile.Subscribe(name =>
         {
             if (string.IsNullOrEmpty(name)) return;
             FilesList.Add(new(name));
         });
 
-        SelectedImagePath.Subscribe(path =>
+        SelectedFile.Subscribe(file =>
         {
-            if (string.IsNullOrEmpty(path)) return;
-            ImageSource.Value = ImageCreater.GetImageFromFile(new(path));
+            if (file == null) return;
+            ImageSource.Value = ImageCreater.GetImageFromFile(file);
         });
 
         ThatModel thatModel = ThatModel.GetInstance();

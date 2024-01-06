@@ -85,7 +85,7 @@
             <!-- 1列目 -->
             <StackPanel Grid.Column="0" Grid.Row="0" Margin="10">
                 <ListBox ItemsSource="{Binding FilesList}"
-                 SelectedItem="{Binding SelectedImagePath.Value}">
+                 SelectedItem="{Binding SelectedFile.Value}">
                 </ListBox>
                 <Button Content="全選択" Command="{Binding SelectAllCommand}"/>
                 <Button Content="選択解除" Command="{Binding DeselectAllCommand}"/>

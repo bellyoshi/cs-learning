@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 namespace ListReactiveProperty.Models
 {
     internal class ThatModel : INotifyPropertyChanged
-        , IDsplay
+        , IDisplay
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         private Color _backColor;

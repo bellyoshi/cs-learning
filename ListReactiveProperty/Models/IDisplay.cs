@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ListReactiveProperty.Models
 {
-    internal interface IDsplay
+    public interface IDisplay
     {
         void SetImageSource(System.Windows.Media.Imaging.BitmapSource? ImageSource); 
     }
