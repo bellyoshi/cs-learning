@@ -83,6 +83,7 @@ internal class MainViewModel
         SelectedFile.Subscribe(file =>
         {
             if (file == null) return;
+            //
             ImageSource.Value = ImageCreater.GetImageFromFile(file);
         });
 
