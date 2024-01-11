@@ -133,7 +133,7 @@ static readonly string[] SVGExts = ["svg"];
             return new SvgFileViewParam(filename);
         if (IsPDFExt(filename))
             return new PdfFileViewParam(filename);
-        return new FileViewParam(filename);
+        throw new ArgumentException("filename");
     }
     
 }

@@ -77,14 +77,18 @@ internal class MainViewModel
         AppendFile.Subscribe(name =>
         {
             if (string.IsNullOrEmpty(name)) return;
-            FilesList.Add(new(name));
+            var file = FileTypes.GetFileViewParam(name);
+            FilesList.Add(file);
         });
 
         SelectedFile.Subscribe(file =>
         {
             if (file == null) return;
-            //
-            ImageSource.Value = ImageCreater.GetImageFromFile(file);
+            if (file is ImageSetter imageSetter)
+            {
+                imageSetter.SetDisplay(ThatModel.GetInstance());
+            }
+
         });
 
         ThatModel thatModel = ThatModel.GetInstance();

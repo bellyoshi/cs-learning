@@ -10,4 +10,8 @@ namespace ListReactiveProperty.Models
     {
         void SetImageSource(System.Windows.Media.Imaging.BitmapSource? ImageSource); 
     }
+    public interface ImageSetter
+    {
+        void SetDisplay(IDisplay display);
+    }
 }

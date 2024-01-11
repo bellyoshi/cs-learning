@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace ListReactiveProperty
 {
-    public class PdfFileViewParam : FileViewParam
+    public class PdfFileViewParam : FileViewParam, ImageSetter
     {
         public int Page { get; 
             set; } = 1;
@@ -24,7 +25,8 @@ namespace ListReactiveProperty
         public void ExecuteDisplay()
         {
             if (this._display == null) return;
-            _display.SetImageSource(null);
+            var image = ImageCreater.GetImageFromFile(this);
+            _display.SetImageSource(image);
         }
     }
 }
