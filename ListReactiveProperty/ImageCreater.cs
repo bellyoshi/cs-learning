@@ -9,6 +9,11 @@ namespace ListReactiveProperty;
 
 internal class ImageCreater
 {
+    public static BitmapSource GetImageFromFile(PdfFileViewParam pdfFileViewParam)
+    {
+        return pdfiumWrapper.PDFRender.GetImage(pdfFileViewParam.filename, 
+            pdfFileViewParam.Page);
+    }
     public static BitmapSource GetImageFromFile(FileViewParam viewParam)
     {
         if (FileTypes.IsImageExt(viewParam.filename))
@@ -18,17 +23,9 @@ internal class ImageCreater
         {
             return pdfiumWrapper.PDFRender.GetSVGImage(viewParam.filename);
         }
-        else if (FileTypes.IsMovieExt(viewParam.filename))
-        {
-            return null;
-        }
-        else if (FileTypes.IsPDFExt(viewParam.filename))
-        {
-            return pdfiumWrapper.PDFRender.GetImage(viewParam.filename, 0);
-        }
         else
         {
-            return null;
+            throw new Exception("Not supported file type");
         }
 
     }

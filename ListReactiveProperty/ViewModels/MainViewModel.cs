@@ -164,11 +164,18 @@ internal class MainViewModel
     private void ExecuteNextPage()
     {
         // 「次のページ」への移動処理
+        var pdffile = SelectedFile.Value as PdfFileViewParam;
+        if (pdffile == null) return;
+        pdffile.NextPage();
     }
 
     private void ExecutePreviousPage()
     {
         // 「前のページ」への移動処理
+        var pdffile = SelectedFile.Value as PdfFileViewParam;
+        if (pdffile == null) return;
+        pdffile.PrevPage();
+
     }
 
     private void ExecuteLastPage()

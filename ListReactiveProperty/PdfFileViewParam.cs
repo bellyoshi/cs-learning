@@ -28,5 +28,17 @@ namespace ListReactiveProperty
             var image = ImageCreater.GetImageFromFile(this);
             _display.SetImageSource(image);
         }
+
+        public void NextPage()
+        {
+            Page++;
+            ExecuteDisplay();
+        }
+
+        public void PrevPage()
+        {
+            Page--;
+            ExecuteDisplay();
+        }
     }
 }
