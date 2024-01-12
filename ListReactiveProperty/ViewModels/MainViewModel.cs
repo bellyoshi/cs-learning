@@ -159,6 +159,9 @@ internal class MainViewModel
     private void ExecuteFirstPage()
     {
         // 「最初のページ」への移動処理
+        var pdffile = SelectedFile.Value as PdfFileViewParam;
+        if (pdffile == null) return;
+        pdffile.FirstPage();
     }
 
     private void ExecuteNextPage()
@@ -181,11 +184,17 @@ internal class MainViewModel
     private void ExecuteLastPage()
     {
         // 「最後のページ」への移動処理
+        var pdffile = SelectedFile.Value as PdfFileViewParam;
+        if (pdffile == null) return;
+        pdffile.LastPage();
     }
 
     private void ExecuteSpecifyPage()
     {
         // 「ページ指定」の処理
+        //var pdffile = SelectedFile.Value as PdfFileViewParam;
+        //if (pdffile == null) return;
+        //pdffile.GoToPage(page)
     }
 
     private void ExecuteFitWidth()

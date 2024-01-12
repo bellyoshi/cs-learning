@@ -50,5 +50,17 @@ namespace ListReactiveProperty
             Page--;
             ExecuteDisplay();
         }
+
+        public void FirstPage()
+        {
+            Page = 0;
+            ExecuteDisplay();
+        }
+
+        public void LastPage()
+        {
+            Page = PageCount - 1;
+            ExecuteDisplay();
+        }
     }
 }
