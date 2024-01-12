@@ -13,19 +13,7 @@ namespace pdfiumWrapper
 {
     public class PDFRender
     {
-        static public BitmapSource GetImage(string filename , int page)
-        {
-            PdfiumViewer.Core.PdfDocument doc = PdfiumViewer.Core.PdfDocument.Load(filename);
-            Bitmap bitmap = new((int)doc.PageSizes[page].Width, (int)doc.PageSizes[page].Height);
-            using (Graphics g = Graphics.FromImage(bitmap))
-            {
-                g.FillRectangle(Brushes.White, 0, 0, bitmap.Width, bitmap.Height);
-                var bounds = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
-                doc.Render(page, g, 96, 96 , bounds, true);
-            }
 
-            return ConvertBitmapToBitmapSource(bitmap);
-        }
 
         public static BitmapSource GetSVGImage(string filename)
         {
@@ -36,7 +24,7 @@ namespace pdfiumWrapper
             return ConvertBitmapToBitmapSource(bitmap);
         }
 
-        static  BitmapImage ConvertBitmapToBitmapSource(Bitmap bitmap)
+       public static  BitmapImage ConvertBitmapToBitmapSource(Bitmap bitmap)
         {
             using var stream = new MemoryStream();
             bitmap.Save(stream, ImageFormat.Png);
