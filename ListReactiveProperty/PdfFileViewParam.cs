@@ -11,8 +11,11 @@ namespace ListReactiveProperty
     public class PdfFileViewParam : FileViewParam, ImageSetter
     {
         public pdfiumWrapper2.PDFDocumentWrapper PDFDocumentWrapper { get; }
-        public int Page { get; 
-            set; } = 1;
+        public int Page
+        {
+            get;
+            set;
+        } = 0;
         public int PageCount { get; set; } = 1;
         public PdfFileViewParam(string filename) : base(filename)
         {
@@ -32,14 +35,14 @@ namespace ListReactiveProperty
             var image = ImageCreater.GetImageFromFile(this);
             _display.SetImageSource(image);
         }
-        public bool CanNextPage => Page < PageCount;
+        public bool CanNextPage => Page < PageCount -1;
         public void NextPage()
         {
             if (!CanNextPage) return;
             Page++;
             ExecuteDisplay();
         }
-        public bool CanPrevPage => Page > 1;
+        public bool CanPrevPage => Page > 0;
         
         public void PrevPage()
         {
