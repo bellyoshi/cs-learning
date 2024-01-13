@@ -72,8 +72,12 @@ internal class MainViewModel
     // ヘルプメニュー
     public ReactiveCommand AboutCommand { get; } = new ReactiveCommand();
 
+    private PdfCommand pdfCommand;
+
     public MainViewModel()
     {
+        pdfCommand = new(SelectedFile);
+
         AppendFile.Subscribe(name =>
         {
             if (string.IsNullOrEmpty(name)) return;
@@ -103,11 +107,11 @@ internal class MainViewModel
         RotateLeft90Command.Subscribe(_ => ExecuteRotateLeft90());
         Rotate180Command.Subscribe(_ => ExecuteRotate180());
 
-        FirstPageCommand.Subscribe(_ => ExecuteFirstPage());
-        NextPageCommand.Subscribe(_ => ExecuteNextPage());
-        PreviousPageCommand.Subscribe(_ => ExecutePreviousPage());
-        LastPageCommand.Subscribe(_ => ExecuteLastPage());
-        SpecifyPageCommand.Subscribe(_ => ExecuteSpecifyPage());
+        FirstPageCommand.Subscribe(_ => pdfCommand.ExecuteFirstPage());
+        NextPageCommand.Subscribe(_ => pdfCommand.ExecuteNextPage());
+        PreviousPageCommand.Subscribe(_ => pdfCommand.ExecutePreviousPage());
+        LastPageCommand.Subscribe(_ => pdfCommand.ExecuteLastPage());
+        SpecifyPageCommand.Subscribe(_ => pdfCommand.ExecuteSpecifyPage());
 
         FitWidthCommand.Subscribe(_ => ExecuteFitWidth());
         ShowAllCommand.Subscribe(_ => ExecuteShowAll());
@@ -156,46 +160,7 @@ internal class MainViewModel
         // 「180度回転」の処理
     }
 
-    private void ExecuteFirstPage()
-    {
-        // 「最初のページ」への移動処理
-        var pdffile = SelectedFile.Value as PdfFileViewParam;
-        if (pdffile == null) return;
-        pdffile.FirstPage();
-    }
-
-    private void ExecuteNextPage()
-    {
-        // 「次のページ」への移動処理
-        var pdffile = SelectedFile.Value as PdfFileViewParam;
-        if (pdffile == null) return;
-        pdffile.NextPage();
-    }
-
-    private void ExecutePreviousPage()
-    {
-        // 「前のページ」への移動処理
-        var pdffile = SelectedFile.Value as PdfFileViewParam;
-        if (pdffile == null) return;
-        pdffile.PrevPage();
-
-    }
-
-    private void ExecuteLastPage()
-    {
-        // 「最後のページ」への移動処理
-        var pdffile = SelectedFile.Value as PdfFileViewParam;
-        if (pdffile == null) return;
-        pdffile.LastPage();
-    }
-
-    private void ExecuteSpecifyPage()
-    {
-        // 「ページ指定」の処理
-        //var pdffile = SelectedFile.Value as PdfFileViewParam;
-        //if (pdffile == null) return;
-        //pdffile.GoToPage(page)
-    }
+    
 
     private void ExecuteFitWidth()
     {
