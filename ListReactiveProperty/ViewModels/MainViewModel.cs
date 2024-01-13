@@ -15,7 +15,7 @@ namespace ListReactiveProperty.ViewModels;
 internal class MainViewModel
 {
     public ObservableCollection<FileViewParam> FilesList { get; } = [];
-    public ReactiveCommand<string> AppendFile { get; } = new();
+
 
     public ReactiveProperty<FileViewParam> SelectedFile { get; } = new();
 
@@ -30,48 +30,49 @@ internal class MainViewModel
 
 
     // ファイルメニュー
-    public ReactiveCommand ListCommand { get; } = new ReactiveCommand();
-    public ReactiveCommand OpenCommand { get; } = new ReactiveCommand();
+    public ReactiveCommand<string> AppendFile { get; } = new();
+    public ReactiveCommand ListCommand { get; } = new ();
+    public ReactiveCommand<string> OpenCommand { get; } = new ();
 
     // 表示メニュー
-    public ReactiveCommand RotateOriginalCommand { get; } = new ReactiveCommand();
-    public ReactiveCommand RotateRight90Command { get; } = new ReactiveCommand();
-    public ReactiveCommand RotateLeft90Command { get; } = new ReactiveCommand();
-    public ReactiveCommand Rotate180Command { get; } = new ReactiveCommand();
+    public ReactiveCommand RotateOriginalCommand { get; } = new ();
+    public ReactiveCommand RotateRight90Command { get; } = new ();
+    public ReactiveCommand RotateLeft90Command { get; } = new ();
+    public ReactiveCommand Rotate180Command { get; } = new ();
 
     // ページナビゲーション
-    public ReactiveCommand FirstPageCommand { get; } = new ReactiveCommand();
+    public ReactiveCommand FirstPageCommand { get; } = new ();
     public ReactiveCommand NextPageCommand { get; }
     public ReactiveCommand PreviousPageCommand { get; } 
-    public ReactiveCommand LastPageCommand { get; } = new ReactiveCommand();
-    public ReactiveCommand SpecifyPageCommand { get; } = new ReactiveCommand();
+    public ReactiveCommand LastPageCommand { get; } = new ();
+    public ReactiveCommand SpecifyPageCommand { get; } = new ();
 
     // ズーム
-    public ReactiveCommand FitWidthCommand { get; } = new ReactiveCommand();
-    public ReactiveCommand ShowAllCommand { get; } = new ReactiveCommand();
-    public ReactiveCommand ZoomInCommand { get; } = new ReactiveCommand();
-    public ReactiveCommand ZoomOutCommand { get; } = new ReactiveCommand();
+    public ReactiveCommand FitWidthCommand { get; } = new ();
+    public ReactiveCommand ShowAllCommand { get; } = new ();
+    public ReactiveCommand ZoomInCommand { get; } = new ();
+    public ReactiveCommand ZoomOutCommand { get; } = new ();
 
     // 再生
-    public ReactiveCommand MoveToStartCommand { get; } = new ReactiveCommand();
-    public ReactiveCommand StartPlayingCommand { get; } = new ReactiveCommand();
-    public ReactiveCommand PausePlayingCommand { get; } = new ReactiveCommand();
-    public ReactiveCommand FastForwardCommand { get; } = new ReactiveCommand();
-    public ReactiveCommand RewindCommand { get; } = new ReactiveCommand();
+    public ReactiveCommand MoveToStartCommand { get; } = new ();
+    public ReactiveCommand StartPlayingCommand { get; } = new ();
+    public ReactiveCommand PausePlayingCommand { get; } = new ();
+    public ReactiveCommand FastForwardCommand { get; } = new ();
+    public ReactiveCommand RewindCommand { get; } = new ();
 
     // セカンドモニター操作
-    public ReactiveCommand ShowOnSecondMonitorCommand { get; } = new ReactiveCommand();
-    public ReactiveCommand EndShowOnSecondMonitorCommand { get; } = new ReactiveCommand();
-    public ReactiveCommand ShowBackgroundOnSecondMonitorCommand { get; } = new ReactiveCommand();
+    public ReactiveCommand ShowOnSecondMonitorCommand { get; } = new ();
+    public ReactiveCommand EndShowOnSecondMonitorCommand { get; } = new ();
+    public ReactiveCommand ShowBackgroundOnSecondMonitorCommand { get; } = new ();
 
     // 設定メニュー
-    public ReactiveCommand DisplaySettingsCommand { get; } = new ReactiveCommand();
-    public ReactiveCommand AutoShowCommand { get; } = new ReactiveCommand();
-    public ReactiveCommand SlimSizeCommand { get; } = new ReactiveCommand();
-    public ReactiveCommand StandardSizeCommand { get; } = new ReactiveCommand();
+    public ReactiveCommand DisplaySettingsCommand { get; } = new ();
+    public ReactiveCommand AutoShowCommand { get; } = new ();
+    public ReactiveCommand SlimSizeCommand { get; } = new ();
+    public ReactiveCommand StandardSizeCommand { get; } = new ();
 
     // ヘルプメニュー
-    public ReactiveCommand AboutCommand { get; } = new ReactiveCommand();
+    public ReactiveCommand AboutCommand { get; } = new ();
 
 
 
@@ -79,12 +80,8 @@ internal class MainViewModel
     {
         pdfCommand = new(SelectedFile);
 
-        AppendFile.Subscribe(name =>
-        {
-            if (string.IsNullOrEmpty(name)) return;
-            var file = FileTypes.GetFileViewParam(name);
-            FilesList.Add(file);
-        });
+        AppendFile.Subscribe(ExecuteAppendFile);
+        
 
         SelectedFile.Subscribe(file =>
         {
@@ -102,7 +99,7 @@ internal class MainViewModel
 
 
         // 各コマンドのアクションを設定
-        OpenCommand.Subscribe(_ => ExecuteOpen());
+        OpenCommand.Subscribe(ExecuteOpen);
         RotateOriginalCommand.Subscribe(_ => ExecuteRotateOriginal());
         RotateRight90Command.Subscribe(_ => ExecuteRotateRight90());
         RotateLeft90Command.Subscribe(_ => ExecuteRotateLeft90());
@@ -140,9 +137,26 @@ internal class MainViewModel
 
         AboutCommand.Subscribe(_ => ExecuteAbout());
     }
-    private void ExecuteOpen()
+
+    private FileViewParam? AppendToFileList(string name)
+    {
+        if (string.IsNullOrEmpty(name)) return null;
+        var file = FileTypes.GetFileViewParam(name);
+        FilesList.Add(file);
+        return file;
+    }
+    private void ExecuteAppendFile(string name)
+    {
+        // 「追加」の処理
+        AppendToFileList(name);
+    }
+    private void ExecuteOpen(string name)
     {
         // 「開く」の処理
+        var file =  AppendToFileList(name);
+        if (file == null) return;
+        SelectedFile.Value = file;
+
     }
 
     private void ExecuteRotateOriginal()
