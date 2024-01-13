@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace ListReactiveProperty
 {
-    public class ImageFileViewParam: FileViewParam, ImageSetter
+    public class ImageFileViewParam(string filename) : FileViewParam(filename), ImageSetter
     {
-        public ImageFileViewParam(string filename) : base(filename)
-        {
-        }
         private IDisplay? _display;
         public void SetDisplay(IDisplay display)
         {

@@ -7,13 +7,8 @@ using System.Threading.Tasks;
 
 namespace ListReactiveProperty
 {
-    public class SvgFileViewParam : FileViewParam, ImageSetter
+    public class SvgFileViewParam(string filename) : FileViewParam(filename), ImageSetter
     {
-        public SvgFileViewParam(string filename) : base(filename)
-        {
-        }
-
-
         private IDisplay? _display;
         public void SetDisplay(IDisplay display)
         {

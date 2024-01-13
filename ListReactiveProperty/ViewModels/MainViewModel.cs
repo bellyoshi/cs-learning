@@ -72,7 +72,7 @@ internal class MainViewModel
     // ヘルプメニュー
     public ReactiveCommand AboutCommand { get; } = new ReactiveCommand();
 
-    private PdfCommand pdfCommand;
+    private readonly PdfCommand pdfCommand;
 
     public MainViewModel()
     {

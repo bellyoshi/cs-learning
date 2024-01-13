@@ -43,7 +43,6 @@ namespace ListReactiveProperty.ViewModels
         {
             var thatModel = ThatModel.GetInstance();
             ImageSource = thatModel.ToReactivePropertyAsSynchronized(x => x.ImageSource);
-            ImageSource = ImageSource;
 
             var screenModel = ScreenModel.GetInstance();
             

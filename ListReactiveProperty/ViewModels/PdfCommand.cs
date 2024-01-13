@@ -7,30 +7,25 @@ using System.Threading.Tasks;
 
 namespace ListReactiveProperty.ViewModels
 {
-    internal class PdfCommand
+    internal class PdfCommand(ReactiveProperty<FileViewParam> selectedFile)
     {
-        public ReactiveProperty<FileViewParam> SelectedFile { get; }
+        public ReactiveProperty<FileViewParam> SelectedFile { get; } = selectedFile;
 
-        public PdfCommand(ReactiveProperty<FileViewParam> selectedFile)
-        {
-            SelectedFile = selectedFile;
-        }
-
-        private PdfFileViewParam? pdffile => SelectedFile.Value as PdfFileViewParam;
+        private PdfFileViewParam? Pdffile => SelectedFile.Value as PdfFileViewParam;
 
         // 「最初のページ」への移動処理
-        internal void ExecuteFirstPage() => pdffile?.FirstPage();
+        internal void ExecuteFirstPage() => Pdffile?.FirstPage();
 
         // 「次のページ」への移動処理
-        internal void ExecuteNextPage() => pdffile?.NextPage();
+        internal void ExecuteNextPage() => Pdffile?.NextPage();
 
         // 「前のページ」への移動処理
-        internal void ExecutePreviousPage() => pdffile?.PrevPage();
+        internal void ExecutePreviousPage() => Pdffile?.PrevPage();
 
 
 
         // 「最後のページ」への移動処理
-        internal void ExecuteLastPage() => pdffile?.LastPage();
+        internal void ExecuteLastPage() => Pdffile?.LastPage();
 
 
         internal void ExecuteSpecifyPage()

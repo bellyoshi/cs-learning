@@ -12,7 +12,7 @@ namespace pdfiumWrapper2
 {
     public class PDFDocumentWrapper
     {
-        PdfiumViewer.Core.PdfDocument doc;
+        private readonly PdfiumViewer.Core.PdfDocument doc;
         public PDFDocumentWrapper(string filename)
         {
             doc = PdfiumViewer.Core.PdfDocument.Load(filename);
