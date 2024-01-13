@@ -23,12 +23,6 @@ internal class MainViewModel
     public ReactiveProperty<System.Windows.Media.Imaging.BitmapSource?> ImageSource { get; } = new();
 
 
-
-
-
-
-
-
     // ファイルメニュー
     public ReactiveCommand<string> AppendFile { get; } = new();
     public ReactiveCommand ListCommand { get; } = new ();

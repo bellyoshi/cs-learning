@@ -18,7 +18,15 @@
         <Menu>
             <MenuItem Header="_ファイル">
                 <MenuItem Header="_リスト" Command="{Binding ListCommand}"/>
-                <MenuItem Header="開く(_O)" Command="{Binding OpenCommand}"/>
+                <MenuItem Header="開く(_O)">
+                <behaviors:Interaction.Triggers>
+                    <behaviors:EventTrigger EventName="Click">
+                            <rp:EventToReactiveCommand Command="{Binding OpenCommand}">
+                            <local:FileOpenReactiveConverter  />
+                        </rp:EventToReactiveCommand>
+                    </behaviors:EventTrigger>
+                </behaviors:Interaction.Triggers>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="_表示">
                 <MenuItem Header="表示を回転">
