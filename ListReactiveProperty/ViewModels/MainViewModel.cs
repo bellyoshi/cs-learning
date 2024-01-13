@@ -19,6 +19,7 @@ internal class MainViewModel
 
     public ReactiveProperty<FileViewParam> SelectedFile { get; } = new();
 
+    private readonly PdfCommand pdfCommand;
     public ReactiveProperty<System.Windows.Media.Imaging.BitmapSource?> ImageSource { get; } = new();
 
 
@@ -40,8 +41,8 @@ internal class MainViewModel
 
     // ページナビゲーション
     public ReactiveCommand FirstPageCommand { get; } = new ReactiveCommand();
-    public ReactiveCommand NextPageCommand { get; } = new ReactiveCommand();
-    public ReactiveCommand PreviousPageCommand { get; } = new ReactiveCommand();
+    public ReactiveCommand NextPageCommand { get; }
+    public ReactiveCommand PreviousPageCommand { get; } 
     public ReactiveCommand LastPageCommand { get; } = new ReactiveCommand();
     public ReactiveCommand SpecifyPageCommand { get; } = new ReactiveCommand();
 
@@ -72,7 +73,7 @@ internal class MainViewModel
     // ヘルプメニュー
     public ReactiveCommand AboutCommand { get; } = new ReactiveCommand();
 
-    private readonly PdfCommand pdfCommand;
+
 
     public MainViewModel()
     {
@@ -108,7 +109,11 @@ internal class MainViewModel
         Rotate180Command.Subscribe(_ => ExecuteRotate180());
 
         FirstPageCommand.Subscribe(_ => pdfCommand.ExecuteFirstPage());
+
+        NextPageCommand = pdfCommand.CanNext.ToReactiveCommand();
         NextPageCommand.Subscribe(_ => pdfCommand.ExecuteNextPage());
+
+        PreviousPageCommand = pdfCommand.CanPrev.ToReactiveCommand();
         PreviousPageCommand.Subscribe(_ => pdfCommand.ExecutePreviousPage());
         LastPageCommand.Subscribe(_ => pdfCommand.ExecuteLastPage());
         SpecifyPageCommand.Subscribe(_ => pdfCommand.ExecuteSpecifyPage());
