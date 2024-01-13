@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using Svg;
 namespace pdfiumWrapper
 {
-    public class PDFRender
+    public class SVGRender
     {
 
 

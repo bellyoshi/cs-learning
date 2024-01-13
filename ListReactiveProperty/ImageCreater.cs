@@ -17,7 +17,7 @@ internal class ImageCreater
     }
     public static BitmapSource GetImageFromFile(SvgFileViewParam svgFileViewParam)
     {
-        return pdfiumWrapper.PDFRender.GetSVGImage(svgFileViewParam.filename);
+        return pdfiumWrapper.SVGRender.GetSVGImage(svgFileViewParam.filename);
     }
     public static BitmapSource GetImageFromFile(ImageFileViewParam viewParam)
     {
