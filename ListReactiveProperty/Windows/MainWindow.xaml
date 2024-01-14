@@ -133,6 +133,12 @@
             </StackPanel>
             <StackPanel Grid.Column="2">
                 <Image Source="{Binding ImageSource.Value}"></Image>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{Binding CurrentPage.Value}"></Label>
+                    <Label Content="/"></Label>
+                    <Label Content="{Binding PageCount.Value}"></Label>
+                </StackPanel>
+
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <Button Content="表示" Command="{Binding ShowOnSecondMonitorCommand}"/>

@@ -31,7 +31,7 @@ namespace pdfiumWrapper2
                 g.FillRectangle(Brushes.White, 0, 0, bitmap.Width, bitmap.Height);
                 var bounds = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
                 //todo dpi 96 いつも同じではない
-                doc.Render(page, g, 96, 96, bounds, true);
+                doc.Render(page, g, 120, 120, bounds, true);
             }
 
             return SVGRender.ConvertBitmapToBitmapSource(bitmap);

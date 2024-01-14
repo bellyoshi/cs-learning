@@ -68,7 +68,8 @@ internal class MainViewModel
     // ヘルプメニュー
     public ReactiveCommand AboutCommand { get; } = new ();
 
-
+    public ReactiveProperty<int> PageCount { get; } = new();
+    public ReactiveProperty<int> CurrentPage { get; } = new();
 
     public MainViewModel()
     {
