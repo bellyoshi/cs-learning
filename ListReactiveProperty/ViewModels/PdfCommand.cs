@@ -1,4 +1,5 @@
-﻿using Reactive.Bindings;
+﻿using ListReactiveProperty.Windows;
+using Reactive.Bindings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,8 +70,11 @@ namespace ListReactiveProperty.ViewModels
         }
 
 
-            internal void ExecuteSpecifyPage()
+        internal void ExecuteSpecifyPage()
         {
+            PageNumberWindow pageNumberWindow = new();
+            pageNumberWindow.ShowDialog();
+            
             // 「ページ指定」の処理
             //pdffile?.GoToPage(page)
         }
