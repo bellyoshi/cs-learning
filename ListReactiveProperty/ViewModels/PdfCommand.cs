@@ -10,12 +10,19 @@ namespace ListReactiveProperty.ViewModels
 {
     internal class PdfCommand 
     {
-        public PdfCommand(ReactiveProperty<FileViewParam> selectedFile)
+        public PdfCommand(ReactiveProperty<FileViewParam> selectedFile,
+            ReactiveProperty<int> PageCount,
+            ReactiveProperty<int> CurrentPage)
         {
             SelectedFile = selectedFile;
+
+            this.PageCount = PageCount;
+            this.CurrentPage = CurrentPage;
             SelectedFile.Subscribe(_ => SetFlag());
         }
         private ReactiveProperty<FileViewParam> SelectedFile { get; } 
+        private ReactiveProperty<int> PageCount { get; }
+        private ReactiveProperty<int> CurrentPage { get; }
 
 
 
@@ -28,6 +35,8 @@ namespace ListReactiveProperty.ViewModels
         {
             CanNext.Value = Pdffile?.CanNextPage??false;
             CanPrev.Value = Pdffile?.CanPrevPage??false;
+            PageCount.Value = Pdffile?.PageCount??0;
+            CurrentPage.Value = Pdffile?.CurrentPage+1??0;
         }
         // 「最初のページ」への移動処理
         internal void ExecuteFirstPage()

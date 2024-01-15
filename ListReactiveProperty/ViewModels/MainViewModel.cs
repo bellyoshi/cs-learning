@@ -73,7 +73,7 @@ internal class MainViewModel
 
     public MainViewModel()
     {
-        pdfCommand = new(SelectedFile);
+        pdfCommand = new(SelectedFile, PageCount, CurrentPage);
 
         AppendFile.Subscribe(ExecuteAppendFile);
         
