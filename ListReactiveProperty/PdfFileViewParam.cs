@@ -62,5 +62,12 @@ namespace ListReactiveProperty
             CurrentPage = PageCount - 1;
             ExecuteDisplay();
         }
+
+        internal void GoToPage(int page)
+        {
+            if (page < 0 || page >= PageCount) return;
+            CurrentPage = page;
+            ExecuteDisplay();
+        }
     }
 }
