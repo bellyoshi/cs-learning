@@ -6,15 +6,27 @@
         xmlns:local="clr-namespace:ListReactiveProperty.Windows"
                         xmlns:vm="clr-namespace:ListReactiveProperty.ViewModels"
         mc:Ignorable="d"
-        Title="PageNumberWindow" Height="100" Width="200">
+        Title="ページ指定" Height="100" Width="200">
     <Window.DataContext>
         <vm:PageNumberViewModel />
     </Window.DataContext>
     <Grid>
-        <StackPanel Orientation="Horizontal" Height="30">
+        <Grid.RowDefinitions>
+            <RowDefinition>
+                
+            </RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Height="30" Grid.Row="0">
             <TextBox Text="{Binding CurrentPage.Value, UpdateSourceTrigger=PropertyChanged}" Height="30" Width="40"/>
             <TextBlock>/</TextBlock>
             <Label Content="{Binding PageCount}" />
+
+
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Height="30" Grid.Row="1">
+            <Button Content="OK"></Button>
+            <Button Content="Cancel"></Button>
 
         </StackPanel>
     </Grid>
