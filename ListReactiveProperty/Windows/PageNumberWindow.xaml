@@ -6,13 +6,14 @@
         xmlns:local="clr-namespace:ListReactiveProperty.Windows"
                         xmlns:vm="clr-namespace:ListReactiveProperty.ViewModels"
         mc:Ignorable="d"
-        Title="PageNumberWindow" Height="450" Width="800">
+        Title="PageNumberWindow" Height="100" Width="200">
     <Window.DataContext>
         <vm:PageNumberViewModel />
     </Window.DataContext>
     <Grid>
-        <StackPanel Orientation="Horizontal">
-            <TextBox Text="{Binding CurrentPage.Value, UpdateSourceTrigger=PropertyChanged}"/>
+        <StackPanel Orientation="Horizontal" Height="30">
+            <TextBox Text="{Binding CurrentPage.Value, UpdateSourceTrigger=PropertyChanged}" Height="30" Width="40"/>
+            <TextBlock>/</TextBlock>
             <Label Content="{Binding PageCount}" />
 
         </StackPanel>
