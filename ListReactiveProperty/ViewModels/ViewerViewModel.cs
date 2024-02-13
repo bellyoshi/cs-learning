@@ -53,6 +53,9 @@ namespace ListReactiveProperty.ViewModels
             VirtualWidth = WindowWidth.CombineLatest(DpiScaleX, (w, dpi) => w / dpi).ToReactiveProperty();
             VirtualHeight = WindowHeight.CombineLatest(DpiScaleY, (h, dpi) => h / dpi).ToReactiveProperty();
 
+            VirtualWidth.Subscribe(_=>
+                System.Diagnostics.Debug.WriteLine(VirtualWidth.Value));
+
             
 
             // コマンドの初期化

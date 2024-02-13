@@ -31,8 +31,21 @@ namespace ListReactiveProperty.Models
         }
 
         public Rectangle FullScreenWindowLayout => System.Windows.Forms.Screen.AllScreens[ScreenIndex].Bounds;
-            
-        public Rectangle WindowLayout => IsFullScreen ? FullScreenWindowLayout : WindowModeWindowLayout;
+
+        private Rectangle _windowLayout;
+        public Rectangle WindowLayout
+        {
+            get => _windowLayout;
+            set
+            {
+                _windowLayout = value;
+                if (!IsFullScreen)
+                {
+                    WindowModeWindowLayout = value;
+                }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WindowLayout)));
+            }
+        }
 
 
 
@@ -43,6 +56,14 @@ namespace ListReactiveProperty.Models
             set
             {
                 _isFullScreen = value;
+                if (value)
+                {
+                    WindowLayout = FullScreenWindowLayout;
+                }
+                else
+                {
+                    WindowLayout = WindowModeWindowLayout;
+                }
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsFullScreen)));
             }
         }
