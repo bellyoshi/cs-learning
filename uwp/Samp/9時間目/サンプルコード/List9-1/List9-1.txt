@@ -1,0 +1,1 @@
+<Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>

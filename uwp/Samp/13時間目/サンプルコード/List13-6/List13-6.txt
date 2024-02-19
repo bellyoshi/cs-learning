@@ -1,0 +1,2 @@
+var attributes = new InkDrawingAttributes();
+attributes.PenTip = PenTipShape.Circle;	// æ’[‚ğ‰~Œ`‚É‚·‚é

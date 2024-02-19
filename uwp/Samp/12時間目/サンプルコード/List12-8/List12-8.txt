@@ -1,0 +1,2 @@
+AccessListEntryView mruView = StorageApplicationPermissions.MostRecentlyUsedList.Entries;
+var list = mruView.Select(entry => new { Metadata = entry.Metadata, Token = entry.Token });

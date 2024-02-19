@@ -1,0 +1,1 @@
+インスタンス名.SuggestedFileName = "新規テキストファイル";

@@ -1,0 +1,2 @@
+var attributes = new InkDrawingAttributes();
+attributes.FitToCurve = true;

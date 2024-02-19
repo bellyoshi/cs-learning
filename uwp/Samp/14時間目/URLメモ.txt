@@ -1,0 +1,13 @@
+https://www.youtube.com/watch?v=zuJZrLkKGUw
+
+xBindってそもそも何？
+http://mntone.hateblo.jp/entry/2015/12/27/102458
+
+
+Xamarin
+Xamarin.Formsのイベント作成
+http://www.buildinsider.net/mobile/xamarintips/0035
+
+
+
+http://www.slideshare.net/ytabuchi/xamarin-65898703

@@ -1,0 +1,68 @@
+﻿<Page
+    x:Class="PDFViewer.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PDFViewer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <ToggleButton x:Name="btnHamburger" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="0">
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;" />
+            </ToggleButton>
+
+            <Button x:Name="btnOpenPdf" HorizontalAlignment="Right" Grid.Column="1" Click="btnOpenPdf_Click">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE8E5;" Margin="0,0,5,0"/>
+                    <TextBlock Text="PDFファイルを開く" />
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <SplitView x:Name="splitView" DisplayMode="CompactOverlay"
+           CompactPaneLength="0"
+           OpenPaneLength="320"
+           IsPaneOpen="{Binding ElementName=btnHamburger, Path=IsChecked, Mode=TwoWay}"
+           Margin="0, 5, 0, 0"
+           Grid.Row="1"
+           >
+            <SplitView.Pane>
+                <StackPanel>
+                    <TextBlock Text="最近使ったファイル" />
+                    <ListBox x:Name="lstFile" SelectionChanged="lstFile_SelectionChanged"/>
+                </StackPanel>
+            </SplitView.Pane>
+            <SplitView.Content>
+                <Grid x:Name="grdPdf" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0">
+                        <Button x:Name="btnPrev" Content="&lt;前へ"  Margin="0, 0, 5, 0" Click="btnPrev_Click"/>
+                        <Button x:Name="btnNext" Content="次へ&gt;" Click="btnNext_Click" />
+                    </StackPanel>
+
+                    <ScrollViewer Margin="12,20,12,12" Grid.Row="1">
+                        <Image x:Name="imgPdf" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="None" Margin="5"/>
+                    </ScrollViewer>
+
+                    <ProgressRing x:Name="progressRing"  Height="50" Width="50" IsActive="True" Visibility="Collapsed" Margin="0,10,0,0" Grid.Row="1"/>
+                </Grid>
+            </SplitView.Content>
+        </SplitView>
+    </Grid>
+</Page>

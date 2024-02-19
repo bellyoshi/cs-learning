@@ -1,0 +1,2 @@
+var attributes = new InkDrawingAttributes();
+attributes.Color = Windows.UI.ColorHelper.FromArgb((byte)(255 * 0.5), 255, 0, 0);

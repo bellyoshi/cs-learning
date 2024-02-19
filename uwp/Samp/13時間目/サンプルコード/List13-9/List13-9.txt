@@ -1,0 +1,2 @@
+// マウスとペンによる描画を許可する
+inkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Mouse | Windows.UI.Core.CoreInputDeviceTypes.Pen;

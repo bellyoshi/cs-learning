@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UiEntry.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center">
+
+            <Label Text="名前" FontSize="18"/>
+            <Entry x:Name="NameText"/>
+            <Label Text="住所" FontSize="18"/>
+            <Entry x:Name="AddressText"/>
+            <Button Text="送信" Clicked="OnClickCommit"/>
+            <Label x:Name="MessageLabel" FontSize="18"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiApp3.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center">
+
+            <Label
+                Text="Hello World" FontSize="32" HorizontalTextAlignment="Center"/>
+            <Label
+                Text="ようこそ.NET MAUIの世界へ" FontSize="24" HorizontalTextAlignment="Center"/>
+            <Label FontSize="32">坊ちゃん</Label>
+            <Label FontSize="24">夏目漱石</Label>
+            <Label>
+                親譲りの無鉄砲子供の時から損ばかりしている。小学校に・・・
+            </Label>
+
+
+            <Button
+                x:Name="CounterBtn"
+                Text="Click me"
+                SemanticProperties.Hint="Counts the number of times you click"
+                Clicked="OnCounterClicked"
+                HorizontalOptions="Center" />
+
+
+            <Label x:Name="Message"></Label>
+            <Button Text="現在時刻"  Clicked="OnDateTimeClicked"/>
+            <Entry Placeholder="＜プレイスホルダー＞"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

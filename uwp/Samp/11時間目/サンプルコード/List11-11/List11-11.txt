@@ -1,0 +1,3 @@
+using Windows.ApplicationModel.DataTransfer;
+
+DataPackage インスタンス名 = new DataPackage();

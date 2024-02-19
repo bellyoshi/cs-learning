@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="MonitorInfo.cs" />
+    <Compile Remove="NativeMethods.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ReactiveProperty.WPF" Version="9.3.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\pdfiumWrapper2\pdfiumWrapper2.csproj" />
+    <ProjectReference Include="..\WinFormsLibrary1\WinFormsLibrary1.csproj" />
+  </ItemGroup>
+
+</Project>
