@@ -14,7 +14,8 @@
         MinWidth="{Binding VirtualWidth.Value}" 
         MaxWidth="{Binding VirtualWidth.Value}"
                 xmlns:vm="clr-namespace:ListReactiveProperty.ViewModels"
-        Top= "{Binding WindowTop.Value, Mode=TwoWay}">
+        Top= "{Binding WindowTop.Value, Mode=TwoWay}"
+        ContextMenu="{DynamicResource MyContextMenu}">
     <Window.DataContext>
         <vm:ViewerViewModel />
     </Window.DataContext>
@@ -25,6 +26,7 @@
             <MenuItem Header="表示終了" Command="{Binding CloseDisplayCommand}"/>
         </ContextMenu>
     </Window.Resources>
+
     <StackPanel>
         <Image Source="{Binding ImageSource.Value}"
                ContextMenu ="{StaticResource MyContextMenu}">
