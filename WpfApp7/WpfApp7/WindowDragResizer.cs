@@ -167,12 +167,14 @@ public class WindowDragResizer
                 {
                     _resizeWindow.Left = _initialWindowPosition.X + dx;
                     _resizeWindow.Width = newWidth;
+                    _initialMousePos = new Point(0, _resizeWindow.Height);
 
                 }
                 break;
             case ResizeDirection.BottomRight:
                 _resizeWindow.Width = Math.Max(_resizeWindow.MinWidth, _initialWindowSize.Width + dx);
                 _resizeWindow.Height = Math.Max(_resizeWindow.MinHeight, _initialWindowSize.Height + dy);
+                _initialMousePos = new Point(_resizeWindow.Width, _resizeWindow.Height);
                 break;
          
         }
