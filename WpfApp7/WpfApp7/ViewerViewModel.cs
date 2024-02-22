@@ -25,12 +25,14 @@ namespace WpfApp7
         public ReactiveCommand CloseDisplayCommand { get; } = new();
 
         private BoundSetter _setter;
+
+
         public ViewerViewModel(BoundSetter setter)
         {
             _setter = setter;
             // コマンドの初期化
-            FullScreenCommand.Subscribe(_ => ExecuteFullScreen());
-            WindowModeCommand.Subscribe(_ => ExecuteWindowMode());
+            FullScreenCommand.Subscribe(_ => IsFullScreen = true);
+            WindowModeCommand.Subscribe(_ => IsFullScreen = false);
 
         }
 
@@ -46,15 +48,10 @@ namespace WpfApp7
             set
             {
                 if (value)
-                {
-
                     SetFullScreen();
-                }
                 else
-                {
-
                     SetNormalScreen();
-                }
+                
             }
         }
 
@@ -90,17 +87,7 @@ namespace WpfApp7
             // Set the window to normal screen
             _IsFullScreen = false;
         }
-        private void ExecuteFullScreen()
-        {
-            IsFullScreen = true;
 
-        }
-
-        private void ExecuteWindowMode()
-        {
-            IsFullScreen = false;
-
-        }
 
 
     }
