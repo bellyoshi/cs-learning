@@ -21,7 +21,7 @@ namespace WpfApp7
             InitializeComponent();
             this.WindowStyle = WindowStyle.None;
             
-            //this.ResizeMode = ResizeMode.NoResize;
+            this.ResizeMode = ResizeMode.NoResize;
             WindowDragMover mover = new WindowDragMover(this, 10, new UIElement[] { this });
             WindowDragResizer resize = new WindowDragResizer(this, 10);
         }
