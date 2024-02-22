@@ -20,16 +20,14 @@ namespace WpfApp7
         public ReactiveProperty<int> WindowWidth { get; set; } = new(480);
 
 
-        public ReactiveProperty<int> WindowMinHeight { get; set; } = new(0);
-        public ReactiveProperty<int> WindowMinWidth { get; set; } = new(0);
-
-
         public ReactiveCommand FullScreenCommand { get; } = new();
         public ReactiveCommand WindowModeCommand { get; } = new();
         public ReactiveCommand CloseDisplayCommand { get; } = new();
 
-        public ViewerViewModel()
+        private BoundSetter _setter;
+        public ViewerViewModel(BoundSetter setter)
         {
+            _setter = setter;
             // コマンドの初期化
             FullScreenCommand.Subscribe(_ => ExecuteFullScreen());
             WindowModeCommand.Subscribe(_ => ExecuteWindowMode());
@@ -72,14 +70,12 @@ namespace WpfApp7
                 
             }
             ScreenModel screenModel = ScreenModel.GetInstance();
+            _setter.SetWindowBound(
+                screenModel.FullScreenWindowLayout.Top,
+                screenModel.FullScreenWindowLayout.Left, 
+                screenModel.FullScreenWindowLayout.Height, 
+                screenModel.FullScreenWindowLayout.Width);
 
-            WindowTop.Value = screenModel.FullScreenWindowLayout.Top;
-            WindowLeft.Value = screenModel.FullScreenWindowLayout.Left;
-
-            WindowWidth.Value = screenModel.FullScreenWindowLayout.Width;
-            WindowHeight.Value = screenModel.FullScreenWindowLayout.Height;
-            WindowMinWidth.Value = screenModel.FullScreenWindowLayout.Width;
-            WindowMinHeight.Value = screenModel.FullScreenWindowLayout.Height;
 
             _IsFullScreen = true;
         }
@@ -88,13 +84,8 @@ namespace WpfApp7
         {
             if (_IsFullScreen)
             {
-                WindowHeight.Value = this.BakupHeight;
-                WindowWidth.Value = this.BakupWidth;
-                WindowTop.Value = this.BackupTop;   
-                WindowLeft.Value = this.BackupLeft;
+                _setter.SetWindowBound(BackupTop, BackupLeft, BakupHeight, BakupWidth);
             }
-            WindowMinWidth.Value =0;
-            WindowMinHeight.Value =0;
 
             // Set the window to normal screen
             _IsFullScreen = false;

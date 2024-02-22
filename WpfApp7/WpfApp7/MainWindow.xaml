@@ -14,9 +14,7 @@
         Top= "{Binding WindowTop.Value, Mode=TwoWay}"
                         xmlns:vm="clr-namespace:WpfApp7"
         ContextMenu="{DynamicResource MyContextMenu}">
-    <Window.DataContext>
-        <vm:ViewerViewModel />
-    </Window.DataContext>
+
     <Window.Resources>
         <ContextMenu x:Key="MyContextMenu">
             <MenuItem Header="フルスクリーン" Command="{Binding FullScreenCommand}"/>
