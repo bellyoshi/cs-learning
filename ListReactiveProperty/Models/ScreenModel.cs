@@ -13,7 +13,7 @@ internal class ScreenModel : INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
 
     //singleton
-    private static ScreenModel _instance = new();
+    private static readonly ScreenModel _instance = new();
     internal static ScreenModel GetInstance()
     {
         return _instance;

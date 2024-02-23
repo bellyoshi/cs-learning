@@ -25,9 +25,9 @@ namespace ListReactiveProperty
             this.WindowStyle = WindowStyle.None;
 
             this.ResizeMode = ResizeMode.NoResize;
-            WindowDragMover mover = new WindowDragMover(this, 10, new UIElement[] { this });
-            WindowDragResizer resize = new WindowDragResizer(this, 10);
-            WindowFullScreenManager windowFullScreenManager = new WindowFullScreenManager(this);
+            WindowDragMover mover = new(this, 10, [this]);
+            WindowDragResizer resize = new(this, 10);
+            WindowFullScreenManager windowFullScreenManager = new(this);
             this.DataContext = new ViewerViewModel(windowFullScreenManager);
 
         }
@@ -37,7 +37,7 @@ namespace ListReactiveProperty
             var _viewModel = DataContext as ViewerViewModel;
             Debug.Assert(_viewModel != null);
             // このウィンドウに対応するDPI情報を取得
-            var dpiInfo = VisualTreeHelper.GetDpi(this);
+            //var dpiInfo = VisualTreeHelper.GetDpi(this);
 
             //_viewModel.SetDpiScale(dpiInfo.DpiScaleX, dpiInfo.DpiScaleY);
 

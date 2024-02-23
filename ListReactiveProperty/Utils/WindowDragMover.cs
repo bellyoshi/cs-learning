@@ -16,8 +16,7 @@ public class WindowDragMover
     // ドラッグを無効とする幅
     private readonly int noDragAreaWidth;
 
-    // マウスをクリックした位置
-    private Point lastMouseDownPoint;
+
 
     public WindowDragMover(Window moveWindow, int noDragAreaWidth, UIElement[] elements)
     {

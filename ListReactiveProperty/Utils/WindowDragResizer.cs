@@ -12,7 +12,7 @@ public class WindowDragResizer
     private Size _initialWindowSize;
     private Point _initialWindowPosition;
     private ResizeDirection _resizeDirection;
-    private int edgeTolerance = 10;
+    private readonly int edgeTolerance = 10;
 
     public WindowDragResizer(Window resizeWindow, int edgeTolerance)
     {
@@ -41,10 +41,7 @@ public class WindowDragResizer
         }
     }
 
-    private void GetInitialiBound(MouseButtonEventArgs e)
-    {
 
-    }
 
     private void ResizeWindow_MouseMove(object sender, MouseEventArgs e)
     {
@@ -184,28 +181,14 @@ public class WindowDragResizer
     private void UpdateCursor(Point position)
     {
         var direction = DetermineResizeDirection(position);
-        switch (direction)
+        _resizeWindow.Cursor =direction switch
         {
-            case ResizeDirection.TopLeft:
-            case ResizeDirection.BottomRight:
-                _resizeWindow.Cursor = Cursors.SizeNWSE;
-                break;
-            case ResizeDirection.TopRight:
-            case ResizeDirection.BottomLeft:
-                _resizeWindow.Cursor = Cursors.SizeNESW;
-                break;
-            case ResizeDirection.Top:
-            case ResizeDirection.Bottom:
-                _resizeWindow.Cursor = Cursors.SizeNS;
-                break;
-            case ResizeDirection.Left:
-            case ResizeDirection.Right:
-                _resizeWindow.Cursor = Cursors.SizeWE;
-                break;
-            default:
-                _resizeWindow.Cursor = Cursors.Arrow;
-                break;
-        }
+            ResizeDirection.TopLeft or  ResizeDirection.BottomRight => Cursors.SizeNWSE,
+            ResizeDirection.TopRight or ResizeDirection.BottomLeft => Cursors.SizeNESW,
+            ResizeDirection.Top or ResizeDirection.Bottom => Cursors.SizeNS,
+            ResizeDirection.Left or ResizeDirection.Right => Cursors.SizeWE,
+            _ => Cursors.Arrow,
+        };
     }
 
     private enum ResizeDirection

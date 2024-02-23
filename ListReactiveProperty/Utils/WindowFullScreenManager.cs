@@ -9,20 +9,13 @@ using System.Windows;
 
 namespace ListReactiveProperty.Utils;
 
-internal class WindowFullScreenManager
+internal class WindowFullScreenManager(Window window)
 {
     public Rectangle FullScreenWindowLayout => System.Windows.Forms.Screen.AllScreens[ScreenIndex].Bounds;
     public int ScreenIndex { get; set; } = 0;
 
 
-    private Window window;
-
-
-    public WindowFullScreenManager(Window window)
-    {
-        this.window = window;
-
-    }
+    private readonly Window window = window;
 
     public double BakupHeight { get; set; }
     public double BakupWidth { get; set; }

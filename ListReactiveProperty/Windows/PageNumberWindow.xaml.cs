@@ -21,16 +21,17 @@ namespace ListReactiveProperty.Windows
     {
         public static int GetPageNumber(int pageNumber, int pageCount)
         {
-            var window = new PageNumberWindow();
-            window.PageNumber = pageNumber;
-
-            window.PageCount =  pageCount;
+            var window = new PageNumberWindow
+            {
+                PageNumber = pageNumber,
+                PageCount =  pageCount
+            };
 
             window.ShowDialog();
             return window.PageNumber;
         }
         private int PageNumber { get; set; }
-        private int backupPageNumber { get; set; }
+        private int BackupPageNumber { get; set; }
         private int PageCount { get; set; }
 
         public PageNumberWindow()
@@ -43,7 +44,7 @@ namespace ListReactiveProperty.Windows
         {
             PageNumberTextBox.Text = PageNumber.ToString();
             PageCountTextBox.Content = PageCount.ToString();
-            backupPageNumber = PageNumber;
+            BackupPageNumber = PageNumber;
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
@@ -54,7 +55,7 @@ namespace ListReactiveProperty.Windows
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            PageNumber = backupPageNumber;
+            PageNumber = BackupPageNumber;
             Close();
         }
     }
