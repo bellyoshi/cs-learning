@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Remove="MonitorInfo.cs" />
     <Compile Remove="NativeMethods.cs" />
+    <Compile Remove="ViewModels\PageNumberViewModel.cs" />
   </ItemGroup>
 
   <ItemGroup>

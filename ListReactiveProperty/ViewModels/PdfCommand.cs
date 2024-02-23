@@ -72,24 +72,11 @@ namespace ListReactiveProperty.ViewModels
         // 「ページ指定」の処理
         internal void ExecuteSpecifyPage()
         {
-            var page = GetPageNumber(CurrentPage.Value, PageCount.Value);
-            if (page == null) return;
-            Pdffile?.GoToPage(page.Value-1);
+            var page = PageNumberWindow.GetPageNumber(CurrentPage.Value, PageCount.Value);
+            Pdffile?.GoToPage(page - 1);
             SetFlag();
         }
 
-        private int? GetPageNumber(int currentPage, int pageCount)
-        {
-            PageNumberWindow pageNumberWindow = new();
-            PageNumberViewModel? pageNumberViewModel = pageNumberWindow.DataContext as PageNumberViewModel;
-            if (pageNumberViewModel == null) return null;
-            pageNumberViewModel.CurrentPage.Value = currentPage;
-            pageNumberViewModel.PageCount.Value = pageCount;
-            pageNumberWindow.ShowDialog();
 
-
-
-            return pageNumberViewModel.CurrentPage.Value;
-        }
     }
 }

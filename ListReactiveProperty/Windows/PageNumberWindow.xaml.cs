@@ -19,9 +19,43 @@ namespace ListReactiveProperty.Windows
     /// </summary>
     public partial class PageNumberWindow : Window
     {
+        public static int GetPageNumber(int pageNumber, int pageCount)
+        {
+            var window = new PageNumberWindow();
+            window.PageNumber = pageNumber;
+
+            window.PageCount =  pageCount;
+
+            window.ShowDialog();
+            return window.PageNumber;
+        }
+        private int PageNumber { get; set; }
+        private int backupPageNumber { get; set; }
+        private int PageCount { get; set; }
+
         public PageNumberWindow()
         {
             InitializeComponent();
+
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            PageNumberTextBox.Text = PageNumber.ToString();
+            PageCountTextBox.Content = PageCount.ToString();
+            backupPageNumber = PageNumber;
+        }
+
+        private void OkButton_Click(object sender, RoutedEventArgs e)
+        {
+            PageNumber = int.Parse(PageNumberTextBox.Text);
+            Close();
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            PageNumber = backupPageNumber;
+            Close();
         }
     }
 }
