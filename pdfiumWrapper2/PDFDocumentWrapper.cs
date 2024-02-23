@@ -34,7 +34,7 @@ namespace pdfiumWrapper2
                 doc.Render(page, g, 120, 120, bounds, true);
             }
 
-            return SVGRender.ConvertBitmapToBitmapSource(bitmap);
+            return BitmapConverter.ToBitmapSource(bitmap);
         }
     }
 }
