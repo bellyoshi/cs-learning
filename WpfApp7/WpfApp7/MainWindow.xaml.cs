@@ -11,32 +11,24 @@ using System.Windows.Shapes;
 
 namespace WpfApp7
 {
-    interface BoundSetter
-    {
-        void SetWindowBound(int top, int left, int height, int width);
-    }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, BoundSetter
+    public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new ViewerViewModel(this);
             this.WindowStyle = WindowStyle.None;
             
             this.ResizeMode = ResizeMode.NoResize;
             WindowDragMover mover = new WindowDragMover(this, 10, new UIElement[] { this });
             WindowDragResizer resize = new WindowDragResizer(this, 10);
+            WindowFullScreenManager windowFullScreenManager = new WindowFullScreenManager(this);
+            this.DataContext = new ViewerViewModel(windowFullScreenManager);
         }
 
-        public void SetWindowBound(int top, int left, int height, int width)
-        {
-            this.Top = top;
-            this.Left = left;
-            this.Height = height;
-            this.Width = width;
-        }
+
     }
 }
