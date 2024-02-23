@@ -6,19 +6,13 @@
         xmlns:local="clr-namespace:ListReactiveProperty"
         mc:Ignorable="d"
         Title="Window1" 
-        Left="{Binding WindowLeft.Value, Mode=TwoWay}"
-        Height="{Binding VirtualHeight.Value}" 
-        MinHeight="{Binding VirtualHeight.Value}" 
-        MaxHeight="{Binding VirtualHeight.Value}"
-        Width="{Binding VirtualWidth.Value}"
-        MinWidth="{Binding VirtualWidth.Value}" 
-        MaxWidth="{Binding VirtualWidth.Value}"
+        Height="480" 
+        Width="640"
+
                 xmlns:vm="clr-namespace:ListReactiveProperty.ViewModels"
-        Top= "{Binding WindowTop.Value, Mode=TwoWay}"
+
         ContextMenu="{DynamicResource MyContextMenu}">
-    <Window.DataContext>
-        <vm:ViewerViewModel />
-    </Window.DataContext>
+
     <Window.Resources>
         <ContextMenu x:Key="MyContextMenu">
             <MenuItem Header="フルスクリーン" Command="{Binding FullScreenCommand}"/>

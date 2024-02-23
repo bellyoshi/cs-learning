@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
+using ListReactiveProperty.Utils;
 
 namespace ListReactiveProperty
 {
@@ -21,7 +22,13 @@ namespace ListReactiveProperty
 
             this.Loaded += new RoutedEventHandler(MainWindow_Loaded);
 
-            FullScreenMode();
+            this.WindowStyle = WindowStyle.None;
+
+            this.ResizeMode = ResizeMode.NoResize;
+            WindowDragMover mover = new WindowDragMover(this, 10, new UIElement[] { this });
+            WindowDragResizer resize = new WindowDragResizer(this, 10);
+            WindowFullScreenManager windowFullScreenManager = new WindowFullScreenManager(this);
+            this.DataContext = new ViewerViewModel(windowFullScreenManager);
 
         }
 
@@ -32,7 +39,7 @@ namespace ListReactiveProperty
             // このウィンドウに対応するDPI情報を取得
             var dpiInfo = VisualTreeHelper.GetDpi(this);
 
-            _viewModel.SetDpiScale(dpiInfo.DpiScaleX, dpiInfo.DpiScaleY);
+            //_viewModel.SetDpiScale(dpiInfo.DpiScaleX, dpiInfo.DpiScaleY);
 
 
 
@@ -41,11 +48,7 @@ namespace ListReactiveProperty
 
         }
 
-        private void FullScreenMode()
-        {
-            // タイトルバーと境界線を表示しない
-            this.WindowStyle = WindowStyle.None;
-        }
+
     }
 
 
