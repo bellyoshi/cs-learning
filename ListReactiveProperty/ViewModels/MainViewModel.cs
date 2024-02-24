@@ -9,6 +9,7 @@ using System.Reactive.Linq;
 using System.Configuration;
 using Reactive.Bindings.Extensions;
 using ListReactiveProperty.Models;
+using System.Windows;
 
 namespace ListReactiveProperty.ViewModels;
 
@@ -21,6 +22,8 @@ internal class MainViewModel
 
     private readonly PdfCommand pdfCommand;
     public ReactiveProperty<System.Windows.Media.Imaging.BitmapSource?> ImageSource { get; } = new();
+
+    public ReactiveProperty<Visibility> IsPdf { get; } = new();
 
 
     // ファイルメニュー
@@ -85,6 +88,17 @@ internal class MainViewModel
             {
                 imageSetter.SetDisplay(ThatModel.GetInstance());
             }
+
+        });
+
+        SelectedFile.Subscribe(file =>
+        {
+            if(file is PdfFileViewParam)
+            {
+                IsPdf.Value = Visibility.Visible;
+            }else
+            {                 IsPdf.Value = Visibility.Collapsed;
+                       }
 
         });
 
