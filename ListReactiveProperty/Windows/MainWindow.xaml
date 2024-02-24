@@ -36,11 +36,11 @@
                     <MenuItem Header="180度回転" Command="{Binding Rotate180Command}"/>
                 </MenuItem>
                 <MenuItem Header="ページナビゲーション">
-                    <MenuItem Header="最初のページ" Command="{Binding FirstPageCommand}"/>
-                    <MenuItem Header="次のページ" Command="{Binding NextPageCommand}"/>
-                    <MenuItem Header="前のページ" Command="{Binding PreviousPageCommand}"/>
-                    <MenuItem Header="最後のページ" Command="{Binding LastPageCommand}"/>
-                    <MenuItem Header="ページ指定" Command="{Binding SpecifyPageCommand}"/>
+                    <MenuItem Header="最初のページ" Command="{Binding FirstPageCommand}" Visibility="{Binding IsPdf.Value}"/>
+                    <MenuItem Header="次のページ" Command="{Binding NextPageCommand}" Visibility="{Binding IsPdf.Value}"/>
+                    <MenuItem Header="前のページ" Command="{Binding PreviousPageCommand}" Visibility="{Binding IsPdf.Value}"/>
+                    <MenuItem Header="最後のページ" Command="{Binding LastPageCommand}" Visibility="{Binding IsPdf.Value}"/>
+                    <MenuItem Header="ページ指定" Command="{Binding SpecifyPageCommand}" Visibility="{Binding IsPdf.Value}"/>
                 </MenuItem>
                 <MenuItem Header="ズーム">
                     <MenuItem Header="ウィンドウ幅に合わせる" Command="{Binding FitWidthCommand}"/>
@@ -115,11 +115,11 @@
                 <Button Content="右へ90度回転" Command="{Binding RotateRight90Command}"/>
                 <Button Content="左へ90度回転" Command="{Binding RotateLeft90Command}"/>
                 <Button Content="180度回転" Command="{Binding Rotate180Command}"/>
-                <Button Content="最初のページ" Command="{Binding FirstPageCommand}"/>
-                <Button Content="次のページ" Command="{Binding NextPageCommand}"/>
-                <Button Content="前のページ" Command="{Binding PreviousPageCommand}"/>
-                <Button Content="最後のページ" Command="{Binding LastPageCommand}"/>
-                <Button Content="ページ指定" Command="{Binding SpecifyPageCommand}"/>
+                <Button Content="最初のページ" Command="{Binding FirstPageCommand}" Visibility="{Binding IsPdf.Value}"/>
+                <Button Content="次のページ" Command="{Binding NextPageCommand}" Visibility="{Binding IsPdf.Value}"/>
+                <Button Content="前のページ" Command="{Binding PreviousPageCommand}" Visibility="{Binding IsPdf.Value}"/>
+                <Button Content="最後のページ" Command="{Binding LastPageCommand}" Visibility="{Binding IsPdf.Value}"/>
+                <Button Content="ページ指定" Command="{Binding SpecifyPageCommand}" Visibility="{Binding IsPdf.Value}"/>
                 <Button Content="ウィンドウ幅に合わせる" Command="{Binding FitWidthCommand}"/>
                 <Button Content="全体を表示" Command="{Binding ShowAllCommand}"/>
                 <Button Content="拡大" Command="{Binding ZoomInCommand}"/>

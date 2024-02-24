@@ -22,6 +22,8 @@ internal class MainViewModel
     private readonly PdfCommand pdfCommand;
     public ReactiveProperty<System.Windows.Media.Imaging.BitmapSource?> ImageSource { get; } = new();
 
+    public ReactiveProperty<bool> IsPdf { get; } = new();
+
 
     // ファイルメニュー
     public ReactiveCommand<string> AppendFile { get; } = new();
@@ -86,6 +88,12 @@ internal class MainViewModel
                 imageSetter.SetDisplay(ThatModel.GetInstance());
             }
 
+        });
+
+        SelectedFile.Subscribe(file =>
+        {
+            if (file == null) IsPdf.Value = false;
+            IsPdf.Value = file is PdfFileViewParam;
         });
 
         ThatModel thatModel = ThatModel.GetInstance();
