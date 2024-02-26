@@ -12,7 +12,7 @@ namespace pdfiumWrapper2
 {
     internal class BitmapConverter
     {
-        public static BitmapImage ToBitmapSource(Bitmap bitmap)
+        public static BitmapImage ToBitmapSource(Image bitmap)
         {
             using var stream = new MemoryStream();
             bitmap.Save(stream, ImageFormat.Png);

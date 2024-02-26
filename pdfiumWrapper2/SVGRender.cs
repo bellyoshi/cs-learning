@@ -10,7 +10,7 @@ using System.IO;
 using System.Windows.Media.Imaging;
 using Svg;
 using pdfiumWrapper2;
-namespace pdfiumWrapper
+namespace pdfiumWrapper2
 {
     public class SVGRender
     {
