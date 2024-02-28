@@ -20,7 +20,7 @@ internal class MainViewModel
 
     public ReactiveProperty<FileViewParam> SelectedFile { get; } = new();
 
-    private readonly PdfCommand pdfCommand;
+    private readonly PdfCommand pdfCommands;
     public ReactiveProperty<System.Windows.Media.Imaging.BitmapSource?> ImageSource { get; } = new();
 
     public ReactiveProperty<Visibility> IsPdf { get; } = new();
@@ -76,7 +76,7 @@ internal class MainViewModel
 
     public MainViewModel()
     {
-        pdfCommand = new(SelectedFile, PageCount, CurrentPage);
+        pdfCommands = new(SelectedFile, PageCount, CurrentPage);
 
         AppendFile.Subscribe(ExecuteAppendFile);
         
@@ -93,12 +93,8 @@ internal class MainViewModel
 
         SelectedFile.Subscribe(file =>
         {
-            if(file is PdfFileViewParam)
-            {
-                IsPdf.Value = Visibility.Visible;
-            }else
-            {                 IsPdf.Value = Visibility.Collapsed;
-                       }
+            bool visible = file is PdfFileViewParam or null;
+            IsPdf.Value = visible ? Visibility.Visible : Visibility.Collapsed;
 
         });
 
@@ -114,15 +110,14 @@ internal class MainViewModel
         RotateLeft90Command.Subscribe(_ => ExecuteRotateLeft90());
         Rotate180Command.Subscribe(_ => ExecuteRotate180());
 
-        FirstPageCommand.Subscribe(_ => pdfCommand.ExecuteFirstPage());
 
-        NextPageCommand = pdfCommand.CanNext.ToReactiveCommand();
-        NextPageCommand.Subscribe(_ => pdfCommand.ExecuteNextPage());
+        FirstPageCommand = pdfCommands.CreateFirstPageCommand();
+        NextPageCommand = pdfCommands.CreateNextPageCommand();
 
-        PreviousPageCommand = pdfCommand.CanPrev.ToReactiveCommand();
-        PreviousPageCommand.Subscribe(_ => pdfCommand.ExecutePreviousPage());
-        LastPageCommand.Subscribe(_ => pdfCommand.ExecuteLastPage());
-        SpecifyPageCommand.Subscribe(_ => pdfCommand.ExecuteSpecifyPage());
+        PreviousPageCommand = pdfCommands.CreatePreviousPageCommand();
+
+        LastPageCommand = pdfCommands.CreateLastPageCommand();
+        SpecifyPageCommand = pdfCommands.CreateSpecifyPageCommand();
 
         FitWidthCommand.Subscribe(_ => ExecuteFitWidth());
         ShowAllCommand.Subscribe(_ => ExecuteShowAll());

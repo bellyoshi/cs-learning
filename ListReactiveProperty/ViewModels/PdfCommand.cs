@@ -27,15 +27,59 @@ namespace ListReactiveProperty.ViewModels
 
 
 
-        public ReactiveProperty<bool> CanNext { get; } = new ReactiveProperty<bool>(false);
+        private ReactiveProperty<bool> CanNext { get; } = new ReactiveProperty<bool>(false);
 
-        public ReactiveProperty<bool> CanPrev { get; } = new ReactiveProperty<bool>(false);
+        public ReactiveCommand CreateNextPageCommand()
+        {
+            var command =  CanNext.ToReactiveCommand();
+            command.Subscribe(_ => ExecuteNextPage());
+            return command;
+        }
+
+        private  ReactiveProperty<bool> CanPrev { get; } = new ReactiveProperty<bool>(false);
+
+        public ReactiveCommand CreatePreviousPageCommand()
+        {
+            var command = CanPrev.ToReactiveCommand();
+            command.Subscribe(_ => ExecutePreviousPage());
+            return command;
+        }
+
+        private  ReactiveProperty<bool> CanFirst { get; } = new ReactiveProperty<bool>(false);
+        public ReactiveCommand CreateFirstPageCommand()
+        {
+            var command = CanFirst.ToReactiveCommand();
+            command.Subscribe(_ => ExecuteFirstPage());
+            return command;
+        }
+
+        private  ReactiveProperty<bool> CanLast { get; } = new ReactiveProperty<bool>(false);
+        public ReactiveCommand CreateLastPageCommand()
+        {
+            var command = CanLast.ToReactiveCommand();
+            command.Subscribe(_ => ExecuteLastPage());
+            return command;
+        }
+
+        private  ReactiveProperty<bool> CanSpecifyPage { get; } = new ReactiveProperty<bool>(false);
+        public ReactiveCommand CreateSpecifyPageCommand()
+        {
+            var command = CanSpecifyPage.ToReactiveCommand();
+            command.Subscribe(_ => ExecuteSpecifyPage());
+            return command;
+        }
+
+
         private PdfFileViewParam? Pdffile => SelectedFile.Value as PdfFileViewParam;
 
         private void SetFlag()
         {
+        
+            CanFirst.Value = Pdffile?.PageCount > 0;
             CanNext.Value = Pdffile?.CanNextPage??false;
             CanPrev.Value = Pdffile?.CanPrevPage??false;
+            CanLast.Value = Pdffile?.PageCount > 0;
+            CanSpecifyPage.Value = Pdffile?.PageCount > 0;
             PageCount.Value = Pdffile?.PageCount??0;
             CurrentPage.Value = Pdffile?.CurrentPage+1??0;
         }
