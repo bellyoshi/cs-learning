@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace ListReactiveProperty.ViewModels
 {
-    internal class PdfCommand 
+    internal class PdfCommands 
     {
-        public PdfCommand(ReactiveProperty<FileViewParam> selectedFile,
+        public PdfCommands(ReactiveProperty<FileViewParam> selectedFile,
             ReactiveProperty<int> PageCount,
             ReactiveProperty<int> CurrentPage)
         {

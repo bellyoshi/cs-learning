@@ -46,6 +46,7 @@ namespace ListReactiveProperty.Models
 
         public void SetImageSource(BitmapSource? ImageSource)
         {
+            
             this.ImageSource = ImageSource;
         }
     }

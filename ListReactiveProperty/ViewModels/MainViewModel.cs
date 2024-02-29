@@ -18,9 +18,11 @@ internal class MainViewModel
     public ObservableCollection<FileViewParam> FilesList { get; } = [];
 
 
-    public ReactiveProperty<FileViewParam> SelectedFile { get; } = new();
+    public ReactiveProperty<FileViewParam?> SelectedFile { get; } = new();
 
-    private readonly PdfCommand pdfCommands;
+    public ReactiveProperty<FileViewParam> PreviewFile { get; } = new();
+
+    private readonly PdfCommands pdfCommands;
     public ReactiveProperty<System.Windows.Media.Imaging.BitmapSource?> ImageSource { get; } = new();
 
     public ReactiveProperty<Visibility> IsPdf { get; } = new();
@@ -30,6 +32,9 @@ internal class MainViewModel
     public ReactiveCommand<string> AppendFile { get; } = new();
     public ReactiveCommand ListCommand { get; } = new ();
     public ReactiveCommand<string> OpenCommand { get; } = new ();
+
+    //DeselectAllCommand
+    public ReactiveCommand DeselectAllCommand { get; } = new ();
 
     // 表示メニュー
     public ReactiveCommand RotateOriginalCommand { get; } = new ();
@@ -76,18 +81,24 @@ internal class MainViewModel
 
     public MainViewModel()
     {
-        pdfCommands = new(SelectedFile, PageCount, CurrentPage);
+        pdfCommands = new(PreviewFile, PageCount, CurrentPage);
 
         AppendFile.Subscribe(ExecuteAppendFile);
         
-
-        SelectedFile.Subscribe(file =>
+        PreviewFile.Subscribe(file =>
         {
-            if (file == null) return;
             if (file is ImageSetter imageSetter)
             {
                 imageSetter.SetDisplay(ThatModel.GetInstance());
             }
+        });
+
+        SelectedFile.Subscribe(file =>
+        {
+            if (file == null) 
+                PreviewFile.Value = new EmptyFileViewParam();
+            else
+                PreviewFile.Value = file;
 
         });
 
@@ -105,6 +116,7 @@ internal class MainViewModel
 
         // 各コマンドのアクションを設定
         OpenCommand.Subscribe(ExecuteOpen);
+        DeselectAllCommand.Subscribe(_ => SelectedFile.Value = null);
         RotateOriginalCommand.Subscribe(_ => ExecuteRotateOriginal());
         RotateRight90Command.Subscribe(_ => ExecuteRotateRight90());
         RotateLeft90Command.Subscribe(_ => ExecuteRotateLeft90());
