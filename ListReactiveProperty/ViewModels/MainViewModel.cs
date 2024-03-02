@@ -35,6 +35,8 @@ internal class MainViewModel
 
     //DeselectAllCommand
     public ReactiveCommand DeselectAllCommand { get; } = new ();
+    //SelectAllCommand
+    public ReactiveCommand SelectAllCommand { get; } = new ();
 
     // 表示メニュー
     public ReactiveCommand RotateOriginalCommand { get; } = new ();
@@ -117,6 +119,7 @@ internal class MainViewModel
         // 各コマンドのアクションを設定
         OpenCommand.Subscribe(ExecuteOpen);
         DeselectAllCommand.Subscribe(_ => SelectedFile.Value = null);
+        SelectAllCommand.Subscribe(_ => SelectedFile.Value = FilesList.FirstOrDefault());
         RotateOriginalCommand.Subscribe(_ => ExecuteRotateOriginal());
         RotateRight90Command.Subscribe(_ => ExecuteRotateRight90());
         RotateLeft90Command.Subscribe(_ => ExecuteRotateLeft90());
