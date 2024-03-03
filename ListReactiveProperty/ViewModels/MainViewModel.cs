@@ -10,12 +10,13 @@ using System.Configuration;
 using Reactive.Bindings.Extensions;
 using ListReactiveProperty.Models;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace ListReactiveProperty.ViewModels;
 
 internal class MainViewModel
 {
-    public ObservableCollection<FileViewParam> FilesList { get; } = [];
+    public ReactiveCollection<SearchResultViewModel> FilesList { get; } = [];
 
 
     public ReactiveProperty<FileViewParam?> SelectedFile { get; } = new();
@@ -118,8 +119,14 @@ internal class MainViewModel
 
         // 各コマンドのアクションを設定
         OpenCommand.Subscribe(ExecuteOpen);
-        DeselectAllCommand.Subscribe(_ => SelectedFile.Value = null);
-        SelectAllCommand.Subscribe(_ => SelectedFile.Value = FilesList.FirstOrDefault());
+        DeselectAllCommand.Subscribe(_ =>
+        {
+            foreach(var file in FilesList) file.IsSelected.Value = false;
+        });
+        SelectAllCommand.Subscribe(_ =>
+            { foreach(var file in FilesList) file.IsSelected.Value = true;}
+        );
+
         RotateOriginalCommand.Subscribe(_ => ExecuteRotateOriginal());
         RotateRight90Command.Subscribe(_ => ExecuteRotateRight90());
         RotateLeft90Command.Subscribe(_ => ExecuteRotateLeft90());
@@ -155,15 +162,53 @@ internal class MainViewModel
         StandardSizeCommand.Subscribe(_ => ExecuteStandardSize());
 
         AboutCommand.Subscribe(_ => ExecuteAbout());
+
+        FilesList.CollectionChanged += (sender, e) =>
+        {
+            if (e.NewItems != null)
+            {
+                foreach (SearchResultViewModel newItem in e.NewItems)
+                {
+                    // 新しい項目のIsSelected.Valueの変更を監視
+                    newItem.IsSelected.Subscribe(_ => OnIsSelectedChanged(newItem));
+                }
+            }
+            if (e.OldItems != null)
+            {
+                foreach (SearchResultViewModel oldItem in e.OldItems)
+                {
+                    // 不要になった項目の監視を解除
+                    oldItem.IsSelected.Dispose();
+                }
+            }
+        };
+    }
+
+    private void OnIsSelectedChanged(SearchResultViewModel item)
+    {
+        // IsSelected.Valueが変更されたときの処理
+        // ここで必要なロジックを実装します
+        
+        var files = this.FilesList.Where(x => x.IsSelected.Value).ToList();
+        if (files.Count == 1)
+        {
+            SelectedFile.Value = files[0].FileViewParam;
+        }else
+        {
+            SelectedFile.Value = null;
+        }
+
     }
 
     private FileViewParam? AppendToFileList(string name)
     {
         if (string.IsNullOrEmpty(name)) return null;
         var file = FileTypes.GetFileViewParam(name);
-        FilesList.Add(file);
+        SearchResultViewModel serchResultViewModel = new (file);
+        FilesList.Add(new(file));
         return file;
     }
+
     private void ExecuteAppendFile(string name)
     {
         // 「追加」の処理

@@ -93,7 +93,24 @@
             <!-- 1列目 -->
             <StackPanel Grid.Column="0" Grid.Row="0" Margin="10">
                 <ListBox ItemsSource="{Binding FilesList}"
-                 SelectedItem="{Binding SelectedFile.Value}">
+                 VirtualizingPanel.IsVirtualizing="True"
+                 VirtualizingPanel.VirtualizationMode="Recycling"
+                 VirtualizingPanel.ScrollUnit="Pixel"
+                 HorizontalContentAlignment="Stretch"
+                 SelectionMode="Extended">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <!-- SearchResultViewModel の IsSelected を TwoWay バインド -->
+                            <Setter Property="IsSelected" Value="{Binding IsSelected.Value, Mode=TwoWay}" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <!-- ここに項目の表示方法を定義 -->
+                            <TextBlock Text="{Binding FileViewParam.filename}" />
+                            <!-- 仮のプロパティ名 -->
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
                 </ListBox>
                 <Button Content="全選択" Command="{Binding SelectAllCommand}"/>
                 <Button Content="選択解除" Command="{Binding DeselectAllCommand}"/>
