@@ -100,15 +100,12 @@
                  SelectionMode="Extended">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
-                            <!-- SearchResultViewModel の IsSelected を TwoWay バインド -->
                             <Setter Property="IsSelected" Value="{Binding IsSelected.Value, Mode=TwoWay}" />
                         </Style>
                     </ListBox.ItemContainerStyle>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <!-- ここに項目の表示方法を定義 -->
                             <TextBlock Text="{Binding FileViewParam.filename}" />
-                            <!-- 仮のプロパティ名 -->
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
