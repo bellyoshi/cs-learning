@@ -38,6 +38,7 @@ internal class MainViewModel
     public ReactiveCommand DeselectAllCommand { get; } = new ();
     //SelectAllCommand
     public ReactiveCommand SelectAllCommand { get; } = new ();
+    public ReactiveCommand DeleteCommand { get; } = new ();
 
     // 表示メニュー
     public ReactiveCommand RotateOriginalCommand { get; } = new ();
@@ -126,6 +127,12 @@ internal class MainViewModel
         SelectAllCommand.Subscribe(_ =>
             { foreach(var file in FilesList) file.IsSelected.Value = true;}
         );
+        DeleteCommand.Subscribe(_ =>
+        {
+            var files = FilesList.Where(x => x.IsSelected.Value).ToList();
+            foreach(var file in files) FilesList.Remove(file);
+            SelectedFile.Value = null;
+        });
 
         RotateOriginalCommand.Subscribe(_ => ExecuteRotateOriginal());
         RotateRight90Command.Subscribe(_ => ExecuteRotateRight90());
