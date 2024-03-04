@@ -17,34 +17,30 @@ namespace ListReactiveProperty.ViewModels;
 
 internal class MainViewModel
 {
-    public ReactiveCollection<SearchResultViewModel> FilesList { get; } = [];
+    public ReactiveCollection<SearchResultViewModel> FilesList { get; }
 
-    public ObservableCollection<MenuItemViewModel> ListMenuItems { get; set; }= new();
-    public class MenuItemViewModel
-    {
-        public string Header { get; set; }
-        public ICommand Command { get; set; }
-        // 必要に応じて他のプロパティや子メニュー項目のコレクションも追加できます
-    }
+    public ObservableCollection<MenuItemViewModel> ListMenuItems { get; }
+
 
     public ReactiveProperty<FileViewParam> PreviewFile { get; } = new();
 
     private readonly PdfCommands pdfCommands;
+
+    private readonly FileListsCommands fileListsCommands;
     public ReactiveProperty<System.Windows.Media.Imaging.BitmapSource?> ImageSource { get; } = new();
 
     public ReactiveProperty<Visibility> IsPdf { get; } = new();
 
 
     // ファイルメニュー
-    public ReactiveCommand<string> AppendFile { get; } = new();
-    public ReactiveCommand ListCommand { get; } = new ();
-    public ReactiveCommand<string> OpenCommand { get; } = new ();
+    public ReactiveCommand<string> AppendFile { get; }
+    public ReactiveCommand<string> OpenCommand { get; } 
 
     //DeselectAllCommand
-    public ReactiveCommand DeselectAllCommand { get; } = new ();
+    public ReactiveCommand DeselectAllCommand { get; } 
     //SelectAllCommand
-    public ReactiveCommand SelectAllCommand { get; } = new ();
-    public ReactiveCommand DeleteCommand { get; } = new ();
+    public ReactiveCommand SelectAllCommand { get; } 
+    public ReactiveCommand DeleteCommand { get; } 
 
     // 表示メニュー
     public ReactiveCommand RotateOriginalCommand { get; } = new ();
@@ -53,11 +49,11 @@ internal class MainViewModel
     public ReactiveCommand Rotate180Command { get; } = new ();
 
     // ページナビゲーション
-    public ReactiveCommand FirstPageCommand { get; } = new ();
+    public ReactiveCommand FirstPageCommand { get; } 
     public ReactiveCommand NextPageCommand { get; }
     public ReactiveCommand PreviousPageCommand { get; } 
-    public ReactiveCommand LastPageCommand { get; } = new ();
-    public ReactiveCommand SpecifyPageCommand { get; } = new ();
+    public ReactiveCommand LastPageCommand { get; } 
+    public ReactiveCommand SpecifyPageCommand { get; } 
 
     // ズーム
     public ReactiveCommand FitWidthCommand { get; } = new ();
@@ -93,20 +89,27 @@ internal class MainViewModel
     {
         pdfCommands = new(PreviewFile, PageCount, CurrentPage);
 
-        AppendFile.Subscribe(ExecuteAppendFile);
+        fileListsCommands = new(PreviewFile);
+        FilesList = fileListsCommands.FilesList;
+        ListMenuItems = fileListsCommands.ListMenuItems;
+
+        AppendFile = fileListsCommands.CreateAppendFile();
+        OpenCommand = fileListsCommands.CreateOpenCommand();
+        DeselectAllCommand = fileListsCommands.CreateDeselectAllCommand();
+        SelectAllCommand = fileListsCommands.CreateSelectAllCommand();
+        DeleteCommand = fileListsCommands.CreateDeleteCommand();
+
         
+
+
+    
+
         PreviewFile.Subscribe(file =>
         {
             if (file is ImageSetter imageSetter)
             {
                 imageSetter.SetDisplay(ThatModel.GetInstance());
             }
-        });
-
-    
-
-        PreviewFile.Subscribe(file =>
-        {
             bool visible = file is PdfFileViewParam or EmptyFileViewParam;
             IsPdf.Value = visible ? Visibility.Visible : Visibility.Collapsed;
 
@@ -118,23 +121,6 @@ internal class MainViewModel
 
 
         // 各コマンドのアクションを設定
-        OpenCommand.Subscribe(ExecuteOpen);
-        DeselectAllCommand.Subscribe(_ =>
-        {
-            foreach(var file in FilesList) file.IsSelected.Value = false;
-        });
-        SelectAllCommand.Subscribe(_ =>
-            { foreach(var file in FilesList) file.IsSelected.Value = true;}
-        );
-        DeleteCommand.Subscribe(_ =>
-        {
-            var files = FilesList.Where(x => x.IsSelected.Value).ToList();
-            foreach(var file in files) FilesList.Remove(file);
-            PreviewFile.Value = EmptyFileViewParam.Instance;
-        });
-
-        FilesList.CollectionChanged += FilesList_CollectionChanged;
-        UpdateListMenuItems();
 
         RotateOriginalCommand.Subscribe(_ => ExecuteRotateOriginal());
         RotateRight90Command.Subscribe(_ => ExecuteRotateRight90());
@@ -172,65 +158,14 @@ internal class MainViewModel
 
         AboutCommand.Subscribe(_ => ExecuteAbout());
 
-        FilesList.CollectionChanged += (sender, e) =>
-        {
-            if (e.NewItems != null)
-            {
-                foreach (SearchResultViewModel newItem in e.NewItems)
-                {
-                    // 新しい項目のIsSelected.Valueの変更を監視
-                    newItem.IsSelected.Subscribe(_ => OnIsSelectedChanged(newItem));
-                }
-            }
-            if (e.OldItems != null)
-            {
-                foreach (SearchResultViewModel oldItem in e.OldItems)
-                {
-                    // 不要になった項目の監視を解除
-                    oldItem.IsSelected.Dispose();
-                }
-            }
-        };
-    }
-
-    private void OnIsSelectedChanged(SearchResultViewModel item)
-    {
-        // IsSelected.Valueが変更されたときの処理
-        // ここで必要なロジックを実装します
-        
-        var files = this.FilesList.Where(x => x.IsSelected.Value).ToList();
-        if (files.Count == 1)
-        {
-            PreviewFile.Value = files[0].FileViewParam;
-        }else
-        {
-            PreviewFile.Value = EmptyFileViewParam.Instance;
-        }
 
     }
 
-    private FileViewParam? AppendToFileList(string name)
-    {
-        if (string.IsNullOrEmpty(name)) return null;
-        var file = FileTypes.GetFileViewParam(name);
-        SearchResultViewModel serchResultViewModel = new (file);
-        FilesList.Add(new(file));
-        return file;
-    }
 
-    private void ExecuteAppendFile(string name)
-    {
-        // 「追加」の処理
-        AppendToFileList(name);
-    }
-    private void ExecuteOpen(string name)
-    {
-        // 「開く」の処理
-        var file =  AppendToFileList(name);
-        if (file == null) return;
-        PreviewFile.Value = file;
 
-    }
+
+
+ 
 
     private void ExecuteRotateOriginal()
     {
@@ -349,29 +284,7 @@ internal class MainViewModel
 
     }
 
-    private void UpdateListMenuItems()
-    {
-        ListMenuItems.Clear();
-        foreach (var file in FilesList)
-        {
-            var menuItem = new MenuItemViewModel
-            {
-                Header = file.FileViewParam.filename,
-                Command = new ReactiveCommand().WithSubscribe(() => OpenFile(file))
-            };
-            ListMenuItems.Add(menuItem);
-        }
-    }
-
-    private void OpenFile(SearchResultViewModel file)
-    {
-        PreviewFile.Value = file.FileViewParam;
-    }
-
-    private void FilesList_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-    {
-        UpdateListMenuItems();
-    }
+  
 
 
 
