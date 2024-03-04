@@ -11,12 +11,21 @@ using Reactive.Bindings.Extensions;
 using ListReactiveProperty.Models;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace ListReactiveProperty.ViewModels;
 
 internal class MainViewModel
 {
     public ReactiveCollection<SearchResultViewModel> FilesList { get; } = [];
+
+    public ObservableCollection<MenuItemViewModel> ListMenuItems { get; set; }= new();
+    public class MenuItemViewModel
+    {
+        public string Header { get; set; }
+        public ICommand Command { get; set; }
+        // 必要に応じて他のプロパティや子メニュー項目のコレクションも追加できます
+    }
 
     public ReactiveProperty<FileViewParam> PreviewFile { get; } = new();
 
@@ -123,6 +132,9 @@ internal class MainViewModel
             foreach(var file in files) FilesList.Remove(file);
             PreviewFile.Value = EmptyFileViewParam.Instance;
         });
+
+        FilesList.CollectionChanged += FilesList_CollectionChanged;
+        UpdateListMenuItems();
 
         RotateOriginalCommand.Subscribe(_ => ExecuteRotateOriginal());
         RotateRight90Command.Subscribe(_ => ExecuteRotateRight90());
@@ -336,6 +348,31 @@ internal class MainViewModel
 
 
     }
+
+    private void UpdateListMenuItems()
+    {
+        ListMenuItems.Clear();
+        foreach (var file in FilesList)
+        {
+            var menuItem = new MenuItemViewModel
+            {
+                Header = file.FileViewParam.filename,
+                Command = new ReactiveCommand().WithSubscribe(() => OpenFile(file))
+            };
+            ListMenuItems.Add(menuItem);
+        }
+    }
+
+    private void OpenFile(SearchResultViewModel file)
+    {
+        PreviewFile.Value = file.FileViewParam;
+    }
+
+    private void FilesList_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        UpdateListMenuItems();
+    }
+
 
 
 }

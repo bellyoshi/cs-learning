@@ -17,7 +17,13 @@
 
         <Menu>
             <MenuItem Header="_ファイル">
-                <MenuItem Header="_リスト" Command="{Binding ListCommand}"/>
+                <MenuItem Header="_リスト" ItemsSource="{Binding ListMenuItems}">
+                    <MenuItem.ItemTemplate>
+                        <DataTemplate>
+                            <MenuItem Header="{Binding Header}" Command="{Binding Command}"/>
+                        </DataTemplate>
+                    </MenuItem.ItemTemplate>
+                </MenuItem>
                 <MenuItem Header="開く(_O)">
                 <behaviors:Interaction.Triggers>
                     <behaviors:EventTrigger EventName="Click">
