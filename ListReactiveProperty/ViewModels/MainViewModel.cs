@@ -18,9 +18,6 @@ internal class MainViewModel
 {
     public ReactiveCollection<SearchResultViewModel> FilesList { get; } = [];
 
-
-    public ReactiveProperty<FileViewParam?> SelectedFile { get; } = new();
-
     public ReactiveProperty<FileViewParam> PreviewFile { get; } = new();
 
     private readonly PdfCommands pdfCommands;
@@ -97,18 +94,11 @@ internal class MainViewModel
             }
         });
 
-        SelectedFile.Subscribe(file =>
-        {
-            if (file == null) 
-                PreviewFile.Value = new EmptyFileViewParam();
-            else
-                PreviewFile.Value = file;
+    
 
-        });
-
-        SelectedFile.Subscribe(file =>
+        PreviewFile.Subscribe(file =>
         {
-            bool visible = file is PdfFileViewParam or null;
+            bool visible = file is PdfFileViewParam or EmptyFileViewParam;
             IsPdf.Value = visible ? Visibility.Visible : Visibility.Collapsed;
 
         });
@@ -131,7 +121,7 @@ internal class MainViewModel
         {
             var files = FilesList.Where(x => x.IsSelected.Value).ToList();
             foreach(var file in files) FilesList.Remove(file);
-            SelectedFile.Value = null;
+            PreviewFile.Value = EmptyFileViewParam.Instance;
         });
 
         RotateOriginalCommand.Subscribe(_ => ExecuteRotateOriginal());
@@ -199,10 +189,10 @@ internal class MainViewModel
         var files = this.FilesList.Where(x => x.IsSelected.Value).ToList();
         if (files.Count == 1)
         {
-            SelectedFile.Value = files[0].FileViewParam;
+            PreviewFile.Value = files[0].FileViewParam;
         }else
         {
-            SelectedFile.Value = null;
+            PreviewFile.Value = EmptyFileViewParam.Instance;
         }
 
     }
@@ -226,7 +216,7 @@ internal class MainViewModel
         // 「開く」の処理
         var file =  AppendToFileList(name);
         if (file == null) return;
-        SelectedFile.Value = file;
+        PreviewFile.Value = file;
 
     }
 

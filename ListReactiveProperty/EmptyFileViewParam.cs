@@ -9,6 +9,8 @@ namespace ListReactiveProperty
 {
     internal class EmptyFileViewParam : FileViewParam, ImageSetter
     {
+        public static EmptyFileViewParam Instance { get; } = new EmptyFileViewParam();
+
         public EmptyFileViewParam()
             : base(String.Empty) { }
 
