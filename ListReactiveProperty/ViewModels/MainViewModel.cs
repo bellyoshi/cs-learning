@@ -12,6 +12,7 @@ using ListReactiveProperty.Models;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace ListReactiveProperty.ViewModels;
 
@@ -24,10 +25,13 @@ internal class MainViewModel
 
     public ReactiveProperty<FileViewParam> PreviewFile { get; } = new();
 
+    public ReactiveProperty<FileViewParam> DisplayFile { get; } = new();
+
     private readonly PdfCommands pdfCommands;
 
     private readonly FileListsCommands fileListsCommands;
-    public ReactiveProperty<System.Windows.Media.Imaging.BitmapSource?> ImageSource { get; } = new();
+    public ReactiveProperty<BitmapSource?> ImageSource { get; } = new();
+    public ReactiveProperty<BitmapSource?> DisplayImage { get; } = new();
 
     public ReactiveProperty<Visibility> IsPdf { get; } = new();
 
@@ -108,15 +112,16 @@ internal class MainViewModel
         {
             if (file is ImageSetter imageSetter)
             {
-                imageSetter.SetDisplay(ThatModel.GetInstance());
+                imageSetter.SetDisplay(DisplayModel.GetInstance());
             }
             bool visible = file is PdfFileViewParam or EmptyFileViewParam;
             IsPdf.Value = visible ? Visibility.Visible : Visibility.Collapsed;
 
         });
 
-        ThatModel thatModel = ThatModel.GetInstance();
+        DisplayModel thatModel = DisplayModel.GetInstance();
         ImageSource = thatModel.ToReactivePropertyAsSynchronized(x => x.ImageSource);
+        DisplayImage = thatModel.ToReactivePropertyAsSynchronized(x => x.DisplayImage);
 
 
 
@@ -252,8 +257,7 @@ internal class MainViewModel
     private void ExecuteDisplaySettings()
     {
         // 「ディスプレイと背景色の設定」の処理
-        Windows.SettingWindow settingWindow = new();
-        settingWindow.Show();
+        Utils.WindowDispacher.ShowWindow<Windows.SettingWindow>();
     }
 
     private void ExecuteAutoShow()
@@ -278,9 +282,8 @@ internal class MainViewModel
 
     private void OpenNewWindow()
     {
-        var window = new ViewerWindow();
-        window.Show();
-
+        Utils.WindowDispacher.ShowWindow<ViewerWindow>();
+        DisplayImage.Value = ImageSource.Value;
 
     }
 

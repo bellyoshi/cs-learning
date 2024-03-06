@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 
 namespace ListReactiveProperty.Models
 {
-    internal class ThatModel : INotifyPropertyChanged
+    internal class DisplayModel : INotifyPropertyChanged
         , IDisplay
     {
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -38,8 +38,19 @@ namespace ListReactiveProperty.Models
             }
         }
 
-        private static ThatModel _instance = new();
-        internal static ThatModel GetInstance()
+        BitmapSource? _displayImage;
+        public BitmapSource? DisplayImage
+        {
+            get => _displayImage;
+            set
+            {
+                _displayImage = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DisplayImage)));
+            }
+        }
+
+        private static DisplayModel _instance = new();
+        internal static DisplayModel GetInstance()
         {
             return _instance;
         }
