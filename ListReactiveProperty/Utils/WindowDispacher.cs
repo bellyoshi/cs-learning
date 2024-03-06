@@ -30,16 +30,6 @@ namespace ListReactiveProperty.Utils
             window.Show();
         }
 
-        public static T GetWindow<T>() where T : Window, new()
-        {
-            var windows = System.Windows.Application.Current.Windows.OfType<T>();
-            return windows.FirstOrDefault() ?? new T();
-        }
 
-        public static void ShowWindow<T>() where T : Window, new()
-        {
-            var window = GetWindow<T>();
-            window.Show();
-        }
     }
 }

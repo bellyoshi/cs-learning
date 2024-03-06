@@ -13,6 +13,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using ListReactiveProperty.Windows;
+using ListReactiveProperty.Utils;
 
 namespace ListReactiveProperty.ViewModels;
 
@@ -246,7 +248,7 @@ internal class MainViewModel
 
     private void ExecuteEndShowOnSecondMonitor()
     {
-        Utils.WindowDispacher.CloseWindow<ViewerWindow>();
+        WindowDispacher.CloseWindow<ViewerWindow>();
     }
 
     private void ExecuteShowBackgroundOnSecondMonitor()
@@ -257,7 +259,7 @@ internal class MainViewModel
     private void ExecuteDisplaySettings()
     {
         // 「ディスプレイと背景色の設定」の処理
-        Utils.WindowDispacher.ShowWindow<Windows.SettingWindow>();
+        WindowDispacher.ShowWindow<SettingWindow>();
     }
 
     private void ExecuteAutoShow()
@@ -282,7 +284,7 @@ internal class MainViewModel
 
     private void OpenNewWindow()
     {
-        Utils.WindowDispacher.ShowWindow<ViewerWindow>();
+        WindowDispacher.ShowWindow<ViewerWindow>();
         DisplayImage.Value = ImageSource.Value;
 
     }
