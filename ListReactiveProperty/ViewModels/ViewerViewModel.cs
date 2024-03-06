@@ -32,8 +32,8 @@ namespace ListReactiveProperty.ViewModels
             WindowModeCommand.Subscribe(_ => setter.IsFullScreen = false);
 
         
-        var thatModel = ThatModel.GetInstance();
-            ImageSource = thatModel.ToReactivePropertyAsSynchronized(x => x.ImageSource);
+            var thatModel = DisplayModel.GetInstance();
+            ImageSource = thatModel.ToReactivePropertyAsSynchronized(x => x.DisplayImage);
 
             var screenModel = ScreenModel.GetInstance();
             
