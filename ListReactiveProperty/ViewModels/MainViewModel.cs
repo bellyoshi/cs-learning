@@ -75,9 +75,10 @@ internal class MainViewModel
     public ReactiveCommand RewindCommand { get; } = new ();
 
     // セカンドモニター操作
-    public ReactiveCommand ShowOnSecondMonitorCommand { get; } = new ();
-    public ReactiveCommand EndShowOnSecondMonitorCommand { get; } = new ();
-    public ReactiveCommand ShowBackgroundOnSecondMonitorCommand { get; } = new ();
+    SecondMonitorCommands SecondMonitorCommands { get; }
+    public ReactiveCommand ShowOnSecondMonitorCommand { get; }
+    public ReactiveCommand EndShowOnSecondMonitorCommand { get; } 
+    public ReactiveCommand ShowBackgroundOnSecondMonitorCommand { get; }
 
     // 設定メニュー
     public ReactiveCommand DisplaySettingsCommand { get; } = new ();
@@ -114,10 +115,15 @@ internal class MainViewModel
         DisplayModel display = DisplayModel.GetInstance();
         PreviewImage = display.ToReactivePropertyAsSynchronized(x => x.PreviewImage);
         DisplayImage = display.ToReactivePropertyAsSynchronized(x => x.DisplayImage);
+
         IsAutoDisplayEnabled = display.ToReactivePropertyAsSynchronized(x => x.IsAutoDisplayEnabled);
-        IsAutoDisplayEnabled.Subscribe(enabled => {
-            if(enabled)ExecuteShowOnSecondMonitor();
-        });
+        SecondMonitorCommands = new( PreviewImage, DisplayImage);
+        
+        ShowOnSecondMonitorCommand = SecondMonitorCommands.CreateShowOnSecondMonitorCommand();
+        EndShowOnSecondMonitorCommand = SecondMonitorCommands.CreateEndShowOnSecondMonitorCommand();
+        ShowBackgroundOnSecondMonitorCommand = SecondMonitorCommands.CreateShowBackgroundOnSecondMonitorCommand();
+
+
         PreviewFile.Subscribe(file =>
         {
             if (file is ImageSetter imageSetter)
@@ -126,7 +132,6 @@ internal class MainViewModel
             }
             bool visible = file is PdfFileViewParam or EmptyFileViewParam;
             IsPdf.Value = visible ? Visibility.Visible : Visibility.Collapsed;
-            if (IsAutoDisplayEnabled.Value) ExecuteShowOnSecondMonitor();
         });
 
         // 各コマンドのアクションを設定
@@ -156,9 +161,7 @@ internal class MainViewModel
         FastForwardCommand.Subscribe(_ => ExecuteFastForward());
         RewindCommand.Subscribe(_ => ExecuteRewind());
 
-        ShowOnSecondMonitorCommand.Subscribe(_ => ExecuteShowOnSecondMonitor());
-        EndShowOnSecondMonitorCommand.Subscribe(_ => ExecuteEndShowOnSecondMonitor());
-        ShowBackgroundOnSecondMonitorCommand.Subscribe(_ => ExecuteShowBackgroundOnSecondMonitor());
+
 
         DisplaySettingsCommand.Subscribe(_ => ExecuteDisplaySettings());
         AutoShowCommand.Subscribe(_ => ExecuteAutoShow());
@@ -243,20 +246,7 @@ internal class MainViewModel
         // 「巻き戻し」の処理
     }
 
-    private void ExecuteShowOnSecondMonitor()
-    {
-        OpenNewWindow();
-    }
-
-    private void ExecuteEndShowOnSecondMonitor()
-    {
-        WindowDispacher.CloseWindow<ViewerWindow>();
-    }
-
-    private void ExecuteShowBackgroundOnSecondMonitor()
-    {
-        // 「セカンドモニターでの背景表示」の処理
-    }
+  
 
     private void ExecuteDisplaySettings()
     {
@@ -284,12 +274,7 @@ internal class MainViewModel
         // 「このアプリについて」の処理
     }
 
-    private void OpenNewWindow()
-    {
-        WindowDispacher.ShowWindow<ViewerWindow>();
-        DisplayImage.Value = PreviewImage.Value;
 
-    }
 
   
 

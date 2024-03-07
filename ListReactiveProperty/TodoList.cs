@@ -29,7 +29,6 @@ internal class TodoList
 //todo : アップデート機能
 //todo : 英語に対応する。
 //todo : テキストファイルを読み込めるようにする。
-//todo : 表示終了、表示開始のボタンのCanExecute
 
 
 

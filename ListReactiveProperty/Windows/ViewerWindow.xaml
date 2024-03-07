@@ -10,7 +10,7 @@
         Width="640"
 
                 xmlns:vm="clr-namespace:ListReactiveProperty.ViewModels"
-
+Closing="Window_Closing"
         ContextMenu="{DynamicResource MyContextMenu}">
 
     <Window.Resources>

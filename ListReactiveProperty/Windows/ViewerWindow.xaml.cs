@@ -30,6 +30,8 @@ namespace ListReactiveProperty
             WindowFullScreenManager windowFullScreenManager = new(this);
             this.DataContext = new ViewerViewModel(windowFullScreenManager);
 
+            SecondMonitorCommands.SetIsOpenSecondMonitor(true);
+
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -48,7 +50,10 @@ namespace ListReactiveProperty
 
         }
 
-
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            SecondMonitorCommands.SetIsOpenSecondMonitor(false);
+        }
     }
 
 
