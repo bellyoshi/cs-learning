@@ -32,12 +32,12 @@ internal class MainViewModel
     private readonly PdfCommands pdfCommands;
 
     private readonly FileListsCommands fileListsCommands;
-    public ReactiveProperty<BitmapSource?> ImageSource { get; } = new();
+    public ReactiveProperty<BitmapSource?> PreviewImage { get; } = new();
     public ReactiveProperty<BitmapSource?> DisplayImage { get; } = new();
 
     public ReactiveProperty<Visibility> IsPdf { get; } = new();
 
-
+    public ReactiveProperty<bool> IsAutoDisplayEnabled { get; }
     // ファイルメニュー
     public ReactiveCommand<string> AppendFile { get; }
     public ReactiveCommand<string> OpenCommand { get; } 
@@ -105,11 +105,19 @@ internal class MainViewModel
         SelectAllCommand = fileListsCommands.CreateSelectAllCommand();
         DeleteCommand = fileListsCommands.CreateDeleteCommand();
 
-        
 
 
-    
 
+
+
+
+        DisplayModel display = DisplayModel.GetInstance();
+        PreviewImage = display.ToReactivePropertyAsSynchronized(x => x.PreviewImage);
+        DisplayImage = display.ToReactivePropertyAsSynchronized(x => x.DisplayImage);
+        IsAutoDisplayEnabled = display.ToReactivePropertyAsSynchronized(x => x.IsAutoDisplayEnabled);
+        IsAutoDisplayEnabled.Subscribe(enabled => {
+            if(enabled)ExecuteShowOnSecondMonitor();
+        });
         PreviewFile.Subscribe(file =>
         {
             if (file is ImageSetter imageSetter)
@@ -118,14 +126,8 @@ internal class MainViewModel
             }
             bool visible = file is PdfFileViewParam or EmptyFileViewParam;
             IsPdf.Value = visible ? Visibility.Visible : Visibility.Collapsed;
-
+            if (IsAutoDisplayEnabled.Value) ExecuteShowOnSecondMonitor();
         });
-
-        DisplayModel thatModel = DisplayModel.GetInstance();
-        ImageSource = thatModel.ToReactivePropertyAsSynchronized(x => x.ImageSource);
-        DisplayImage = thatModel.ToReactivePropertyAsSynchronized(x => x.DisplayImage);
-
-
 
         // 各コマンドのアクションを設定
 
@@ -285,7 +287,7 @@ internal class MainViewModel
     private void OpenNewWindow()
     {
         WindowDispacher.ShowWindow<ViewerWindow>();
-        DisplayImage.Value = ImageSource.Value;
+        DisplayImage.Value = PreviewImage.Value;
 
     }
 

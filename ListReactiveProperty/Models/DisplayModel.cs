@@ -27,14 +27,33 @@ namespace ListReactiveProperty.Models
             }
         }
 
-        System.Windows.Media.Imaging.BitmapSource? _imageSouce;
-        public System.Windows.Media.Imaging.BitmapSource? ImageSource
+        BitmapSource? _imageSouce;
+        public BitmapSource? PreviewImage
         {
             get => _imageSouce;
             set
             {
                 _imageSouce = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ImageSource)));
+                if (this.IsAutoDisplayEnabled)
+                {
+                    this.DisplayImage = value;
+                }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(PreviewImage)));
+            }
+        }
+
+        bool _isAutoDisplayEnabled;
+        public bool IsAutoDisplayEnabled
+        {
+            get => _isAutoDisplayEnabled;
+            set
+            {
+                _isAutoDisplayEnabled = value;
+                if (value)
+                {
+                    this.DisplayImage = this.PreviewImage;
+                }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsAutoDisplayEnabled)));
             }
         }
 
@@ -58,7 +77,7 @@ namespace ListReactiveProperty.Models
         public void SetImageSource(BitmapSource? ImageSource)
         {
             
-            this.ImageSource = ImageSource;
+            this.PreviewImage = ImageSource;
         }
     }
 }

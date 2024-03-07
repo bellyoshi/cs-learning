@@ -152,8 +152,8 @@
 
             </StackPanel>
             <StackPanel Grid.Column="2">
-                <Image Source="{Binding ImageSource.Value}"></Image>
-                <StackPanel Orientation="Horizontal">
+                <Image Source="{Binding PreviewImage.Value}"></Image>
+                <StackPanel Orientation="Horizontal" Visibility="{Binding IsPdf}">
                     <Label Content="{Binding CurrentPage.Value}"></Label>
                     <Label Content="/"></Label>
                     <Label Content="{Binding PageCount.Value}"></Label>
@@ -164,6 +164,8 @@
                 <Button Content="表示" Command="{Binding ShowOnSecondMonitorCommand}"/>
                 <Button Content="表示終了" Command="{Binding EndShowOnSecondMonitorCommand}"/>
                 <Button Content="背景表示" Command="{Binding ShowBackgroundOnSecondMonitorCommand}"/>
+                <CheckBox IsChecked="{Binding IsAutoDisplayEnabled.Value}"
+                  Content="操作中に自動表示"/>
             </StackPanel>
 
     </Grid>

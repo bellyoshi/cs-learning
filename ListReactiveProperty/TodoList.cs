@@ -10,7 +10,6 @@ internal class TodoList
 //todo : 0.5ページ移動を可能にする。
 //todo : マウスでスクロールできるようにする。
 //todo : 拡大縮小を可能にする。
-//todo : 操作中に自動表示のチェックボック
 //todo : 動画の時以外に再生ボタンを表示しない
 //todo : 回転のボタンの位置を調整
 //todo : 回転のボタンの実装
@@ -30,6 +29,7 @@ internal class TodoList
 //todo : アップデート機能
 //todo : 英語に対応する。
 //todo : テキストファイルを読み込めるようにする。
+//todo : 表示終了、表示開始のボタンのCanExecute
 
 
 
