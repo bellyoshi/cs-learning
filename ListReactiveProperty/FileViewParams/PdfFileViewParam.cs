@@ -5,11 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
-namespace ListReactiveProperty
+
+namespace ListReactiveProperty.FileViewParams
 {
-    public class PdfFileViewParam : FileViewParam, ImageSetter
+    public class PdfFileViewParam : DocuGraphFileViewParam
     {
+        public override BitmapSource GetImageFromFile()
+        {
+            return ImageCreater.GetImageFromFile(this);
+        }
+
         public pdfiumWrapper2.PDFDocumentWrapper PDFDocumentWrapper { get; }
         public int CurrentPage
         {
@@ -22,20 +29,9 @@ namespace ListReactiveProperty
             PDFDocumentWrapper = new pdfiumWrapper2.PDFDocumentWrapper(filename);
             PageCount = PDFDocumentWrapper.PageCount;
         }
-        private IDisplay? _display;
-        public void SetDisplay(IDisplay display)
-        {
-            this._display = display;
-            ExecuteDisplay();
-        }
 
-        public void ExecuteDisplay()
-        {
-            if (this._display == null) return;
-            var image = ImageCreater.GetImageFromFile(this);
-            _display.SetImageSource(image);
-        }
-        public bool CanNextPage => CurrentPage < PageCount -1;
+
+        public bool CanNextPage => CurrentPage < PageCount - 1;
         public void NextPage()
         {
             if (!CanNextPage) return;
@@ -43,7 +39,7 @@ namespace ListReactiveProperty
             ExecuteDisplay();
         }
         public bool CanPrevPage => CurrentPage > 0;
-        
+
         public void PrevPage()
         {
             if (!CanPrevPage) return;

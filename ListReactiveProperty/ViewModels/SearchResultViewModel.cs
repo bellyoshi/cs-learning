@@ -1,6 +1,8 @@
 ﻿using Reactive.Bindings;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using ListReactiveProperty.FileViewParams;
+
 namespace ListReactiveProperty.ViewModels;
 
 

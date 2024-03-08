@@ -5,10 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ListReactiveProperty
+
+namespace ListReactiveProperty.FileViewParams
 {
-    public class ImageFileViewParam(string filename) : FileViewParam(filename), ImageSetter
+    public class EmptyFileViewParam : FileViewParam, ImageSetter
     {
+        public static EmptyFileViewParam Instance { get; } = new EmptyFileViewParam();
+
+        public EmptyFileViewParam()
+            : base(String.Empty) { }
+
         private IDisplay? _display;
         public void SetDisplay(IDisplay display)
         {
@@ -19,9 +25,8 @@ namespace ListReactiveProperty
         public void ExecuteDisplay()
         {
             if (this._display == null) return;
-            var image = ImageCreater.GetImageFromFile(this);
-            _display.SetImageSource(image);
+            _display.SetImageSource(null);
         }
-    }
-
+    }   
+    
 }

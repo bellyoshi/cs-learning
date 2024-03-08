@@ -15,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using ListReactiveProperty.Windows;
 using ListReactiveProperty.Utils;
+using ListReactiveProperty.FileViewParams;
 
 namespace ListReactiveProperty.ViewModels;
 
