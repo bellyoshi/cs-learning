@@ -25,6 +25,7 @@ internal class MainViewModel
 
     public ObservableCollection<MenuItemViewModel> ListMenuItems { get; }
 
+    public ReactiveProperty<string> VideoPath { get; } = new(); 
 
     public ReactiveProperty<FileViewParam> PreviewFile { get; } = new();
 
@@ -130,6 +131,10 @@ internal class MainViewModel
             if (file is ImageSetter imageSetter)
             {
                 imageSetter.SetDisplay(DisplayModel.GetInstance());
+            }
+            if(file is MovieFileViewParam movieFileViewParam)
+            {
+                VideoPath.Value = movieFileViewParam.filename;
             }
             bool visible = file is PdfFileViewParam or EmptyFileViewParam;
             IsPdf.Value = visible ? Visibility.Visible : Visibility.Collapsed;
