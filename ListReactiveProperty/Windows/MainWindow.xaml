@@ -152,8 +152,8 @@
 
             </StackPanel>
             <StackPanel Grid.Column="2">
-                <Image Source="{Binding PreviewImage.Value}"></Image>
-                <MediaElement Source="{Binding VideoPath.Value}" LoadedBehavior="Play"/>
+                <Image Source="{Binding PreviewImage.Value}" Visibility="{Binding IsImage.Value}"></Image>
+                <MediaElement Source="{Binding VideoPath.Value}" LoadedBehavior="Play" Visibility="{Binding IsMovie.Value}"/>
                 <StackPanel Orientation="Horizontal" Visibility="{Binding IsPdf}">
                     <Label Content="{Binding CurrentPage.Value}"></Label>
                     <Label Content="/"></Label>

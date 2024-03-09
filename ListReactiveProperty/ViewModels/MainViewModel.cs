@@ -39,6 +39,9 @@ internal class MainViewModel
 
     public ReactiveProperty<Visibility> IsPdf { get; } = new();
 
+    public ReactiveProperty<Visibility> IsMovie { get; } = new();
+    public ReactiveProperty<Visibility> IsImage { get; } = new();
+
     public ReactiveProperty<bool> IsAutoDisplayEnabled { get; }
     // ファイルメニュー
     public ReactiveCommand<string> AppendFile { get; }
@@ -97,12 +100,11 @@ internal class MainViewModel
 
     public MainViewModel()
     {
-        pdfCommands = new(PreviewFile, PageCount, CurrentPage);
+
 
         fileListsCommands = new(PreviewFile);
         FilesList = fileListsCommands.FilesList;
         ListMenuItems = fileListsCommands.ListMenuItems;
-
         AppendFile = fileListsCommands.CreateAppendFile();
         OpenCommand = fileListsCommands.CreateOpenCommand();
         DeselectAllCommand = fileListsCommands.CreateDeselectAllCommand();
@@ -133,12 +135,19 @@ internal class MainViewModel
             {
                 imageSetter.SetDisplay(DisplayModel.GetInstance());
             }
-            if(file is MovieFileViewParam movieFileViewParam)
+            if (file is MovieFileViewParam movieFileViewParam)
             {
                 VideoPath.Value = movieFileViewParam.filename;
             }
+            else
+            {
+                VideoPath.Value = String.Empty;     
+            
+            }
             bool visible = file is PdfFileViewParam or EmptyFileViewParam;
             IsPdf.Value = visible ? Visibility.Visible : Visibility.Collapsed;
+            IsMovie.Value = file is MovieFileViewParam ? Visibility.Visible : Visibility.Collapsed;
+            IsImage.Value = file is ImageSetter ? Visibility.Visible : Visibility.Collapsed;
         });
 
         // 各コマンドのアクションを設定
@@ -148,12 +157,10 @@ internal class MainViewModel
         RotateLeft90Command = RotateCommands.CreateRotateLeft90Command();
         Rotate180Command = RotateCommands.CreateRotate180Command();
 
-
+        pdfCommands = new(PreviewFile, PageCount, CurrentPage);
         FirstPageCommand = pdfCommands.CreateFirstPageCommand();
         NextPageCommand = pdfCommands.CreateNextPageCommand();
-
         PreviousPageCommand = pdfCommands.CreatePreviousPageCommand();
-
         LastPageCommand = pdfCommands.CreateLastPageCommand();
         SpecifyPageCommand = pdfCommands.CreateSpecifyPageCommand();
 
@@ -171,7 +178,6 @@ internal class MainViewModel
 
 
         DisplaySettingsCommand.Subscribe(_ => ExecuteDisplaySettings());
-        AutoShowCommand.Subscribe(_ => ExecuteAutoShow());
         SlimSizeCommand.Subscribe(_ => ExecuteSlimSize());
         StandardSizeCommand.Subscribe(_ => ExecuteStandardSize());
 
@@ -243,10 +249,7 @@ internal class MainViewModel
         WindowDispacher.ShowWindow<SettingWindow>();
     }
 
-    private void ExecuteAutoShow()
-    {
-        // 「操作中に自動表示」の設定
-    }
+
 
     private void ExecuteSlimSize()
     {
