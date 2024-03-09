@@ -51,10 +51,11 @@ internal class MainViewModel
     public ReactiveCommand DeleteCommand { get; } 
 
     // 表示メニュー
-    public ReactiveCommand RotateOriginalCommand { get; } = new ();
-    public ReactiveCommand RotateRight90Command { get; } = new ();
-    public ReactiveCommand RotateLeft90Command { get; } = new ();
-    public ReactiveCommand Rotate180Command { get; } = new ();
+    private RotateCommands RotateCommands { get; }
+    public ReactiveCommand RotateOriginalCommand { get; } 
+    public ReactiveCommand RotateRight90Command { get; } 
+    public ReactiveCommand RotateLeft90Command { get; } 
+    public ReactiveCommand Rotate180Command { get; } 
 
     // ページナビゲーション
     public ReactiveCommand FirstPageCommand { get; } 
@@ -141,11 +142,11 @@ internal class MainViewModel
         });
 
         // 各コマンドのアクションを設定
-
-        RotateOriginalCommand.Subscribe(_ => ExecuteRotateOriginal());
-        RotateRight90Command.Subscribe(_ => ExecuteRotateRight90());
-        RotateLeft90Command.Subscribe(_ => ExecuteRotateLeft90());
-        Rotate180Command.Subscribe(_ => ExecuteRotate180());
+        RotateCommands = new(PreviewFile);
+        RotateOriginalCommand = RotateCommands.CreateRotateOriginalCommand();
+        RotateRight90Command = RotateCommands.CreateRotateRight90Command();
+        RotateLeft90Command = RotateCommands.CreateRotateLeft90Command();
+        Rotate180Command = RotateCommands.CreateRotate180Command();
 
 
         FirstPageCommand = pdfCommands.CreateFirstPageCommand();
@@ -185,25 +186,7 @@ internal class MainViewModel
 
  
 
-    private void ExecuteRotateOriginal()
-    {
-        // 「元の表示」の回転処理
-    }
 
-    private void ExecuteRotateRight90()
-    {
-        // 「右へ90度回転」の処理
-    }
-
-    private void ExecuteRotateLeft90()
-    {
-        // 「左へ90度回転」の処理
-    }
-
-    private void ExecuteRotate180()
-    {
-        // 「180度回転」の処理
-    }
 
     
 
