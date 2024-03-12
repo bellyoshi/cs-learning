@@ -73,12 +73,14 @@ internal class MainViewModel
     public ReactiveCommand ZoomInCommand { get; } = new ();
     public ReactiveCommand ZoomOutCommand { get; } = new ();
 
+    private MovieCommands MovieCommands { get; }
+
     // 再生
-    public ReactiveCommand MoveToStartCommand { get; } = new ();
-    public ReactiveCommand StartPlayingCommand { get; } = new ();
-    public ReactiveCommand PausePlayingCommand { get; } = new ();
-    public ReactiveCommand FastForwardCommand { get; } = new ();
-    public ReactiveCommand RewindCommand { get; } = new ();
+    public ReactiveCommand MoveToStartCommand { get; } 
+    public ReactiveCommand StartPlayingCommand { get; } 
+    public ReactiveCommand PausePlayingCommand { get; } 
+    public ReactiveCommand FastForwardCommand { get; } 
+    public ReactiveCommand RewindCommand { get; } 
 
     // セカンドモニター操作
     SecondMonitorCommands SecondMonitorCommands { get; }
@@ -169,11 +171,14 @@ internal class MainViewModel
         ZoomInCommand.Subscribe(_ => ExecuteZoomIn());
         ZoomOutCommand.Subscribe(_ => ExecuteZoomOut());
 
-        MoveToStartCommand.Subscribe(_ => ExecuteMoveToStart());
-        StartPlayingCommand.Subscribe(_ => ExecuteStartPlaying());
-        PausePlayingCommand.Subscribe(_ => ExecutePausePlaying());
-        FastForwardCommand.Subscribe(_ => ExecuteFastForward());
-        RewindCommand.Subscribe(_ => ExecuteRewind());
+        MovieCommands = new(PreviewFile);
+
+
+        MoveToStartCommand = MovieCommands.CreateMoveToStartCommand();
+        StartPlayingCommand = MovieCommands.CreateMoveToStartCommand();
+        PausePlayingCommand = MovieCommands.CreateMoveToStartCommand();
+        FastForwardCommand = MovieCommands.CreateMoveToStartCommand();
+        RewindCommand = MovieCommands.CreateMoveToStartCommand();
 
 
 
@@ -216,30 +221,9 @@ internal class MainViewModel
         // 「縮小」のズーム処理
     }
 
-    private void ExecuteMoveToStart()
-    {
-        // 「最初に移動」の処理
-    }
+  
 
-    private void ExecuteStartPlaying()
-    {
-        // 「再生開始」の処理
-    }
 
-    private void ExecutePausePlaying()
-    {
-        // 「一時停止」の処理
-    }
-
-    private void ExecuteFastForward()
-    {
-        // 「早送り」の処理
-    }
-
-    private void ExecuteRewind()
-    {
-        // 「巻き戻し」の処理
-    }
 
   
 

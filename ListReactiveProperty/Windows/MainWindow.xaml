@@ -7,6 +7,8 @@
         xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:rp="clr-namespace:Reactive.Bindings.Interactivity;assembly=ReactiveProperty.WPF"
                 xmlns:vm="clr-namespace:ListReactiveProperty.ViewModels"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:behaviors="clr-namespace:ListReactiveProperty.Behaviors"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         >
@@ -153,7 +155,13 @@
             </StackPanel>
             <StackPanel Grid.Column="2">
                 <Image Source="{Binding PreviewImage.Value}" Visibility="{Binding IsImage.Value}"></Image>
-                <MediaElement Source="{Binding VideoPath.Value}" LoadedBehavior="Play" Visibility="{Binding IsMovie.Value}"/>
+                <MediaElement Source="{Binding VideoPath.Value}" 
+                              Visibility="{Binding IsMovie.Value}"
+                              LoadedBehavior="Manual">
+                    <i:Interaction.Behaviors>
+                        <behaviors:MediaBehavior/>
+                    </i:Interaction.Behaviors>
+                </MediaElement>
                 <StackPanel Orientation="Horizontal" Visibility="{Binding IsPdf}">
                     <Label Content="{Binding CurrentPage.Value}"></Label>
                     <Label Content="/"></Label>
