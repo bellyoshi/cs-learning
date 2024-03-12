@@ -3,6 +3,7 @@ using Reactive.Bindings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,11 +20,18 @@ namespace ListReactiveProperty.ViewModels
                 {
                     docuGraphFileViewParam.Value = d;
                 }
+                SetFlag();
             });
-            docuGraphFileViewParam.Subscribe(d =>
-            {
-                CanRotate.Value = d != null;
-            });
+            docuGraphFileViewParam.Subscribe(_ => SetFlag());
+        }
+
+        private void SetFlag()
+        {
+            if (fileViewParam.Value is EmptyFileViewParam)
+                CanRotate.Value = false;
+            else
+                CanRotate.Value = fileViewParam.Value is DocuGraphFileViewParam;
+
         }
 
         ReactiveProperty<FileViewParams.FileViewParam> fileViewParam;

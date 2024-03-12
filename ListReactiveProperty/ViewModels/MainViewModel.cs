@@ -27,7 +27,7 @@ internal class MainViewModel
 
     public ReactiveProperty<string> VideoPath { get; } = new(); 
 
-    public ReactiveProperty<FileViewParam> PreviewFile { get; } = new();
+    public ReactiveProperty<FileViewParam> PreviewFile { get; } = new(EmptyFileViewParam.Instance);
 
     public ReactiveProperty<FileViewParam> DisplayFile { get; } = new();
 
