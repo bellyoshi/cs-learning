@@ -8,4 +8,12 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="ReactiveProperty.WPF" Version="9.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WinFormsLibrary1\WinFormsLibrary1.csproj" />
+  </ItemGroup>
+
 </Project>

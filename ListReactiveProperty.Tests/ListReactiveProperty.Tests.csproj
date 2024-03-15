@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ListReactiveProperty\ListReactiveProperty.csproj" />
+    <ProjectReference Include="..\WinFormsLibrary1\WinFormsLibrary1.csproj" />
   </ItemGroup>
 
 </Project>

@@ -18,7 +18,7 @@ namespace ListReactiveProperty.ViewModels
         //back color
         public ReactiveProperty<Brush> BackColor { get; } 
 
-        private readonly ThatModel _thatModel = ThatModel.GetInstance();
+        private readonly DisplayModel _thatModel = DisplayModel.GetInstance();
 
         public ObservableCollection<Screen> DisplayOptions { get; } = new();
         public ReactiveProperty<Screen> SelectedDisplayOption { get; } = new();

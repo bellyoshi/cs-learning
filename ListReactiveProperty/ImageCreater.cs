@@ -4,7 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Media.Imaging;
 using System.Windows.Input;
-
+using ListReactiveProperty.FileViewParams;
 
 namespace ListReactiveProperty;
 
@@ -17,7 +17,7 @@ internal class ImageCreater
     }
     public static BitmapSource GetImageFromFile(SvgFileViewParam svgFileViewParam)
     {
-        return pdfiumWrapper.SVGRender.GetSVGImage(svgFileViewParam.filename);
+        return pdfiumWrapper2.SVGRender.GetSVGImage(svgFileViewParam.filename);
     }
     public static BitmapSource GetImageFromFile(ImageFileViewParam viewParam)
     {

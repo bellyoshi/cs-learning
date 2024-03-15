@@ -5,11 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp7"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="MainWindow" 
         AllowsTransparency="True"
         Background="Transparent"
-                 >
-        <Grid>
+        Left="{Binding WindowLeft.Value, Mode=TwoWay}"
+        Height="{Binding WindowHeight.Value, Mode=TwoWay}" 
+        Width="{Binding WindowWidth.Value, Mode=TwoWay}"
+        Top= "{Binding WindowTop.Value, Mode=TwoWay}"
+                        xmlns:vm="clr-namespace:WpfApp7"
+        ContextMenu="{DynamicResource MyContextMenu}">
+
+    <Window.Resources>
+        <ContextMenu x:Key="MyContextMenu">
+            <MenuItem Header="フルスクリーン" Command="{Binding FullScreenCommand}"/>
+            <MenuItem Header="ウィンドウモード" Command="{Binding WindowModeCommand}"/>
+            <MenuItem Header="表示終了" Command="{Binding CloseDisplayCommand}"/>
+        </ContextMenu>
+    </Window.Resources>
+    <Grid>
             <Border Background="White" BorderBrush="Black" BorderThickness="2">
                 <!-- ここにウィンドウのコンテンツを追加 -->
             </Border>

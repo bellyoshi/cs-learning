@@ -9,37 +9,63 @@ using System.Reactive.Linq;
 using System.Configuration;
 using Reactive.Bindings.Extensions;
 using ListReactiveProperty.Models;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
+using ListReactiveProperty.Windows;
+using ListReactiveProperty.Utils;
+using ListReactiveProperty.FileViewParams;
 
 namespace ListReactiveProperty.ViewModels;
 
 internal class MainViewModel
 {
-    public ObservableCollection<FileViewParam> FilesList { get; } = [];
+    public ReactiveCollection<SearchResultViewModel> FilesList { get; }
 
+    public ObservableCollection<MenuItemViewModel> ListMenuItems { get; }
 
-    public ReactiveProperty<FileViewParam> SelectedFile { get; } = new();
+    public ReactiveProperty<string> VideoPath { get; } = new(); 
 
-    private readonly PdfCommand pdfCommand;
-    public ReactiveProperty<System.Windows.Media.Imaging.BitmapSource?> ImageSource { get; } = new();
+    public ReactiveProperty<FileViewParam> PreviewFile { get; } = new(EmptyFileViewParam.Instance);
 
+    public ReactiveProperty<FileViewParam> DisplayFile { get; } = new();
 
+    private readonly PdfCommands pdfCommands;
+
+    private readonly FileListsCommands fileListsCommands;
+    public ReactiveProperty<BitmapSource?> PreviewImage { get; } = new();
+    public ReactiveProperty<BitmapSource?> DisplayImage { get; } = new();
+
+    public ReactiveProperty<Visibility> IsPdf { get; } = new();
+
+    public ReactiveProperty<Visibility> IsMovie { get; } = new();
+    public ReactiveProperty<Visibility> IsImage { get; } = new();
+
+    public ReactiveProperty<bool> IsAutoDisplayEnabled { get; }
     // ファイルメニュー
-    public ReactiveCommand<string> AppendFile { get; } = new();
-    public ReactiveCommand ListCommand { get; } = new ();
-    public ReactiveCommand<string> OpenCommand { get; } = new ();
+    public ReactiveCommand<string> AppendFile { get; }
+    public ReactiveCommand<string> OpenCommand { get; } 
+
+    //DeselectAllCommand
+    public ReactiveCommand DeselectAllCommand { get; } 
+    //SelectAllCommand
+    public ReactiveCommand SelectAllCommand { get; } 
+    public ReactiveCommand DeleteCommand { get; } 
 
     // 表示メニュー
-    public ReactiveCommand RotateOriginalCommand { get; } = new ();
-    public ReactiveCommand RotateRight90Command { get; } = new ();
-    public ReactiveCommand RotateLeft90Command { get; } = new ();
-    public ReactiveCommand Rotate180Command { get; } = new ();
+    private RotateCommands RotateCommands { get; }
+    public ReactiveCommand RotateOriginalCommand { get; } 
+    public ReactiveCommand RotateRight90Command { get; } 
+    public ReactiveCommand RotateLeft90Command { get; } 
+    public ReactiveCommand Rotate180Command { get; } 
 
     // ページナビゲーション
-    public ReactiveCommand FirstPageCommand { get; } = new ();
+    public ReactiveCommand FirstPageCommand { get; } 
     public ReactiveCommand NextPageCommand { get; }
     public ReactiveCommand PreviousPageCommand { get; } 
-    public ReactiveCommand LastPageCommand { get; } = new ();
-    public ReactiveCommand SpecifyPageCommand { get; } = new ();
+    public ReactiveCommand LastPageCommand { get; } 
+    public ReactiveCommand SpecifyPageCommand { get; } 
 
     // ズーム
     public ReactiveCommand FitWidthCommand { get; } = new ();
@@ -47,17 +73,20 @@ internal class MainViewModel
     public ReactiveCommand ZoomInCommand { get; } = new ();
     public ReactiveCommand ZoomOutCommand { get; } = new ();
 
+    private MovieCommands MovieCommands { get; }
+
     // 再生
-    public ReactiveCommand MoveToStartCommand { get; } = new ();
-    public ReactiveCommand StartPlayingCommand { get; } = new ();
-    public ReactiveCommand PausePlayingCommand { get; } = new ();
-    public ReactiveCommand FastForwardCommand { get; } = new ();
-    public ReactiveCommand RewindCommand { get; } = new ();
+    public ReactiveCommand MoveToStartCommand { get; } 
+    public ReactiveCommand StartPlayingCommand { get; } 
+    public ReactiveCommand PausePlayingCommand { get; } 
+    public ReactiveCommand FastForwardCommand { get; } 
+    public ReactiveCommand RewindCommand { get; } 
 
     // セカンドモニター操作
-    public ReactiveCommand ShowOnSecondMonitorCommand { get; } = new ();
-    public ReactiveCommand EndShowOnSecondMonitorCommand { get; } = new ();
-    public ReactiveCommand ShowBackgroundOnSecondMonitorCommand { get; } = new ();
+    SecondMonitorCommands SecondMonitorCommands { get; }
+    public ReactiveCommand ShowOnSecondMonitorCommand { get; }
+    public ReactiveCommand EndShowOnSecondMonitorCommand { get; } 
+    public ReactiveCommand ShowBackgroundOnSecondMonitorCommand { get; }
 
     // 設定メニュー
     public ReactiveCommand DisplaySettingsCommand { get; } = new ();
@@ -73,106 +102,102 @@ internal class MainViewModel
 
     public MainViewModel()
     {
-        pdfCommand = new(SelectedFile, PageCount, CurrentPage);
 
-        AppendFile.Subscribe(ExecuteAppendFile);
+
+        fileListsCommands = new(PreviewFile);
+        FilesList = fileListsCommands.FilesList;
+        ListMenuItems = fileListsCommands.ListMenuItems;
+        AppendFile = fileListsCommands.CreateAppendFile();
+        OpenCommand = fileListsCommands.CreateOpenCommand();
+        DeselectAllCommand = fileListsCommands.CreateDeselectAllCommand();
+        SelectAllCommand = fileListsCommands.CreateSelectAllCommand();
+        DeleteCommand = fileListsCommands.CreateDeleteCommand();
+
+
+
+
+
+
+
+        DisplayModel display = DisplayModel.GetInstance();
+        PreviewImage = display.ToReactivePropertyAsSynchronized(x => x.PreviewImage);
+        DisplayImage = display.ToReactivePropertyAsSynchronized(x => x.DisplayImage);
+
+        IsAutoDisplayEnabled = display.ToReactivePropertyAsSynchronized(x => x.IsAutoDisplayEnabled);
+        SecondMonitorCommands = new( PreviewImage, DisplayImage);
         
+        ShowOnSecondMonitorCommand = SecondMonitorCommands.CreateShowOnSecondMonitorCommand();
+        EndShowOnSecondMonitorCommand = SecondMonitorCommands.CreateEndShowOnSecondMonitorCommand();
+        ShowBackgroundOnSecondMonitorCommand = SecondMonitorCommands.CreateShowBackgroundOnSecondMonitorCommand();
 
-        SelectedFile.Subscribe(file =>
+
+        PreviewFile.Subscribe(file =>
         {
-            if (file == null) return;
             if (file is ImageSetter imageSetter)
             {
-                imageSetter.SetDisplay(ThatModel.GetInstance());
+                imageSetter.SetDisplay(DisplayModel.GetInstance());
             }
-
+            if (file is MovieFileViewParam movieFileViewParam)
+            {
+                VideoPath.Value = movieFileViewParam.filename;
+            }
+            else
+            {
+                VideoPath.Value = String.Empty;     
+            
+            }
+            bool visible = file is PdfFileViewParam or EmptyFileViewParam;
+            IsPdf.Value = visible ? Visibility.Visible : Visibility.Collapsed;
+            IsMovie.Value = file is MovieFileViewParam ? Visibility.Visible : Visibility.Collapsed;
+            IsImage.Value = file is ImageSetter ? Visibility.Visible : Visibility.Collapsed;
         });
 
-        ThatModel thatModel = ThatModel.GetInstance();
-        ImageSource = thatModel.ToReactivePropertyAsSynchronized(x => x.ImageSource);
-
-
-
         // 各コマンドのアクションを設定
-        OpenCommand.Subscribe(ExecuteOpen);
-        RotateOriginalCommand.Subscribe(_ => ExecuteRotateOriginal());
-        RotateRight90Command.Subscribe(_ => ExecuteRotateRight90());
-        RotateLeft90Command.Subscribe(_ => ExecuteRotateLeft90());
-        Rotate180Command.Subscribe(_ => ExecuteRotate180());
+        RotateCommands = new(PreviewFile);
+        RotateOriginalCommand = RotateCommands.CreateRotateOriginalCommand();
+        RotateRight90Command = RotateCommands.CreateRotateRight90Command();
+        RotateLeft90Command = RotateCommands.CreateRotateLeft90Command();
+        Rotate180Command = RotateCommands.CreateRotate180Command();
 
-        FirstPageCommand.Subscribe(_ => pdfCommand.ExecuteFirstPage());
-
-        NextPageCommand = pdfCommand.CanNext.ToReactiveCommand();
-        NextPageCommand.Subscribe(_ => pdfCommand.ExecuteNextPage());
-
-        PreviousPageCommand = pdfCommand.CanPrev.ToReactiveCommand();
-        PreviousPageCommand.Subscribe(_ => pdfCommand.ExecutePreviousPage());
-        LastPageCommand.Subscribe(_ => pdfCommand.ExecuteLastPage());
-        SpecifyPageCommand.Subscribe(_ => pdfCommand.ExecuteSpecifyPage());
+        pdfCommands = new(PreviewFile, PageCount, CurrentPage);
+        FirstPageCommand = pdfCommands.CreateFirstPageCommand();
+        NextPageCommand = pdfCommands.CreateNextPageCommand();
+        PreviousPageCommand = pdfCommands.CreatePreviousPageCommand();
+        LastPageCommand = pdfCommands.CreateLastPageCommand();
+        SpecifyPageCommand = pdfCommands.CreateSpecifyPageCommand();
 
         FitWidthCommand.Subscribe(_ => ExecuteFitWidth());
         ShowAllCommand.Subscribe(_ => ExecuteShowAll());
         ZoomInCommand.Subscribe(_ => ExecuteZoomIn());
         ZoomOutCommand.Subscribe(_ => ExecuteZoomOut());
 
-        MoveToStartCommand.Subscribe(_ => ExecuteMoveToStart());
-        StartPlayingCommand.Subscribe(_ => ExecuteStartPlaying());
-        PausePlayingCommand.Subscribe(_ => ExecutePausePlaying());
-        FastForwardCommand.Subscribe(_ => ExecuteFastForward());
-        RewindCommand.Subscribe(_ => ExecuteRewind());
+        MovieCommands = new(PreviewFile);
 
-        ShowOnSecondMonitorCommand.Subscribe(_ => ExecuteShowOnSecondMonitor());
-        EndShowOnSecondMonitorCommand.Subscribe(_ => ExecuteEndShowOnSecondMonitor());
-        ShowBackgroundOnSecondMonitorCommand.Subscribe(_ => ExecuteShowBackgroundOnSecondMonitor());
+
+        MoveToStartCommand = MovieCommands.CreateMoveToStartCommand();
+        StartPlayingCommand = MovieCommands.CreateMoveToStartCommand();
+        PausePlayingCommand = MovieCommands.CreateMoveToStartCommand();
+        FastForwardCommand = MovieCommands.CreateMoveToStartCommand();
+        RewindCommand = MovieCommands.CreateMoveToStartCommand();
+
+
 
         DisplaySettingsCommand.Subscribe(_ => ExecuteDisplaySettings());
-        AutoShowCommand.Subscribe(_ => ExecuteAutoShow());
         SlimSizeCommand.Subscribe(_ => ExecuteSlimSize());
         StandardSizeCommand.Subscribe(_ => ExecuteStandardSize());
 
         AboutCommand.Subscribe(_ => ExecuteAbout());
-    }
 
-    private FileViewParam? AppendToFileList(string name)
-    {
-        if (string.IsNullOrEmpty(name)) return null;
-        var file = FileTypes.GetFileViewParam(name);
-        FilesList.Add(file);
-        return file;
-    }
-    private void ExecuteAppendFile(string name)
-    {
-        // 「追加」の処理
-        AppendToFileList(name);
-    }
-    private void ExecuteOpen(string name)
-    {
-        // 「開く」の処理
-        var file =  AppendToFileList(name);
-        if (file == null) return;
-        SelectedFile.Value = file;
 
     }
 
-    private void ExecuteRotateOriginal()
-    {
-        // 「元の表示」の回転処理
-    }
 
-    private void ExecuteRotateRight90()
-    {
-        // 「右へ90度回転」の処理
-    }
 
-    private void ExecuteRotateLeft90()
-    {
-        // 「左へ90度回転」の処理
-    }
 
-    private void ExecuteRotate180()
-    {
-        // 「180度回転」の処理
-    }
+
+ 
+
+
 
     
 
@@ -196,57 +221,19 @@ internal class MainViewModel
         // 「縮小」のズーム処理
     }
 
-    private void ExecuteMoveToStart()
-    {
-        // 「最初に移動」の処理
-    }
+  
 
-    private void ExecuteStartPlaying()
-    {
-        // 「再生開始」の処理
-    }
 
-    private void ExecutePausePlaying()
-    {
-        // 「一時停止」の処理
-    }
 
-    private void ExecuteFastForward()
-    {
-        // 「早送り」の処理
-    }
-
-    private void ExecuteRewind()
-    {
-        // 「巻き戻し」の処理
-    }
-
-    private void ExecuteShowOnSecondMonitor()
-    {
-        OpenNewWindow();
-    }
-
-    private void ExecuteEndShowOnSecondMonitor()
-    {
-        Utils.WindowDispacher.CloseWindow<ViewerWindow>();
-    }
-
-    private void ExecuteShowBackgroundOnSecondMonitor()
-    {
-        // 「セカンドモニターでの背景表示」の処理
-    }
+  
 
     private void ExecuteDisplaySettings()
     {
         // 「ディスプレイと背景色の設定」の処理
-        Windows.SettingWindow settingWindow = new();
-        settingWindow.Show();
+        WindowDispacher.ShowWindow<SettingWindow>();
     }
 
-    private void ExecuteAutoShow()
-    {
-        // 「操作中に自動表示」の設定
-    }
+
 
     private void ExecuteSlimSize()
     {
@@ -263,13 +250,10 @@ internal class MainViewModel
         // 「このアプリについて」の処理
     }
 
-    private void OpenNewWindow()
-    {
-        var window = new ViewerWindow();
-        window.Show();
 
 
-    }
+  
+
 
 
 }
