@@ -26,8 +26,7 @@ namespace ListReactiveProperty.ViewModels
 
         public SettingViewModel()
         {
-            BackColor //= _thatModel.ToReactivePropertyAsSynchronized(x => x.BackColor);
-            = new(new SolidColorBrush(Color.FromArgb(255, 0, 0, 0))); //default black
+            BackColor = _thatModel.ToReactivePropertyAsSynchronized(x => x.BackColor);
             ChangeColorCommand.Subscribe(_ => ShowColorDialog());
 
             Screen.AllScreens.ToList().ForEach(x => DisplayOptions.Add(x));

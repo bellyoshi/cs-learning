@@ -21,10 +21,12 @@ Closing="Window_Closing"
         </ContextMenu>
     </Window.Resources>
 
-    <StackPanel>
-        <Image Source="{Binding ImageSource.Value}"
+    <Grid>
+        <Border Background="{Binding Background.Value}">
+            <Image Source="{Binding ImageSource.Value}"
                ContextMenu ="{StaticResource MyContextMenu}">
-            
-        </Image>
-    </StackPanel>
+
+            </Image>
+        </Border>
+    </Grid>
 </Window>

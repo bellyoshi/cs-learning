@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -16,11 +16,13 @@ using System.Windows.Media.Imaging;
 using ListReactiveProperty.Windows;
 using ListReactiveProperty.Utils;
 using ListReactiveProperty.FileViewParams;
+using System.Windows.Media;
 
 namespace ListReactiveProperty.ViewModels;
 
 internal class MainViewModel
 {
+    public ReactiveProperty<Brush> ImageBackgroundColor { get; }
     public ReactiveCollection<SearchResultViewModel> FilesList { get; }
 
     public ObservableCollection<MenuItemViewModel> ListMenuItems { get; }
@@ -103,6 +105,7 @@ internal class MainViewModel
     public MainViewModel()
     {
 
+        ImageBackgroundColor = DisplayModel.GetInstance().ToReactivePropertyAsSynchronized(x => x.BackColor);
 
         fileListsCommands = new(PreviewFile);
         FilesList = fileListsCommands.FilesList;

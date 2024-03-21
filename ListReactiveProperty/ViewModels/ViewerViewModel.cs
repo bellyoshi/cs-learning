@@ -4,6 +4,8 @@ using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System.Reactive.Linq;
 using System.Windows.Forms;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace ListReactiveProperty.ViewModels
 {
@@ -21,6 +23,8 @@ namespace ListReactiveProperty.ViewModels
         public ReactiveCommand WindowModeCommand { get; } = new();
         public ReactiveCommand CloseDisplayCommand { get; } = new();
 
+        public ReactiveProperty<Brush> Background { get; } = new();
+
 
 
         public ReactiveProperty<string> Text { get; } = new();
@@ -32,8 +36,9 @@ namespace ListReactiveProperty.ViewModels
             WindowModeCommand.Subscribe(_ => setter.IsFullScreen = false);
 
         
-            var thatModel = DisplayModel.GetInstance();
-            ImageSource = thatModel.ToReactivePropertyAsSynchronized(x => x.DisplayImage);
+            var displayModel = DisplayModel.GetInstance();
+            ImageSource = displayModel.ToReactivePropertyAsSynchronized(x => x.DisplayImage);
+            Background = displayModel.ToReactivePropertyAsSynchronized(x => x.BackColor);
 
             var screenModel = ScreenModel.GetInstance();
             

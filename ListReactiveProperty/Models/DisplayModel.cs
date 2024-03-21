@@ -16,8 +16,8 @@ namespace ListReactiveProperty.Models
         , IDisplay
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        private Color _backColor;
-        public Color BackColor
+        private Brush _backColor = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
+        public Brush BackColor
         {
             get => _backColor;
             set
