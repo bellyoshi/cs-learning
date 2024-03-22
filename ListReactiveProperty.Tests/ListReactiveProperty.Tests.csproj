@@ -22,4 +22,10 @@
     <ProjectReference Include="..\WinFormsLibrary1\WinFormsLibrary1.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="sample.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
