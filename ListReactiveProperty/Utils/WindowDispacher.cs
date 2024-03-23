@@ -37,6 +37,13 @@ namespace ListReactiveProperty.Utils
 
         private static void ShowWindow<T>() where T : Window, new()
         {
+            var windows = System.Windows.Application.Current.Windows.OfType<T>();
+            return windows.Any();
+        }
+
+
+        private static void ShowWindow<T>() where T : Window, new()
+        {
             var window = GetWindow<T>();
             window.Show();
         }
