@@ -14,8 +14,17 @@ internal class WindowFullScreenManager(Window window)
     public Rectangle FullScreenWindowLayout => System.Windows.Forms.Screen.AllScreens[ScreenIndex].Bounds;
     public int ScreenIndex { get; set; } = 0;
 
-
-    private readonly Window window = window;
+    private Window _window = window;
+    public Window Window { get => _window;
+        set {
+            _window = value;
+            SetWindowBound(top, left, height, width);
+        } 
+    }
+    private double top = window.Top;
+    private double left = window.Left;
+    private double height = window.Height;
+    private double width = window.Width;
 
     public double BakupHeight { get; set; }
     public double BakupWidth { get; set; }
@@ -42,10 +51,10 @@ internal class WindowFullScreenManager(Window window)
         // Set the window to full screen
         if (!_IsFullScreen)
         {
-            this.BakupHeight = window.Height;
-            this.BakupWidth = window.Width;
-            this.BackupLeft = window.Left;
-            this.BackupTop = window.Top;
+            this.BakupHeight = Window.Height;
+            this.BakupWidth = Window.Width;
+            this.BackupLeft = Window.Left;
+            this.BackupTop = Window.Top;
 
         }
 
@@ -61,10 +70,16 @@ internal class WindowFullScreenManager(Window window)
 
     private void SetWindowBound(double top, double left, double height, double width)
     {
-        window.Top = top;
-        window.Left = left;
-        window.Height = height;
-        window.Width = width;
+        this.top = top;
+        this.left = left;
+        this.height = height;
+        this.width =  width;
+
+            Window.Top = top;
+            Window.Left = left;
+            Window.Height = height;
+            Window.Width = width;
+        
     }
 
     void SetNormalScreen()
