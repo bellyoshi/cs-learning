@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using System.Data;
 using System.Windows;
+using ListReactiveProperty.Utils;
 
 namespace ListReactiveProperty
 {
@@ -9,6 +10,14 @@ namespace ListReactiveProperty
     /// </summary>
     public partial class App : Application
     {
+        private Utils.DependencyContainer Container = new();
+
+        App()
+        {
+            WindowDispacher.Container  = Container;
+        }
+
+
     }
 
 }

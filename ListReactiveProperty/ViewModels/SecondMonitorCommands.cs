@@ -88,7 +88,7 @@ namespace ListReactiveProperty.ViewModels
         }
         private void OpenNewWindow()
         {
-            WindowDispacher.ShowWindow<ViewerWindow>();
+            WindowDispacher.ShowViewerWindow();
             DisplayImage.Value = PreviewImage.Value;
 
         }

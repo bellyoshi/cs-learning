@@ -25,10 +25,7 @@ namespace ListReactiveProperty
             this.WindowStyle = WindowStyle.None;
 
             this.ResizeMode = ResizeMode.NoResize;
-            WindowDragMover mover = new(this, 10, [this]);
-            WindowDragResizer resize = new(this, 10);
-            WindowFullScreenManager windowFullScreenManager = new(this);
-            this.DataContext = new ViewerViewModel(windowFullScreenManager);
+
 
             SecondMonitorCommands.SetIsOpenSecondMonitor(true);
 

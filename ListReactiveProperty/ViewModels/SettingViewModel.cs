@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media;
 using ListReactiveProperty.Models;
+using ListReactiveProperty.Utils;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 
@@ -23,7 +24,11 @@ namespace ListReactiveProperty.ViewModels
         public ObservableCollection<Screen> DisplayOptions { get; } = new();
         public ReactiveProperty<Screen> SelectedDisplayOption { get; } = new();
         public ReactiveCommand ChangeColorCommand { get; } = new();
+        public void SetWindowFullScreenManager(WindowFullScreenManager value)
+        {
+           //todo: implement
 
+        }
         public SettingViewModel()
         {
             BackColor = _thatModel.ToReactivePropertyAsSynchronized(x => x.BackColor);

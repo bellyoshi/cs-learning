@@ -3,6 +3,7 @@ using ListReactiveProperty.Utils;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 using System.Reactive.Linq;
+using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -29,11 +30,16 @@ namespace ListReactiveProperty.ViewModels
 
         public ReactiveProperty<string> Text { get; } = new();
 
-        public ViewerViewModel(WindowFullScreenManager setter)
+        public void SetWindowFullScreenManager(WindowFullScreenManager value) { 
+                // コマンドの初期化
+            FullScreenCommand.Subscribe(_ => value.IsFullScreen = true);
+            WindowModeCommand.Subscribe(_ => value.IsFullScreen = false);
+            
+        }
+
+        public ViewerViewModel()
         {
-            // コマンドの初期化
-            FullScreenCommand.Subscribe(_ => setter.IsFullScreen = true);
-            WindowModeCommand.Subscribe(_ => setter.IsFullScreen = false);
+
 
         
             var displayModel = DisplayModel.GetInstance();
