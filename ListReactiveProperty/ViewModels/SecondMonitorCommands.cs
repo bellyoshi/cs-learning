@@ -79,7 +79,7 @@ namespace ListReactiveProperty.ViewModels
 
         private void ExecuteEndShowOnSecondMonitor()
         {
-            WindowDispacher.CloseWindow<ViewerWindow>();
+       //todo:close behavior     WindowDispacher.CloseWindow<ViewerWindow>();
         }
 
         private void ExecuteShowBackgroundOnSecondMonitor()
@@ -88,7 +88,6 @@ namespace ListReactiveProperty.ViewModels
         }
         private void OpenNewWindow()
         {
-            WindowDispacher.ShowViewerWindow();
             DisplayImage.Value = PreviewImage.Value;
 
         }

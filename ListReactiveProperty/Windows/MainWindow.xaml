@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ListReactiveProperty"
+        xmlns:b="clr-namespace:ListReactiveProperty.Behaviors"
         xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:rp="clr-namespace:Reactive.Bindings.Interactivity;assembly=ReactiveProperty.WPF"
                 xmlns:vm="clr-namespace:ListReactiveProperty.ViewModels"
@@ -62,13 +63,25 @@
                     <MenuItem Header="巻き戻し" Command="{Binding RewindCommand}"/>
                 </MenuItem>
                 <MenuItem Header="セカンドモニター操作">
-                    <MenuItem Header="表示" Command="{Binding ShowOnSecondMonitorCommand}"/>
-                    <MenuItem Header="表示終了" Command="{Binding EndShowOnSecondMonitorCommand}"/>
+                    <MenuItem Header="表示" Command="{Binding ShowOnSecondMonitorCommand}">
+                    <behaviors:Interaction.Triggers>
+                        <behaviors:EventTrigger EventName="Click">
+                            <b:OpenViewerBehavior />
+                        </behaviors:EventTrigger>
+                    </behaviors:Interaction.Triggers>
+                </MenuItem>
+                <MenuItem Header="表示終了" Command="{Binding EndShowOnSecondMonitorCommand}"/>
                     <MenuItem Header="背景表示" Command="{Binding ShowBackgroundOnSecondMonitorCommand}"/>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_設定">
-                <MenuItem Header="ディスプレイと背景色" Command="{Binding DisplaySettingsCommand}"/>
+                <MenuItem Header="ディスプレイと背景色" Command="{Binding DisplaySettingsCommand}">
+                    <behaviors:Interaction.Triggers>
+                        <behaviors:EventTrigger EventName="Click">
+                            <b:OpenSettingBehavior />
+                        </behaviors:EventTrigger>
+                    </behaviors:Interaction.Triggers>
+                </MenuItem>
                 <MenuItem Header="操作中に自動表示" Command="{Binding AutoShowCommand}"/>
                 <MenuItem Header="操作画面サイズ">
                     <MenuItem Header="スリム" Command="{Binding SlimSizeCommand}"/>
@@ -169,8 +182,14 @@
 
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <Button Content="表示" Command="{Binding ShowOnSecondMonitorCommand}"/>
-                <Button Content="表示終了" Command="{Binding EndShowOnSecondMonitorCommand}"/>
+                <Button Content="表示" Command="{Binding ShowOnSecondMonitorCommand}">
+                    <behaviors:Interaction.Triggers>
+                        <behaviors:EventTrigger EventName="Click">
+                            <b:OpenViewerBehavior />
+                        </behaviors:EventTrigger>
+                    </behaviors:Interaction.Triggers>
+                </Button>
+                        <Button Content="表示終了" Command="{Binding EndShowOnSecondMonitorCommand}"/>
                 <Button Content="背景表示" Command="{Binding ShowBackgroundOnSecondMonitorCommand}"/>
                 <CheckBox IsChecked="{Binding IsAutoDisplayEnabled.Value}"
                   Content="操作中に自動表示"/>

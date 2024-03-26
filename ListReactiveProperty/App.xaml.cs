@@ -10,12 +10,7 @@ namespace ListReactiveProperty
     /// </summary>
     public partial class App : Application
     {
-        private Utils.DependencyContainer Container = new();
-
-        App()
-        {
-            WindowDispacher.Container  = Container;
-        }
+        static public DependencyContainer Container { get; } = new();
 
 
     }

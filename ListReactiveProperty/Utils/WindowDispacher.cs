@@ -13,42 +13,44 @@ namespace ListReactiveProperty.Utils
 {
     internal class WindowDispacher
     {
-        public static Utils.DependencyContainer Container;
+        public Utils.DependencyContainer Container;
+
+        public WindowDispacher(DependencyContainer container)
+        {
+            Container = container;
+        }
+
         //特定の型のウィンドウを閉じる
-        public static void CloseWindow<T>() where T : System.Windows.Window
+        public void CloseWindow<T>() where T : System.Windows.Window
         {
             var windows = System.Windows.Application.Current.Windows.OfType<T>();
             windows.ToList().ForEach(w => w.Close());
         }
         
 
-        public static T GetWindow<T>() where T : Window, new()
+        public T GetWindow<T>() where T : Window, new()
         {
             var windows = System.Windows.Application.Current.Windows.OfType<T>();
             return windows.FirstOrDefault() ?? new T();
         }
 
-        public static bool ExistsWindow<T>() where T : Window
+        public bool ExistsWindow<T>() where T : Window
         {
             var windows = System.Windows.Application.Current.Windows.OfType<T>();
             return windows.Any();
         }
 
 
-        private static void ShowWindow<T>() where T : Window, new()
-        {
-            var windows = System.Windows.Application.Current.Windows.OfType<T>();
-            return windows.Any();
-        }
 
 
-        private static void ShowWindow<T>() where T : Window, new()
+
+        private void ShowWindow<T>() where T : Window, new()
         {
             var window = GetWindow<T>();
             window.Show();
         }
 
-        public static void ShowSettingWindow()
+        public void ShowSettingWindow()
         {
             if (!ExistsWindow<SettingWindow>())
             {
@@ -57,7 +59,7 @@ namespace ListReactiveProperty.Utils
             ShowWindow<SettingWindow>();
         }
 
-        public static void ShowViewerWindow()
+        public void ShowViewerWindow()
         {
             if (!ExistsWindow<ViewerWindow>())
             {
@@ -66,7 +68,7 @@ namespace ListReactiveProperty.Utils
             ShowWindow<ViewerWindow>();
         }
 
-        public static void InitializeViewerWindow()
+        public void InitializeViewerWindow()
         {
             //ViewerWindowの初期化
             var window = new ViewerWindow();
@@ -79,7 +81,7 @@ namespace ListReactiveProperty.Utils
             window.DataContext = view;
         }
 
-        private static WindowFullScreenManager GetWindowFullScreenManager(ViewerWindow window)
+        private WindowFullScreenManager GetWindowFullScreenManager(ViewerWindow window)
         {
             if (Container.hasInstance<WindowFullScreenManager>())
             {
@@ -96,7 +98,7 @@ namespace ListReactiveProperty.Utils
 
         }
 
-        static void InitializeSettingWindow()
+         void InitializeSettingWindow()
         {
             if (!Container.hasInstance<WindowFullScreenManager>())
             {
