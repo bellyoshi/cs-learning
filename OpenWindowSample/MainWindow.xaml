@@ -14,7 +14,24 @@
     <i1:Interaction.Behaviors>
         <behaviors:OpenWindowBehavior/>
     </i1:Interaction.Behaviors>
-    <Grid>
-        <Button Content="Open New Window" Command="{Binding OpenNewWindowCommand}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-    </Grid>
+    <StackPanel>
+        <Menu>
+            <MenuItem Header="Open New Window">
+                <i1:Interaction.Triggers>
+                    <i1:EventTrigger EventName="Click">
+                        <behaviors:DependencyObjectOpenWindowBehavior />
+                    </i1:EventTrigger>
+                </i1:Interaction.Triggers>
+            </MenuItem>
+        </Menu>
+
+        <Button Content="Open New Window1" Command="{Binding OpenNewWindowCommand}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Content="Open New Window2">
+            <i1:Interaction.Triggers>
+                <i1:EventTrigger EventName="Click">
+                    <behaviors:DependencyObjectOpenWindowBehavior />
+                </i1:EventTrigger>
+            </i1:Interaction.Triggers>
+        </Button>
+    </StackPanel>
 </Window>
