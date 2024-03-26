@@ -79,7 +79,7 @@ namespace ListReactiveProperty.ViewModels
 
         private void ExecuteEndShowOnSecondMonitor()
         {
-       //todo:close behavior     WindowDispacher.CloseWindow<ViewerWindow>();
+
         }
 
         private void ExecuteShowBackgroundOnSecondMonitor()

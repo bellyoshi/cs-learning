@@ -64,7 +64,7 @@ namespace ListReactiveProperty.ViewModels
 
         private void ExecuteCloseDisplay()
         {
-            //todo:close behavior Utils.WindowDispacher.CloseWindow<ViewerWindow>();
+
 
         }
     }
