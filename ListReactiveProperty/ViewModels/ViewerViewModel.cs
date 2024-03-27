@@ -30,7 +30,7 @@ namespace ListReactiveProperty.ViewModels
 
         public ReactiveProperty<string> Text { get; } = new();
 
-        public void SetWindowFullScreenManager(WindowFullScreenManager value) { 
+        public void SetWindowFullScreenManager(IWindowFullScreenManager value) { 
                 // コマンドの初期化
             FullScreenCommand.Subscribe(_ => value.IsFullScreen = true);
             WindowModeCommand.Subscribe(_ => value.IsFullScreen = false);
