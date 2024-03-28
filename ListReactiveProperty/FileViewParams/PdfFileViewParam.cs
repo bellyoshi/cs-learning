@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
+
 namespace ListReactiveProperty.FileViewParams
 {
-    internal class PdfFileViewParam : DocuGraphFileViewParam
+    public class PdfFileViewParam : DocuGraphFileViewParam
     {
         public override BitmapSource GetImageFromFile()
         {

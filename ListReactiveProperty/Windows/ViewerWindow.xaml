@@ -4,33 +4,38 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ListReactiveProperty"
+         xmlns:b="clr-namespace:ListReactiveProperty.Behaviors"
+        xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="Window1" 
-        Left="{Binding WindowLeft.Value, Mode=TwoWay}"
-        Height="{Binding VirtualHeight.Value}" 
-        MinHeight="{Binding VirtualHeight.Value}" 
-        MaxHeight="{Binding VirtualHeight.Value}"
-        Width="{Binding VirtualWidth.Value}"
-        MinWidth="{Binding VirtualWidth.Value}" 
-        MaxWidth="{Binding VirtualWidth.Value}"
+        Height="480" 
+        Width="640"
+
                 xmlns:vm="clr-namespace:ListReactiveProperty.ViewModels"
-        Top= "{Binding WindowTop.Value, Mode=TwoWay}"
+Closing="Window_Closing"
         ContextMenu="{DynamicResource MyContextMenu}">
-    <Window.DataContext>
-        <vm:ViewerViewModel />
-    </Window.DataContext>
+
     <Window.Resources>
         <ContextMenu x:Key="MyContextMenu">
             <MenuItem Header="フルスクリーン" Command="{Binding FullScreenCommand}"/>
             <MenuItem Header="ウィンドウモード" Command="{Binding WindowModeCommand}"/>
-            <MenuItem Header="表示終了" Command="{Binding CloseDisplayCommand}"/>
+            <MenuItem Header="表示終了" Command="{Binding CloseDisplayCommand}">
+                <behaviors:Interaction.Triggers>
+                    <behaviors:EventTrigger EventName="Click">
+                        <b:CloseViewerBehavior />
+                    </behaviors:EventTrigger>
+                </behaviors:Interaction.Triggers>
+            </MenuItem>
+            
         </ContextMenu>
     </Window.Resources>
 
-    <StackPanel>
-        <Image Source="{Binding ImageSource.Value}"
+    <Grid>
+        <Border Background="{Binding Background.Value}">
+            <Image Source="{Binding ImageSource.Value}"
                ContextMenu ="{StaticResource MyContextMenu}">
-            
-        </Image>
-    </StackPanel>
+
+            </Image>
+        </Border>
+    </Grid>
 </Window>

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ListReactiveProperty"
+        xmlns:b="clr-namespace:ListReactiveProperty.Behaviors"
         xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:rp="clr-namespace:Reactive.Bindings.Interactivity;assembly=ReactiveProperty.WPF"
                 xmlns:vm="clr-namespace:ListReactiveProperty.ViewModels"
@@ -17,7 +18,13 @@
 
         <Menu>
             <MenuItem Header="_ファイル">
-                <MenuItem Header="_リスト" Command="{Binding ListCommand}"/>
+                <MenuItem Header="_リスト" ItemsSource="{Binding ListMenuItems}">
+                    <MenuItem.ItemTemplate>
+                        <DataTemplate>
+                            <MenuItem Header="{Binding Header}" Command="{Binding Command}"/>
+                        </DataTemplate>
+                    </MenuItem.ItemTemplate>
+                </MenuItem>
                 <MenuItem Header="開く(_O)">
                 <behaviors:Interaction.Triggers>
                     <behaviors:EventTrigger EventName="Click">
@@ -36,11 +43,11 @@
                     <MenuItem Header="180度回転" Command="{Binding Rotate180Command}"/>
                 </MenuItem>
                 <MenuItem Header="ページナビゲーション">
-                    <MenuItem Header="最初のページ" Command="{Binding FirstPageCommand}"/>
-                    <MenuItem Header="次のページ" Command="{Binding NextPageCommand}"/>
-                    <MenuItem Header="前のページ" Command="{Binding PreviousPageCommand}"/>
-                    <MenuItem Header="最後のページ" Command="{Binding LastPageCommand}"/>
-                    <MenuItem Header="ページ指定" Command="{Binding SpecifyPageCommand}"/>
+                    <MenuItem Header="最初のページ" Command="{Binding FirstPageCommand}" Visibility="{Binding IsPdf.Value}"/>
+                    <MenuItem Header="次のページ" Command="{Binding NextPageCommand}" Visibility="{Binding IsPdf.Value}"/>
+                    <MenuItem Header="前のページ" Command="{Binding PreviousPageCommand}" Visibility="{Binding IsPdf.Value}"/>
+                    <MenuItem Header="最後のページ" Command="{Binding LastPageCommand}" Visibility="{Binding IsPdf.Value}"/>
+                    <MenuItem Header="ページ指定" Command="{Binding SpecifyPageCommand}" Visibility="{Binding IsPdf.Value}"/>
                 </MenuItem>
                 <MenuItem Header="ズーム">
                     <MenuItem Header="ウィンドウ幅に合わせる" Command="{Binding FitWidthCommand}"/>
@@ -56,13 +63,31 @@
                     <MenuItem Header="巻き戻し" Command="{Binding RewindCommand}"/>
                 </MenuItem>
                 <MenuItem Header="セカンドモニター操作">
-                    <MenuItem Header="表示" Command="{Binding ShowOnSecondMonitorCommand}"/>
-                    <MenuItem Header="表示終了" Command="{Binding EndShowOnSecondMonitorCommand}"/>
-                    <MenuItem Header="背景表示" Command="{Binding ShowBackgroundOnSecondMonitorCommand}"/>
+                    <MenuItem Header="表示" Command="{Binding ShowOnSecondMonitorCommand}">
+                        <behaviors:Interaction.Triggers>
+                            <behaviors:EventTrigger EventName="Click">
+                                <b:OpenViewerBehavior />
+                            </behaviors:EventTrigger>
+                        </behaviors:Interaction.Triggers>
+                    </MenuItem>
+                    <MenuItem Header="表示終了" Command="{Binding EndShowOnSecondMonitorCommand}">
+                        <behaviors:Interaction.Triggers>
+                            <behaviors:EventTrigger EventName="Click">
+                                <b:CloseViewerBehavior />
+                            </behaviors:EventTrigger>
+                        </behaviors:Interaction.Triggers>
+                    </MenuItem>
+                <MenuItem Header="背景表示" Command="{Binding ShowBackgroundOnSecondMonitorCommand}"/>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="_設定">
-                <MenuItem Header="ディスプレイと背景色" Command="{Binding DisplaySettingsCommand}"/>
+                <MenuItem Header="ディスプレイと背景色" Command="{Binding DisplaySettingsCommand}">
+                    <behaviors:Interaction.Triggers>
+                        <behaviors:EventTrigger EventName="Click">
+                            <b:OpenSettingBehavior />
+                        </behaviors:EventTrigger>
+                    </behaviors:Interaction.Triggers>
+                </MenuItem>
                 <MenuItem Header="操作中に自動表示" Command="{Binding AutoShowCommand}"/>
                 <MenuItem Header="操作画面サイズ">
                     <MenuItem Header="スリム" Command="{Binding SlimSizeCommand}"/>
@@ -93,7 +118,21 @@
             <!-- 1列目 -->
             <StackPanel Grid.Column="0" Grid.Row="0" Margin="10">
                 <ListBox ItemsSource="{Binding FilesList}"
-                 SelectedItem="{Binding SelectedFile.Value}">
+                 VirtualizingPanel.IsVirtualizing="True"
+                 VirtualizingPanel.VirtualizationMode="Recycling"
+                 VirtualizingPanel.ScrollUnit="Pixel"
+                 HorizontalContentAlignment="Stretch"
+                 SelectionMode="Extended">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="IsSelected" Value="{Binding IsSelected.Value, Mode=TwoWay}" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding FileViewParam.filename}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
                 </ListBox>
                 <Button Content="全選択" Command="{Binding SelectAllCommand}"/>
                 <Button Content="選択解除" Command="{Binding DeselectAllCommand}"/>
@@ -115,11 +154,11 @@
                 <Button Content="右へ90度回転" Command="{Binding RotateRight90Command}"/>
                 <Button Content="左へ90度回転" Command="{Binding RotateLeft90Command}"/>
                 <Button Content="180度回転" Command="{Binding Rotate180Command}"/>
-                <Button Content="最初のページ" Command="{Binding FirstPageCommand}"/>
-                <Button Content="次のページ" Command="{Binding NextPageCommand}"/>
-                <Button Content="前のページ" Command="{Binding PreviousPageCommand}"/>
-                <Button Content="最後のページ" Command="{Binding LastPageCommand}"/>
-                <Button Content="ページ指定" Command="{Binding SpecifyPageCommand}"/>
+                <Button Content="最初のページ" Command="{Binding FirstPageCommand}" Visibility="{Binding IsPdf.Value}"/>
+                <Button Content="次のページ" Command="{Binding NextPageCommand}" Visibility="{Binding IsPdf.Value}"/>
+                <Button Content="前のページ" Command="{Binding PreviousPageCommand}" Visibility="{Binding IsPdf.Value}"/>
+                <Button Content="最後のページ" Command="{Binding LastPageCommand}" Visibility="{Binding IsPdf.Value}"/>
+                <Button Content="ページ指定" Command="{Binding SpecifyPageCommand}" Visibility="{Binding IsPdf.Value}"/>
                 <Button Content="ウィンドウ幅に合わせる" Command="{Binding FitWidthCommand}"/>
                 <Button Content="全体を表示" Command="{Binding ShowAllCommand}"/>
                 <Button Content="拡大" Command="{Binding ZoomInCommand}"/>
@@ -132,8 +171,16 @@
 
             </StackPanel>
             <StackPanel Grid.Column="2">
-                <Image Source="{Binding ImageSource.Value}"></Image>
-                <StackPanel Orientation="Horizontal">
+                <Border Background="{Binding ImageBackgroundColor.Value}">
+                <Image Source="{Binding PreviewImage.Value}" Visibility="{Binding IsImage.Value}"></Image>
+                </Border>
+                <Border Background="{Binding ImageBackgroundColor.Value}">
+                <MediaElement Source="{Binding VideoPath.Value}" 
+                              Visibility="{Binding IsMovie.Value}"
+                              LoadedBehavior="Manual">
+                </MediaElement>
+                </Border>
+                <StackPanel Orientation="Horizontal" Visibility="{Binding IsPdf}">
                     <Label Content="{Binding CurrentPage.Value}"></Label>
                     <Label Content="/"></Label>
                     <Label Content="{Binding PageCount.Value}"></Label>
@@ -141,9 +188,23 @@
 
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <Button Content="表示" Command="{Binding ShowOnSecondMonitorCommand}"/>
-                <Button Content="表示終了" Command="{Binding EndShowOnSecondMonitorCommand}"/>
+                <Button Content="表示" Command="{Binding ShowOnSecondMonitorCommand}">
+                    <behaviors:Interaction.Triggers>
+                        <behaviors:EventTrigger EventName="Click">
+                            <b:OpenViewerBehavior />
+                        </behaviors:EventTrigger>
+                    </behaviors:Interaction.Triggers>
+                </Button>
+                <Button Content="表示終了" Command="{Binding EndShowOnSecondMonitorCommand}">
+                    <behaviors:Interaction.Triggers>
+                        <behaviors:EventTrigger EventName="Click">
+                            <b:CloseViewerBehavior />
+                        </behaviors:EventTrigger>
+                    </behaviors:Interaction.Triggers>
+                </Button>
                 <Button Content="背景表示" Command="{Binding ShowBackgroundOnSecondMonitorCommand}"/>
+                <CheckBox IsChecked="{Binding IsAutoDisplayEnabled.Value}"
+                  Content="操作中に自動表示"/>
             </StackPanel>
 
     </Grid>

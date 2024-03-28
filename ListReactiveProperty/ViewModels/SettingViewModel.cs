@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media;
 using ListReactiveProperty.Models;
+using ListReactiveProperty.Utils;
 using Reactive.Bindings;
 using Reactive.Bindings.Extensions;
 
@@ -18,19 +19,39 @@ namespace ListReactiveProperty.ViewModels
         //back color
         public ReactiveProperty<Brush> BackColor { get; } 
 
-        private readonly ThatModel _thatModel = ThatModel.GetInstance();
+        private readonly DisplayModel _thatModel = DisplayModel.GetInstance();
 
         public ObservableCollection<Screen> DisplayOptions { get; } = new();
-        public ReactiveProperty<Screen> SelectedDisplayOption { get; } = new();
+        public ReactiveProperty<Screen?> SelectedDisplayOption { get; } = new();
         public ReactiveCommand ChangeColorCommand { get; } = new();
 
+        IWindowFullScreenManager? windowFullScreenManager;
+        public void SetWindowFullScreenManager(IWindowFullScreenManager value)
+        {
+           windowFullScreenManager = value;
+        }
         public SettingViewModel()
         {
-            BackColor //= _thatModel.ToReactivePropertyAsSynchronized(x => x.BackColor);
-            = new(new SolidColorBrush(Color.FromArgb(255, 0, 0, 0))); //default black
+            BackColor = _thatModel.ToReactivePropertyAsSynchronized(x => x.BackColor);
             ChangeColorCommand.Subscribe(_ => ShowColorDialog());
 
+            SelectedDisplayOption.Subscribe(SelectedDisplayOption =>
+            {
+                SelectedDisplayChange(SelectedDisplayOption);
+            }
+            );
+
             Screen.AllScreens.ToList().ForEach(x => DisplayOptions.Add(x));
+        }
+
+        private void SelectedDisplayChange(Screen? SelectedDisplayOption)
+        {
+            if (windowFullScreenManager == null) return;
+            if (SelectedDisplayOption == null) return;
+
+                int index = DisplayOptions.IndexOf(SelectedDisplayOption);
+                windowFullScreenManager.ScreenIndex = index;
+            
         }
 
         private void ShowColorDialog()

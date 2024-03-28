@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 
 namespace ListReactiveProperty.FileViewParams
 {
-    internal class SvgFileViewParam(string filename) : DocuGraphFileViewParam(filename)
+    public class SvgFileViewParam(string filename) : DocuGraphFileViewParam(filename)
     {
         public override BitmapSource GetImageFromFile()
         {

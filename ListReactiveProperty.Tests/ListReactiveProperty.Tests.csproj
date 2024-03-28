@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
@@ -19,6 +19,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ListReactiveProperty\ListReactiveProperty.csproj" />
+    <ProjectReference Include="..\WinFormsLibrary1\WinFormsLibrary1.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="sample.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
