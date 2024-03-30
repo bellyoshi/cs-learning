@@ -24,5 +24,31 @@ namespace Sample.Tests
             Assert.AreEqual(200m, account.Balance);
 
         }
+
+        [TestMethod]
+        // Account Opening Balance is 0
+        public void AccountOpeningBalanceIsZero()
+        {
+            // Arrange
+            var account = new Account();
+
+            // Act
+            // Assert
+            Assert.AreEqual(0m, account.Balance);
+        }
+
+        [TestMethod]
+        // Adding 100 Transaction Change Balance
+        public void Adding100TransactionChangeBalance()
+        {
+            // Arrange
+            var account = new Account();
+
+            // Act
+            account.AddTransaction(100m);
+
+            // Assert
+            Assert.AreEqual(100m, account.Balance);
+        }
     }
 }

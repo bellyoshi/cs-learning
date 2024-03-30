@@ -5,6 +5,7 @@ namespace Sample.Tests
     {
         public Account()
         {
+
         }
 
         public decimal Balance { get; set; }
