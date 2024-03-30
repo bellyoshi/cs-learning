@@ -50,5 +50,20 @@ namespace Sample.Tests
             // Assert
             Assert.AreEqual(100m, account.Balance);
         }
+
+        [TestMethod]
+        // Adding Two Transactions Create Summation Balance
+        public void AddingTwoTransactionsCreateSummationBalance()
+        {
+            // Arrange
+            var account = new Account();
+
+            // Act
+            account.AddTransaction(100m);
+            account.AddTransaction(200m);
+
+            // Assert
+            Assert.AreEqual(300m, account.Balance);
+        }
     }
 }
