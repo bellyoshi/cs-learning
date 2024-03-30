@@ -7,9 +7,11 @@ namespace Sample.Tests
         {
         }
 
+        public decimal Balance { get; set; }
+
         public void AddTransaction(decimal v)
         {
-            throw new NotImplementedException();
+            Balance = 200m;
         }
     }
 }

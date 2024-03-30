@@ -9,7 +9,7 @@ using Sample;
 namespace Sample.Tests
 {
     [TestClass]
-    internal class AcountTest
+    public class AcountTest
     {
         [TestMethod]
         public void AddingTransactionChangeBalance()
@@ -17,7 +17,11 @@ namespace Sample.Tests
             // Arrange
             var account = new Account();
 
+            // Act
+            account.AddTransaction(200m);
 
+            // Assert
+            Assert.AreEqual(200m, account.Balance);
 
         }
     }
