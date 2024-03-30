@@ -10,9 +10,9 @@ namespace Sample.Tests
 
         public decimal Balance { get; set; }
 
-        public void AddTransaction(decimal v)
+        public void AddTransaction(decimal amount)
         {
-            Balance = 200m;
+            Balance = amount;
         }
     }
 }
