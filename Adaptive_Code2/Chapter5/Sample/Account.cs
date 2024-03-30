@@ -12,7 +12,7 @@ namespace Sample.Tests
 
         public void AddTransaction(decimal amount)
         {
-            Balance = amount;
+            Balance += amount;
         }
     }
 }
