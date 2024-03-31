@@ -4,7 +4,7 @@ namespace Sample.Tests
     public class AccountService
     {
         private readonly IAccountRepository repository;
-        public AccountService(IAccountRepository repository)
+        public AccountService(IAccountRepository? repository)
         {
             if (repository == null)
             {
@@ -20,7 +20,14 @@ namespace Sample.Tests
             {
                 return;
             }
-            account.AddTransaction(amount);
+            try
+            {
+                account.AddTransaction(amount);
+            }catch(DomainException)
+            {
+                throw new ServiceException();
+            }
+
         }
 
         
