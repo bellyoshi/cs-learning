@@ -5,7 +5,7 @@
                             xmlns:local="clr-namespace:WpfApp12"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors">
     <Grid>
-        <MediaElement x:Name="viewerMediaElement" LoadedBehavior="Manual" UnloadedBehavior="Stop">
+        <MediaElement x:Name="viewerMediaElement" LoadedBehavior="Manual" UnloadedBehavior="Stop" Source="{Binding Source.Value}">
             <i:Interaction.Behaviors>
                 <local:MediaSyncBehavior IsPlaying="{Binding IsMediaPlaying.Value}"
                                        />

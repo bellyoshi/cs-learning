@@ -10,8 +10,6 @@ namespace WpfApp12;
             InitializeComponent();
             DataContext = viewModel;
 
-            viewerMediaElement.Source = new Uri(
-                @"C:\Users\catik\OneDrive\www\video\hanatokingdom.mp4", UriKind.Relative);
 
         // ViewModelのMediaPositionの変更を購読し、MediaElementの位置を更新します。
         viewModel.MediaPosition.Subscribe(position =>

@@ -11,6 +11,8 @@ public class MediaStateViewModel
     public ReactiveProperty<double> PositionValue { get; } = new ReactiveProperty<double>();
     public ReactiveProperty<double> LengthValue { get; } = new ReactiveProperty<double>();
 
+    public ReactiveProperty<Uri> Source { get; } = new (new Uri(@"C:\Users\catik\OneDrive\www\video\hanatokingdom.mp4",UriKind.Relative));
+
 
     public MediaStateViewModel()
     {
