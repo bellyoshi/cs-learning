@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -49,12 +50,12 @@ public class MediaSyncBehavior : Behavior<MediaElement>
             if ((bool)e.NewValue)
             {
                 behavior.AssociatedObject.Play();
-                behavior.positionTimer.Start();
+                behavior.positionTimer?.Start();
             }
             else
             {
                 behavior.AssociatedObject.Pause();
-                behavior.positionTimer.Stop();
+                behavior.positionTimer?.Stop();
             }
         }
     }
@@ -76,16 +77,17 @@ public class MediaSyncBehavior : Behavior<MediaElement>
     {
         positionTimer = new DispatcherTimer
         {
-            Interval = TimeSpan.FromMilliseconds(50), // Update interval
+            Interval = TimeSpan.FromMilliseconds(10), // Update interval
         };
         positionTimer.Tick += (sender, e) =>
         {
             // Update the MediaPosition without causing a recursive update
             var newPosition = AssociatedObject.Position;
-            if (Math.Abs((MediaPosition - newPosition).TotalSeconds) > 1)
+            if (Math.Abs((MediaPosition - newPosition).TotalMilliseconds) > 20)
             {
                 MediaPosition = newPosition;
             }
+            Debug.WriteLine($"MediaPosition: {newPosition}");
         };
     }
 }
