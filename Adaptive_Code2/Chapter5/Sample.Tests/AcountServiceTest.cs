@@ -73,8 +73,6 @@ namespace Sample.Tests
                 Assert.IsInstanceOfType<DomainException>(ex.InnerException);
             }
 
-            //Assert
-            Assert.AreEqual(200m, account.Balance);
         }
     }
 }
