@@ -10,22 +10,33 @@ namespace Sample.Tests
     [TestClass]
     public class AcountServiceTest
     {
+        private Mock<Account> mockAccount;
+        private Mock<IAccountRepository> mockRepository;
+        private AccountService sut;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            // Setup
+            mockAccount = new Mock<Account>();
+            mockRepository = new Mock<IAccountRepository>();
+            sut = new AccountService(mockRepository.Object);
+            
+        }
+        
         [TestMethod]
         public void AddingTransactionToAccountDelegatesToAccountInstance()
         {
             // Arrange
-            var account = new Mock<Account>();
-            account.Setup(a => a.AddTransaction(200m)).Verifiable();
-            var mockRepository = new Mock<IAccountRepository>();
+            mockAccount.Setup(a => a.AddTransaction(200m)).Verifiable();
             mockRepository.Setup(r => r.GetByName("Trading Account"))
-                .Returns(account.Object);
-            var sut = new AccountService(mockRepository.Object);
+                .Returns(mockAccount.Object);
 
             //Act
             sut.AddTransactionToAccount("Trading Account", 200m);
 
             //Assert
-            account.Verify();
+            mockAccount.Verify();
         }
 
         [TestMethod]
@@ -40,12 +51,9 @@ namespace Sample.Tests
         public void DoNotThrowWhenAccountIsNotFound()
         {
             // Arrange
-            var mockRepository = new Mock<IAccountRepository>();
-
-            var sut = new AccountService(mockRepository.Object);
 
             // Act
-            sut.AddTransactionToAccount("Trading Account", 00m);
+            sut.AddTransactionToAccount("Trading Account", 0m);
 
             // Assert
             // No exception is thrown
@@ -55,11 +63,9 @@ namespace Sample.Tests
         public void AccountExceptionsAreWrappedInThrowServiceException()
         {
             // Arrange
-            var account = new Mock<Account>();
-            account.Setup(a => a.AddTransaction(100m)).Throws<DomainException>();
-            var mockRepository = new Mock<IAccountRepository>();
+            mockAccount.Setup(a => a.AddTransaction(100m)).Throws<DomainException>();
             mockRepository.Setup(r => r.GetByName("Trading Account"))
-                .Returns(account.Object);
+                .Returns(mockAccount.Object);
             var sut = new AccountService(mockRepository.Object);
 
             // Act
