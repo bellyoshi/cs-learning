@@ -2,8 +2,15 @@
 using System.Diagnostics;
 using Reactive.Bindings;
 namespace WpfApp12;
-public class MediaStateViewModel
+
+interface ISliderViewModel
 {
+    public ReactiveProperty<double> RequiredValue { get; }
+}
+
+public class MediaStateViewModel : ISliderViewModel
+{
+    public ReactiveProperty<double> RequiredValue { get; } = new();
     public ReactiveProperty<bool> IsMediaPlaying { get; } = new ReactiveProperty<bool>();
     public ReactiveProperty<TimeSpan> MediaPosition { get; } = new ReactiveProperty<TimeSpan>();
     public ReactiveProperty<TimeSpan> MediaLength { get; } = new ReactiveProperty<TimeSpan>();
@@ -26,6 +33,12 @@ public class MediaStateViewModel
         MediaLength.Subscribe(length =>
         {
             LengthValue.Value = length.TotalMilliseconds;
+        });
+        RequiredValue.Subscribe(value =>
+        {
+            MediaPosition.Value = TimeSpan.FromMilliseconds(value);
+            Debug.WriteLine($"ここで処理: {value}");
+
         });
     }
 

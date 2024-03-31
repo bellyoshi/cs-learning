@@ -9,46 +9,42 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfApp12
+namespace WpfApp12;
+
+/// <summary>
+/// Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class MainWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    private readonly MediaStateViewModel viewModel = new MediaStateViewModel();
+
+    public MainWindow()
     {
-        private readonly MediaStateViewModel viewModel = new MediaStateViewModel();
-
-        public MainWindow()
-        {
-            InitializeComponent();
-            DataContext = viewModel;
-        }
-
-        private void PlayButton_Click(object sender, RoutedEventArgs e)
-        {
-            viewModel.IsMediaPlaying.Value = true;
-            mainMediaElement.Play();
-        }
-
-        private void PauseButton_Click(object sender, RoutedEventArgs e)
-        {
-            viewModel.IsMediaPlaying.Value = false;
-            mainMediaElement.Pause();
-        }
-
-        private void OpenViewer_Click(object sender, RoutedEventArgs e)
-        {
-            var viewerWindow = new ViewerWindow(viewModel);
-            viewerWindow.Show();
-            mainMediaElement.Source =  new Uri(
-               @"C:\Users\catik\OneDrive\www\video\hanatokingdom.mp4", UriKind.Relative);
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var window1 = new Window1();
-            window1.Show();
-        }
+        InitializeComponent();
+        DataContext = viewModel;
     }
 
+    private void PlayButton_Click(object sender, RoutedEventArgs e)
+    {
+        viewModel.IsMediaPlaying.Value = true;
+        mainMediaElement.Play();
     }
+
+    private void PauseButton_Click(object sender, RoutedEventArgs e)
+    {
+        viewModel.IsMediaPlaying.Value = false;
+        mainMediaElement.Pause();
+    }
+
+    private void OpenViewer_Click(object sender, RoutedEventArgs e)
+    {
+        var viewerWindow = new ViewerWindow(viewModel);
+        viewerWindow.Show();
+        mainMediaElement.Source =  new Uri(
+           @"C:\Users\catik\OneDrive\www\video\hanatokingdom.mp4", UriKind.Relative);
+    }
+
+
+
+}
+
