@@ -10,7 +10,7 @@ namespace Sample.Tests
 
         public decimal Balance { get; set; }
 
-        public void AddTransaction(decimal amount)
+        virtual public void AddTransaction(decimal amount)
         {
             Balance += amount;
         }
