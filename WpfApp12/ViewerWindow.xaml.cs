@@ -9,14 +9,6 @@ namespace WpfApp12;
             InitializeComponent();
             DataContext = viewModel;
 
-            viewModel.IsMediaPlaying.Subscribe(isPlaying =>
-            {
-                if (isPlaying) viewerMediaElement.Play();
-                else viewerMediaElement.Pause();
-            });
-
-            // MainWindowからメディアソースのパスを直接取得するか、
-            // ViewModelを介してソースを設定するロジックを追加
             viewerMediaElement.Source = new Uri(
                 @"C:\Users\catik\OneDrive\www\video\hanatokingdom.mp4", UriKind.Relative);
         }

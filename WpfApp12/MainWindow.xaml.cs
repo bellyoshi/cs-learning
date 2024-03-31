@@ -27,20 +27,20 @@ namespace WpfApp12
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
             viewModel.IsMediaPlaying.Value = true;
-            mediaElement.Play();
+            mainMediaElement.Play();
         }
 
         private void PauseButton_Click(object sender, RoutedEventArgs e)
         {
             viewModel.IsMediaPlaying.Value = false;
-            mediaElement.Pause();
+            mainMediaElement.Pause();
         }
 
         private void OpenViewer_Click(object sender, RoutedEventArgs e)
         {
             var viewerWindow = new ViewerWindow(viewModel);
             viewerWindow.Show();
-            mediaElement.Source =  new Uri(
+            mainMediaElement.Source =  new Uri(
                @"C:\Users\catik\OneDrive\www\video\hanatokingdom.mp4", UriKind.Relative);
         }
     }

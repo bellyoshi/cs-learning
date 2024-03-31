@@ -5,9 +5,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
+                    xmlns:local="clr-namespace:WpfApp12"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         Title="MainWindow" Height="450" Width="800">
         <Grid>
-            <MediaElement Name="mediaElement" Source="YourMediaFile.mp4" LoadedBehavior="Manual" UnloadedBehavior="Stop"/>
+        <MediaElement Name="mainMediaElement" Source="YourMediaFile.mp4" LoadedBehavior="Manual">
+            <i:Interaction.Behaviors>
+                <local:MediaSyncBehavior IsPlaying="{Binding IsMediaPlaying.Value}" />
+            </i:Interaction.Behaviors>
+        </MediaElement>
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Orientation="Horizontal">
                 <Button Content="Play" Click="PlayButton_Click"/>
                 <Button Content="Pause" Click="PauseButton_Click"/>
