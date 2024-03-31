@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel.Utilities;
 using Moq;
 
 namespace Sample.Tests
@@ -10,33 +11,26 @@ namespace Sample.Tests
     [TestClass]
     public class AcountServiceTest
     {
-        private Mock<Account> mockAccount;
-        private Mock<IAccountRepository> mockRepository;
-        private AccountService sut;
+        private AccountServiceBuilder accountServiceBuilder;
 
         [TestInitialize]
         public void Setup()
         {
-            // Setup
-            mockAccount = new Mock<Account>();
-            mockRepository = new Mock<IAccountRepository>();
-            sut = new AccountService(mockRepository.Object);
+            accountServiceBuilder = new AccountServiceBuilder();
             
         }
         
         [TestMethod]
         public void AddingTransactionToAccountDelegatesToAccountInstance()
         {
-            // Arrange
-            mockAccount.Setup(a => a.AddTransaction(200m)).Verifiable();
-            mockRepository.Setup(r => r.GetByName("Trading Account"))
-                .Returns(mockAccount.Object);
+            var sut = accountServiceBuilder
+                .WithAccountCalled("Trading Account")
+                .AddTransactionOfValue(200m)
+                .Build();
 
-            //Act
             sut.AddTransactionToAccount("Trading Account", 200m);
 
-            //Assert
-            mockAccount.Verify();
+            accountServiceBuilder.MockAccount.Verify();
         }
 
         [TestMethod]
@@ -50,6 +44,7 @@ namespace Sample.Tests
         [TestMethod]
         public void DoNotThrowWhenAccountIsNotFound()
         {
+            var sut = accountServiceBuilder.Build();
             // Arrange
 
             // Act
@@ -63,10 +58,11 @@ namespace Sample.Tests
         public void AccountExceptionsAreWrappedInThrowServiceException()
         {
             // Arrange
-            mockAccount.Setup(a => a.AddTransaction(100m)).Throws<DomainException>();
-            mockRepository.Setup(r => r.GetByName("Trading Account"))
-                .Returns(mockAccount.Object);
-            var sut = new AccountService(mockRepository.Object);
+            var sut = accountServiceBuilder
+                .WithAccountCalled("Trading Account")
+                .Build();
+            accountServiceBuilder.MockAccount.Setup(a => a.AddTransaction(100m)).Throws<DomainException>();
+
 
             // Act
             try
