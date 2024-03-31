@@ -52,7 +52,6 @@ namespace Sample.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ServiceException))]
         public void AccountExceptionsAreWrappedInThrowServiceException()
         {
             // Arrange
@@ -64,7 +63,14 @@ namespace Sample.Tests
             var sut = new AccountService(mockRepository.Object);
 
             // Act
-            sut.AddTransactionToAccount("Trading Account", 100m);
+            try
+            {
+                sut.AddTransactionToAccount("Trading Account", 100m);
+            }catch(ServiceException ex)
+            {
+                Assert.IsInstanceOfType<DomainException>(ex.InnerException);
+            }
+
         }
     }
 }
