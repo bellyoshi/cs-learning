@@ -7,7 +7,8 @@
     <Grid>
         <MediaElement x:Name="viewerMediaElement" LoadedBehavior="Manual" UnloadedBehavior="Stop">
             <i:Interaction.Behaviors>
-                <local:MediaSyncBehavior IsPlaying="{Binding IsMediaPlaying.Value}"/>
+                <local:MediaSyncBehavior IsPlaying="{Binding IsMediaPlaying.Value}"
+                                       />
             </i:Interaction.Behaviors>
         </MediaElement>
     </Grid>

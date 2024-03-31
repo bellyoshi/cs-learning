@@ -8,18 +8,23 @@
                     xmlns:local="clr-namespace:WpfApp12"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         Title="MainWindow" Height="450" Width="800">
-        <Grid>
-        <MediaElement Name="mainMediaElement" Source="YourMediaFile.mp4" LoadedBehavior="Manual">
+    <Grid>
+        <MediaElement x:Name="mainMediaElement" LoadedBehavior="Manual">
             <i:Interaction.Behaviors>
-                <local:MediaSyncBehavior IsPlaying="{Binding IsMediaPlaying.Value}" />
+                <local:MediaSyncBehavior IsPlaying="{Binding IsMediaPlaying.Value}"
+                                          MediaPosition="{Binding MediaPosition.Value, Mode=TwoWay}"/>
             </i:Interaction.Behaviors>
         </MediaElement>
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Orientation="Horizontal">
-                <Button Content="Play" Click="PlayButton_Click"/>
-                <Button Content="Pause" Click="PauseButton_Click"/>
-                <Button Content="Open Viewer" Click="OpenViewer_Click"/>
-            </StackPanel>
-        </Grid>
+        <Slider x:Name="trackBar" Minimum="0" Maximum="{Binding LengthValue.Value}" 
+                Value="{Binding PositionValue.Value}" 
+                Orientation="Horizontal" VerticalAlignment="Bottom"/>
+
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Orientation="Horizontal">
+            <Button Content="Play" Click="PlayButton_Click"/>
+            <Button Content="Pause" Click="PauseButton_Click"/>
+            <Button Content="Open Viewer" Click="OpenViewer_Click"/>
+        </StackPanel>
+    </Grid>
 
 
 </Window>
