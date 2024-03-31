@@ -27,5 +27,13 @@ namespace Sample.Tests
             //Assert
             account.Verify();
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void CannotCreateAccountServiceWithNullRepository()
+        {
+            // Arrange
+            var sut = new AccountService(null);
+        }
     }
 }
