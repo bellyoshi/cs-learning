@@ -22,7 +22,7 @@ namespace Sample.Tests
             }
             try
             {
-                account.AddTransaction(amount);
+            account.AddTransaction(amount);
             }catch(DomainException ex)
             {
                 throw new ServiceException("Adding Transaction to account failed", ex);
