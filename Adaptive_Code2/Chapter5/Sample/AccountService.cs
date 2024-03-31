@@ -6,13 +6,23 @@ namespace Sample.Tests
         private readonly IAccountRepository repository;
         public AccountService(IAccountRepository repository)
         {
+            if (repository == null)
+            {
+                throw new ArgumentNullException("repository", "A valid account repository must by supplied.");
+            }
             this.repository = repository;
         }
 
         public void AddTransactionToAccount(string accountName, decimal amount)
         {
             var account = repository.GetByName(accountName);
+            if (account == null)
+            {
+                return;
+            }
             account.AddTransaction(amount);
         }
+
+        
     }
 }

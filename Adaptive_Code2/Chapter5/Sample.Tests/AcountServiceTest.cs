@@ -35,5 +35,21 @@ namespace Sample.Tests
             // Arrange
             var sut = new AccountService(null);
         }
+
+        [TestMethod]
+        public void DoNotThrowWhenAccountIsNotFound()
+        {
+            // Arrange
+            var mockRepository = new Mock<IAccountRepository>();
+
+            var sut = new AccountService(mockRepository.Object);
+
+            // Act
+            sut.AddTransactionToAccount("Trading Account", 00m);
+
+            // Assert
+            // No exception is thrown
+        }
+
     }
 }
