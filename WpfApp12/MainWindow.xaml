@@ -23,6 +23,7 @@
             <Button Content="Play" Click="PlayButton_Click"/>
             <Button Content="Pause" Click="PauseButton_Click"/>
             <Button Content="Open Viewer" Click="OpenViewer_Click"/>
+            <Button Content="Open Window1" Click="Button_Click"></Button>
         </StackPanel>
     </Grid>
 

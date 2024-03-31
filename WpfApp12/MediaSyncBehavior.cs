@@ -66,7 +66,7 @@ public class MediaSyncBehavior : Behavior<MediaElement>
         if (behavior?.AssociatedObject != null && e.NewValue is TimeSpan newPosition)
         {
             // Avoid updating the position if the change is originated from the timer check
-            if (Math.Abs((behavior.AssociatedObject.Position - newPosition).TotalSeconds) > 1)
+            if (Math.Abs((behavior.AssociatedObject.Position - newPosition).TotalMilliseconds) > 100)
             {
                 behavior.AssociatedObject.Position = newPosition;
             }

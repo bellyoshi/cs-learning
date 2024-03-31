@@ -43,6 +43,12 @@ namespace WpfApp12
             mainMediaElement.Source =  new Uri(
                @"C:\Users\catik\OneDrive\www\video\hanatokingdom.mp4", UriKind.Relative);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var window1 = new Window1();
+            window1.Show();
+        }
     }
 
     }
