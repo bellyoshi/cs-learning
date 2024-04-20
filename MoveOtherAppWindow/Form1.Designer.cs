@@ -28,71 +28,84 @@
         /// </summary>
         private void InitializeComponent()
         {
+            txtSearchTitle = new TextBox();
+            btnSearch = new Button();
+            lstWindows = new ListBox();
             btnMoveToSecondMonitor = new Button();
-            btnRestore = new Button();
-            textBox1 = new TextBox();
-            button1 = new Button();
-            button2 = new Button();
+            btnDoubleClick = new Button();
+            btnReturnToOriginal = new Button();
             SuspendLayout();
+            // 
+            // txtSearchTitle
+            // 
+            txtSearchTitle.Location = new Point(56, 64);
+            txtSearchTitle.Margin = new Padding(4);
+            txtSearchTitle.Name = "txtSearchTitle";
+            txtSearchTitle.Size = new Size(599, 31);
+            txtSearchTitle.TabIndex = 2;
+            txtSearchTitle.Text = "Zoom";
+            // 
+            // btnSearch
+            // 
+            btnSearch.Location = new Point(670, 62);
+            btnSearch.Margin = new Padding(4);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(118, 36);
+            btnSearch.TabIndex = 5;
+            btnSearch.Text = "検索";
+            btnSearch.UseVisualStyleBackColor = true;
+            btnSearch.Click += btnSearch_Click;
+            // 
+            // lstWindows
+            // 
+            lstWindows.FormattingEnabled = true;
+            lstWindows.ItemHeight = 25;
+            lstWindows.Location = new Point(56, 125);
+            lstWindows.Name = "lstWindows";
+            lstWindows.Size = new Size(754, 229);
+            lstWindows.TabIndex = 6;
             // 
             // btnMoveToSecondMonitor
             // 
-            btnMoveToSecondMonitor.Location = new Point(79, 141);
+            btnMoveToSecondMonitor.Location = new Point(56, 386);
             btnMoveToSecondMonitor.Name = "btnMoveToSecondMonitor";
-            btnMoveToSecondMonitor.Size = new Size(94, 29);
-            btnMoveToSecondMonitor.TabIndex = 0;
-            btnMoveToSecondMonitor.Text = "セカンドモニターへ合わせる";
+            btnMoveToSecondMonitor.Size = new Size(139, 34);
+            btnMoveToSecondMonitor.TabIndex = 7;
+            btnMoveToSecondMonitor.Text = "セカンドモニターへ";
             btnMoveToSecondMonitor.UseVisualStyleBackColor = true;
             btnMoveToSecondMonitor.Click += btnMoveToSecondMonitor_Click;
             // 
-            // btnRestore
+            // btnDoubleClick
             // 
-            btnRestore.Location = new Point(79, 198);
-            btnRestore.Name = "btnRestore";
-            btnRestore.Size = new Size(94, 29);
-            btnRestore.TabIndex = 1;
-            btnRestore.Text = "button2";
-            btnRestore.UseVisualStyleBackColor = true;
-            btnRestore.Click += btnRestore_Click;
+            btnDoubleClick.Location = new Point(214, 386);
+            btnDoubleClick.Name = "btnDoubleClick";
+            btnDoubleClick.Size = new Size(127, 34);
+            btnDoubleClick.TabIndex = 8;
+            btnDoubleClick.Text = "ダブルクリック";
+            btnDoubleClick.UseVisualStyleBackColor = true;
+            btnDoubleClick.Click += btnDoubleClick_Click;
             // 
-            // textBox1
+            // btnReturnToOriginal
             // 
-            textBox1.Location = new Point(45, 51);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(480, 27);
-            textBox1.TabIndex = 2;
-            textBox1.Text = "Zoom ミーティング 参加者ID: 260447";
-            // 
-            // button1
-            // 
-            button1.Location = new Point(190, 141);
-            button1.Name = "button1";
-            button1.Size = new Size(94, 29);
-            button1.TabIndex = 3;
-            button1.Text = "ダブルクリック";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += btnDoubleClick_Click;
-            // 
-            // button2
-            // 
-            button2.Location = new Point(290, 141);
-            button2.Name = "button2";
-            button2.Size = new Size(335, 29);
-            button2.TabIndex = 4;
-            button2.Text = "セカンドモニターへ移動しダブルクリック";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
+            btnReturnToOriginal.Location = new Point(366, 386);
+            btnReturnToOriginal.Name = "btnReturnToOriginal";
+            btnReturnToOriginal.Size = new Size(112, 34);
+            btnReturnToOriginal.TabIndex = 9;
+            btnReturnToOriginal.Text = "元の位置に戻す";
+            btnReturnToOriginal.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(button2);
-            Controls.Add(button1);
-            Controls.Add(textBox1);
-            Controls.Add(btnRestore);
+            ClientSize = new Size(1000, 562);
+            Controls.Add(btnReturnToOriginal);
+            Controls.Add(btnDoubleClick);
             Controls.Add(btnMoveToSecondMonitor);
+            Controls.Add(lstWindows);
+            Controls.Add(btnSearch);
+            Controls.Add(txtSearchTitle);
+            Margin = new Padding(4);
             Name = "Form1";
             Text = "Form1";
             ResumeLayout(false);
@@ -100,11 +113,11 @@
         }
 
         #endregion
-
+        private TextBox txtSearchTitle;
+        private Button btnSearch;
+        private ListBox lstWindows;
         private Button btnMoveToSecondMonitor;
-        private Button btnRestore;
-        private TextBox textBox1;
-        private Button button1;
-        private Button button2;
+        private Button btnDoubleClick;
+        private Button btnReturnToOriginal;
     }
 }

@@ -1,23 +1,36 @@
-using System;
-using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace MoveOtherAppWindow;
 
 
 public partial class Form1 : Form
 {
+    [StructLayout(LayoutKind.Sequential)]
+    struct RECT
+    {
+        public int Left;
+        public int Top;
+        public int Right;
+        public int Bottom;
+
+        public int Width => Right - Left;
+        public int Height => Bottom - Top;
+    }
+
     [DllImport("user32.dll")]
     private static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
 
+    [DllImport("user32.dll", SetLastError = true)]
+    static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
 
 
 
     [DllImport("user32.dll", SetLastError = true)]
-    private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+    private static extern IntPtr FindWindow(string? lpClassName, string lpWindowName);
 
-    [DllImport("user32.dll")]
-    private static extern bool GetWindowRect(IntPtr hWnd, out Rectangle lpRect);
+    [DllImport("user32.dll", SetLastError = true)]
+    static extern bool GetWindowRect(IntPtr hwnd, out RECT lpRect);
 
     [DllImport("user32.dll")]
     private static extern bool SetCursorPos(int X, int Y);
@@ -28,60 +41,134 @@ public partial class Form1 : Form
     private const uint MOUSEEVENTF_LEFTDOWN = 0x0002;
     private const uint MOUSEEVENTF_LEFTUP = 0x0004;
 
+    public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
+
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
+
+
+    [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+    public static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool IsWindowVisible(IntPtr hWnd);
+    struct INPUT
+    {
+        public int type;
+        public InputUnion U;
+        public static int Size => Marshal.SizeOf(typeof(INPUT));
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    struct InputUnion
+    {
+        [FieldOffset(0)]
+        public MOUSEINPUT mi;
+    }
+
+    struct MOUSEINPUT
+    {
+        public int dx;
+        public int dy;
+        public uint mouseData;
+        public uint dwFlags;
+        public uint time;
+        public IntPtr dwExtraInfo;
+    }
+
+
+
+    [DllImport("user32.dll", SetLastError = true)]
+    static extern uint SendInput(uint nInputs, [MarshalAs(UnmanagedType.LPArray), In] INPUT[] pInputs, int cbSize);
+
+    [DllImport("user32.dll")]
+    static extern bool SetForegroundWindow(IntPtr hWnd);
+
+
     public Form1()
     {
         InitializeComponent();
     }
 
-    // ウインドウの初期位置を記録するための変数
-    private Rectangle originalRect;
-    private bool isMoved = false;
-
-
+    private void btnSearch_Click(object sender, EventArgs e)
+    {
+        lstWindows.Items.Clear();
+        EnumWindows((hWnd, lParam) =>
+        {
+            if (IsWindowVisible(hWnd))
+            {
+                StringBuilder title = new StringBuilder(256);
+                GetWindowText(hWnd, title, title.Capacity);
+                if (title.ToString().StartsWith(txtSearchTitle.Text))
+                {
+                    lstWindows.Items.Add($"{hWnd} - {title}");
+                }
+            }
+            return true;
+        }, IntPtr.Zero);
+    }
 
     private void btnMoveToSecondMonitor_Click(object sender, EventArgs e)
     {
-        IntPtr hWnd = FindWindow(null, textBox1.Text);
-        if (hWnd != IntPtr.Zero)
+        if (lstWindows.SelectedItem != null)
         {
-            GetWindowRect(hWnd, out originalRect); // 元のウインドウ位置を保存
-            isMoved = true;
-            // セカンドモニターを探す、存在しない場合は主モニターを使用
-            Screen? targetScreen
-                = Screen.AllScreens.FirstOrDefault(s => !s.Primary) ?? Screen.PrimaryScreen;
+            var selectedWindowInfo = lstWindows.SelectedItem.ToString().Split('-')[0].Trim();
+            IntPtr hWnd = new IntPtr(Convert.ToInt32(selectedWindowInfo));
 
-            if (targetScreen != null)
-                MoveWindow(hWnd, targetScreen.WorkingArea.Left, targetScreen.WorkingArea.Top, targetScreen.WorkingArea.Width, targetScreen.WorkingArea.Height, true);
+            // モニターの情報を取得
+            if (Screen.AllScreens.Length > 1)
+            {
+                // セカンドモニターを仮定して取得（インデックスは 1 です）
+                Screen secondMonitor = Screen.AllScreens[1];
+                Rectangle monitorArea = secondMonitor.WorkingArea;
+
+                // ウインドウのサイズを取得（MoveWindow を使う場合は必要）
+                RECT rect;
+                GetWindowRect(hWnd, out rect);
+
+                // ウインドウをセカンドモニターの左上に移動
+                MoveWindow(hWnd, monitorArea.X, monitorArea.Y, rect.Width, rect.Height, true);
+            }
+            else
+            {
+                MessageBox.Show("セカンドモニターが検出されませんでした。");
+            }
         }
         else
         {
-            MessageBox.Show("ウインドウが見つかりません。");
-        }
-    }
-
-    private void btnRestore_Click(object sender, EventArgs e)
-    {
-        if (isMoved)
-        {
-            IntPtr hWnd = FindWindow(null, textBox1.Text);
-            if (hWnd != IntPtr.Zero)
-            {
-                MoveWindow(hWnd, originalRect.Left, originalRect.Top, originalRect.Width, originalRect.Height, true);
-            }
+            MessageBox.Show("リストからウインドウを選択してください。");
         }
     }
 
     private void btnDoubleClick_Click(object sender, EventArgs e)
     {
-        IntPtr hWnd = FindWindow(null, textBox1.Text);
+        if (lstWindows.SelectedItem != null)
+        {
+            var selectedWindowInfo = lstWindows.SelectedItem.ToString().Split('-')[0].Trim();
+            IntPtr hWnd = new IntPtr(Convert.ToInt32(selectedWindowInfo));
+
+            // PerformDoubleClick メソッドを呼び出してダブルクリックをシミュレート
+            PerformDoubleClick(hWnd);
+        }
+        else
+        {
+            MessageBox.Show("リストからウインドウを選択してください。");
+        }
+    }
+
+
+    private void PerformDoubleClick(IntPtr hWnd)
+    {
         if (hWnd != IntPtr.Zero)
         {
             // ウインドウの位置と大きさを取得
-            GetWindowRect(hWnd, out Rectangle rect);
+            GetWindowRect(hWnd, out RECT rect);
 
             // ウインドウの中心を計算
-            int centerX = rect.Left + (rect.Width - rect.Left) / 2;
-            int centerY = rect.Top + (rect.Height - rect.Top) / 2;
+            int centerX = (rect.Left + rect.Right) / 2;
+            int centerY = (rect.Top +  rect.Bottom) / 2;
 
             // マウスカーソルをウインドウの中心に移動
             SetCursorPos(centerX, centerY);
@@ -98,10 +185,5 @@ public partial class Form1 : Form
         }
     }
 
-    private void button2_Click(object sender, EventArgs e)
-    {
-        btnMoveToSecondMonitor_Click(sender, e);
-        btnDoubleClick_Click(sender, e);
-    }
 }
 
