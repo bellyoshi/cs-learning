@@ -33,13 +33,18 @@
             textBox1 = new TextBox();
             button1 = new Button();
             button2 = new Button();
+            button3 = new Button();
+            LeftTexBox = new TextBox();
+            TopTextBox = new TextBox();
+            RightTextBox = new TextBox();
+            BottomTextBox = new TextBox();
             SuspendLayout();
             // 
             // btnMoveToSecondMonitor
             // 
-            btnMoveToSecondMonitor.Location = new Point(79, 141);
+            btnMoveToSecondMonitor.Location = new Point(45, 164);
             btnMoveToSecondMonitor.Name = "btnMoveToSecondMonitor";
-            btnMoveToSecondMonitor.Size = new Size(94, 29);
+            btnMoveToSecondMonitor.Size = new Size(121, 29);
             btnMoveToSecondMonitor.TabIndex = 0;
             btnMoveToSecondMonitor.Text = "セカンドモニターへ合わせる";
             btnMoveToSecondMonitor.UseVisualStyleBackColor = true;
@@ -47,11 +52,11 @@
             // 
             // btnRestore
             // 
-            btnRestore.Location = new Point(79, 198);
+            btnRestore.Location = new Point(395, 92);
             btnRestore.Name = "btnRestore";
             btnRestore.Size = new Size(94, 29);
             btnRestore.TabIndex = 1;
-            btnRestore.Text = "button2";
+            btnRestore.Text = "戻す";
             btnRestore.UseVisualStyleBackColor = true;
             btnRestore.Click += btnRestore_Click;
             // 
@@ -65,7 +70,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(190, 141);
+            button1.Location = new Point(173, 164);
             button1.Name = "button1";
             button1.Size = new Size(94, 29);
             button1.TabIndex = 3;
@@ -75,7 +80,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(290, 141);
+            button2.Location = new Point(273, 164);
             button2.Name = "button2";
             button2.Size = new Size(335, 29);
             button2.TabIndex = 4;
@@ -83,11 +88,54 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
+            // button3
+            // 
+            button3.Location = new Point(536, 50);
+            button3.Name = "button3";
+            button3.Size = new Size(94, 29);
+            button3.TabIndex = 5;
+            button3.Text = "獲得";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
+            // LeftTexBox
+            // 
+            LeftTexBox.Location = new Point(45, 93);
+            LeftTexBox.Name = "LeftTexBox";
+            LeftTexBox.Size = new Size(78, 27);
+            LeftTexBox.TabIndex = 6;
+            // 
+            // TopTextBox
+            // 
+            TopTextBox.Location = new Point(129, 93);
+            TopTextBox.Name = "TopTextBox";
+            TopTextBox.Size = new Size(78, 27);
+            TopTextBox.TabIndex = 6;
+            // 
+            // RightTextBox
+            // 
+            RightTextBox.Location = new Point(213, 93);
+            RightTextBox.Name = "RightTextBox";
+            RightTextBox.Size = new Size(78, 27);
+            RightTextBox.TabIndex = 6;
+            // 
+            // BottomTextBox
+            // 
+            BottomTextBox.Location = new Point(297, 93);
+            BottomTextBox.Name = "BottomTextBox";
+            BottomTextBox.Size = new Size(78, 27);
+            BottomTextBox.TabIndex = 6;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(BottomTextBox);
+            Controls.Add(RightTextBox);
+            Controls.Add(TopTextBox);
+            Controls.Add(LeftTexBox);
+            Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(textBox1);
@@ -106,5 +154,10 @@
         private TextBox textBox1;
         private Button button1;
         private Button button2;
+        private Button button3;
+        private TextBox LeftTexBox;
+        private TextBox TopTextBox;
+        private TextBox RightTextBox;
+        private TextBox BottomTextBox;
     }
 }

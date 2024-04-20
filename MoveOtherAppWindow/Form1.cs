@@ -7,6 +7,15 @@ namespace MoveOtherAppWindow;
 
 public partial class Form1 : Form
 {
+    [StructLayout(LayoutKind.Sequential)]
+    public struct RECT
+    {
+        public int Left;        // x position of upper-left corner
+        public int Top;         // y position of upper-left corner
+        public int Right;       // x position of lower-right corner
+        public int Bottom;      // y position of lower-right corner
+    }
+
     [DllImport("user32.dll")]
     private static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
 
@@ -14,10 +23,10 @@ public partial class Form1 : Form
 
 
     [DllImport("user32.dll", SetLastError = true)]
-    private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+    private static extern IntPtr FindWindow(string? lpClassName, string lpWindowName);
 
-    [DllImport("user32.dll")]
-    private static extern bool GetWindowRect(IntPtr hWnd, out Rectangle lpRect);
+    [DllImport("user32.dll", SetLastError = true)]
+    static extern bool GetWindowRect(IntPtr hwnd, out RECT lpRect);
 
     [DllImport("user32.dll")]
     private static extern bool SetCursorPos(int X, int Y);
@@ -33,8 +42,7 @@ public partial class Form1 : Form
         InitializeComponent();
     }
 
-    // ウインドウの初期位置を記録するための変数
-    private Rectangle originalRect;
+
     private bool isMoved = false;
 
 
@@ -44,7 +52,7 @@ public partial class Form1 : Form
         IntPtr hWnd = FindWindow(null, textBox1.Text);
         if (hWnd != IntPtr.Zero)
         {
-            GetWindowRect(hWnd, out originalRect); // 元のウインドウ位置を保存
+            GetWindowRect(hWnd, out RECT originalRect); // 元のウインドウ位置を保存
             isMoved = true;
             // セカンドモニターを探す、存在しない場合は主モニターを使用
             Screen? targetScreen
@@ -61,14 +69,21 @@ public partial class Form1 : Form
 
     private void btnRestore_Click(object sender, EventArgs e)
     {
-        if (isMoved)
+        RECT originalRect = new();
+        originalRect.Right = int.Parse(RightTextBox.Text);
+        originalRect.Bottom = int.Parse(BottomTextBox.Text);
+        originalRect.Left = int.Parse(LeftTexBox.Text);
+        originalRect.Top = int.Parse(TopTextBox.Text);
+
+
+        IntPtr hWnd = FindWindow(null, textBox1.Text);
+        if (hWnd != IntPtr.Zero)
         {
-            IntPtr hWnd = FindWindow(null, textBox1.Text);
-            if (hWnd != IntPtr.Zero)
-            {
-                MoveWindow(hWnd, originalRect.Left, originalRect.Top, originalRect.Width, originalRect.Height, true);
-            }
+            MoveWindow(hWnd, originalRect.Left, originalRect.Top, 
+                originalRect.Right - originalRect.Left, 
+                originalRect.Bottom - originalRect.Top, true);
         }
+        
     }
 
     private void btnDoubleClick_Click(object sender, EventArgs e)
@@ -77,11 +92,11 @@ public partial class Form1 : Form
         if (hWnd != IntPtr.Zero)
         {
             // ウインドウの位置と大きさを取得
-            GetWindowRect(hWnd, out Rectangle rect);
+            GetWindowRect(hWnd, out RECT rect);
 
             // ウインドウの中心を計算
-            int centerX = rect.Left + (rect.Width - rect.Left) / 2;
-            int centerY = rect.Top + (rect.Height - rect.Top) / 2;
+            int centerX = (rect.Left + rect.Right) / 2;
+            int centerY = (rect.Top + rect.Bottom) / 2;
 
             // マウスカーソルをウインドウの中心に移動
             SetCursorPos(centerX, centerY);
@@ -102,6 +117,22 @@ public partial class Form1 : Form
     {
         btnMoveToSecondMonitor_Click(sender, e);
         btnDoubleClick_Click(sender, e);
+    }
+
+    private void button3_Click(object sender, EventArgs e)
+    {
+
+        IntPtr hWnd = FindWindow(null, textBox1.Text);
+        if (hWnd == IntPtr.Zero) return;
+        
+        GetWindowRect(hWnd, out RECT originalRect); // 元のウインドウ位置を保存
+        BottomTextBox.Text = originalRect.Bottom.ToString();
+        LeftTexBox.Text = originalRect.Left.ToString();
+        RightTextBox.Text = originalRect.Right.ToString();
+        TopTextBox.Text = originalRect.Top.ToString();
+
+        
+
     }
 }
 
