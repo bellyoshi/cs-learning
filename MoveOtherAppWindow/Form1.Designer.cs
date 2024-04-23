@@ -93,44 +93,8 @@
             btnReturnToOriginal.TabIndex = 9;
             btnReturnToOriginal.Text = "元の位置に戻す";
             btnReturnToOriginal.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            button3.Location = new Point(536, 50);
-            button3.Name = "button3";
-            button3.Size = new Size(94, 29);
-            button3.TabIndex = 5;
-            button3.Text = "獲得";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
-            // 
-            // LeftTexBox
-            // 
-            LeftTexBox.Location = new Point(45, 93);
-            LeftTexBox.Name = "LeftTexBox";
-            LeftTexBox.Size = new Size(78, 27);
-            LeftTexBox.TabIndex = 6;
-            // 
-            // TopTextBox
-            // 
-            TopTextBox.Location = new Point(129, 93);
-            TopTextBox.Name = "TopTextBox";
-            TopTextBox.Size = new Size(78, 27);
-            TopTextBox.TabIndex = 6;
-            // 
-            // RightTextBox
-            // 
-            RightTextBox.Location = new Point(213, 93);
-            RightTextBox.Name = "RightTextBox";
-            RightTextBox.Size = new Size(78, 27);
-            RightTextBox.TabIndex = 6;
-            // 
-            // BottomTextBox
-            // 
-            BottomTextBox.Location = new Point(297, 93);
-            BottomTextBox.Name = "BottomTextBox";
-            BottomTextBox.Size = new Size(78, 27);
-            BottomTextBox.TabIndex = 6;
+            
+            
             // 
             // Form1
             // 
