@@ -92,41 +92,22 @@ public partial class Form1 : Form
         InitializeComponent();
     }
 
-    private void btnSearch_Click(object sender, EventArgs e)
-    {
-        lstWindows.Items.Clear();
-        EnumWindows((hWnd, lParam) =>
-        {
-            if (IsWindowVisible(hWnd))
-            {
-                StringBuilder title = new StringBuilder(256);
-                GetWindowText(hWnd, title, title.Capacity);
-                if (title.ToString().StartsWith(txtSearchTitle.Text))
-                {
-                    lstWindows.Items.Add($"{hWnd} - {title}");
-                }
-            }
-            return true;
-        }, IntPtr.Zero);
-    }
+    // ウインドウの初期位置を記録するための変数
+    private Rectangle originalRect;
+    private bool isMoved = false;
+
+
 
     private void btnMoveToSecondMonitor_Click(object sender, EventArgs e)
     {
-        if (lstWindows.SelectedItem != null)
+        IntPtr hWnd = FindWindow(null, textBox1.Text);
+        if (hWnd != IntPtr.Zero)
         {
-            var selectedWindowInfo = lstWindows.SelectedItem.ToString().Split('-')[0].Trim();
-            IntPtr hWnd = new IntPtr(Convert.ToInt32(selectedWindowInfo));
-
-            // モニターの情報を取得
-            if (Screen.AllScreens.Length > 1)
-            {
-                // セカンドモニターを仮定して取得（インデックスは 1 です）
-                Screen secondMonitor = Screen.AllScreens[1];
-                Rectangle monitorArea = secondMonitor.WorkingArea;
-
-                // ウインドウのサイズを取得（MoveWindow を使う場合は必要）
-                RECT rect;
-                GetWindowRect(hWnd, out rect);
+            GetWindowRect(hWnd, out originalRect); // 元のウインドウ位置を保存
+            isMoved = true;
+            // セカンドモニターを探す、存在しない場合は主モニターを使用
+            Screen? targetScreen
+                = Screen.AllScreens.FirstOrDefault(s => !s.Primary) ?? Screen.PrimaryScreen;
 
                 // ウインドウをセカンドモニターの左上に移動
                 MoveWindow(hWnd, monitorArea.X, monitorArea.Y, rect.Width, rect.Height, true);
@@ -142,20 +123,17 @@ public partial class Form1 : Form
         }
     }
 
-    private void btnDoubleClick_Click(object sender, EventArgs e)
+    private void btnRestore_Click(object sender, EventArgs e)
     {
-        if (lstWindows.SelectedItem != null)
+        if (isMoved)
         {
-            var selectedWindowInfo = lstWindows.SelectedItem.ToString().Split('-')[0].Trim();
-            IntPtr hWnd = new IntPtr(Convert.ToInt32(selectedWindowInfo));
-
-            // PerformDoubleClick メソッドを呼び出してダブルクリックをシミュレート
-            PerformDoubleClick(hWnd);
+            IntPtr hWnd = FindWindow(null, textBox1.Text);
+            if (hWnd != IntPtr.Zero)
+            {
+                MoveWindow(hWnd, originalRect.Left, originalRect.Top, originalRect.Width, originalRect.Height, true);
+            }
         }
-        else
-        {
-            MessageBox.Show("リストからウインドウを選択してください。");
-        }
+        
     }
 
 
@@ -167,8 +145,8 @@ public partial class Form1 : Form
             GetWindowRect(hWnd, out RECT rect);
 
             // ウインドウの中心を計算
-            int centerX = (rect.Left + rect.Right) / 2;
-            int centerY = (rect.Top +  rect.Bottom) / 2;
+            int centerX = rect.Left + (rect.Width - rect.Left) / 2;
+            int centerY = rect.Top + (rect.Height - rect.Top) / 2;
 
             // マウスカーソルをウインドウの中心に移動
             SetCursorPos(centerX, centerY);
@@ -185,5 +163,10 @@ public partial class Form1 : Form
         }
     }
 
+    private void button2_Click(object sender, EventArgs e)
+    {
+        btnMoveToSecondMonitor_Click(sender, e);
+        btnDoubleClick_Click(sender, e);
+    }
 }
 
